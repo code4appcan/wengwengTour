@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <body class="um-vp " ontouchstart>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head" style="height:2.5em">
+                <div class="nav-btn" id="left">
+                    <div class="fa fa-2x fa-angle-left"></div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0"></h1>
+                <div class="nav-btn nav-bt" >
+                    <div class="ub" style="margin-right: 2em" id="publish">
+                        发表
+                    </div>
+                    <div class="ub" style="margin-right: 1em" id="look">
+                        预览
+                    </div>
+                </div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l">
+
+            </div>
+            <!--content结束-->
+            <!-- <div id="footer">
+            <div class="ub ub-f1 " style="height:3em;background-color: red">
+            <div class="ub" style="background-color: red"></div>
+            <div class="ub" style="background-color: red"></div>
+            </div>
+            </div>  -->
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    <script>
+        var headId = appcan.locStorage.getVal("headId");
+        var titleName = appcan.locStorage.getVal("headIName");
+        var user_id = appcan.locStorage.getVal("user_id");
+        var listenFlag=appcan.locStorage.getVal("listenFlag");
+        appcan.ready(function() {
+            var titHeight = $('#header').offset().height;
+            appcan.frame.open("content", "write_traval_content.html", 0, titHeight);
+            window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+            }
+            /*监听返回键*/
+            uexWindow.setReportKey(0, 1);
+            uexWindow.onKeyPressed = function(data) {
+                if (data == 0) {
+                    /*关闭write_title.html和write_traval.html,回到lnote.html*/
+                    if(listenFlag==1){
+                        appcan.locStorage.remove('listenFlag');
+                        appcan.window.close(-1);
+                        return;
+                    }
+                    uexWindow.closeAboveWndByName("write_title");
+                }
+            }
+        });
+        appcan.button("#left", "btn-act", function() {
+             appcan.locStorage.setVal("headId",headId);
+            appcan.locStorage.setVal("flag",1);
+            uexWindow.evaluateScript('write_title', '0', 'focus()');            
+            appcan.window.close(-1);
+        })
+        appcan.button("#publish", "ani-act", function() {
+            appcan.locStorage.remove("flag");
+            var regUrl = ipVal + 'travelset/save_head/';
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'POST',
+                dataType : 'json',
+                data : {
+                    name : titleName,
+                    id : headId,
+                    status : 1,
+                    userid : user_id
+                },
+                success : function(data) {
+                    if (200 == data.status) {
+                        uexWindow.evaluatePopoverScript('lnote', 'content', 'firstShow()'); 
+                        uexWindow.toast("1", "5", "发表成功页面跳转中", 5000);
+                         if(listenFlag==1){
+                             uexWindow.evaluatePopoverScript('myJournal', 'content', 'firstShowpublish()'); 
+                             appcan.window.close(-1);
+                             return;
+                         }
+                        setTimeout(function() {                            
+                            //appcan.window.open("lnote", "lnote.html", 10);                          
+                           uexWindow.closeAboveWndByName("write_title");
+                        }, 3000);                        
+
+                    } else {
+                       // alert(data.error);
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+        })
+        appcan.button("#look", "ani-act", function() {
+            appcan.window.open("previewJournal", "previewJournal.html", 10);
+        })
+        function close(){
+            appcan.window.close(-1);
+        }
+
+    </script>
+</html>

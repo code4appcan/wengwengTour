@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <style type="text/css">
+        .gheader {
+            height: 12em;
+            color: white;
+        }
+        .hcolor {
+            background-color: #218DD5;
+        }
+
+    </style>
+    <body class="um-vp bc-bg " ontouchstart style="background-color: white">
+        <div class="ub ub-ver">
+            <div class="ub ub-f1 gheader ub-ac ub-pc hcolor" style="background-size: 100% 100%;width: 100%;background-repeat: no-repeat;" id="set">
+                定义设置封面
+            </div>
+            <div class="ub ub-f1 ub-pj ub-ac" style="background-color: white;height:2.5em;border-bottom: 1px solid #5C5C5C" id="badong">
+                <div class="ub" style="margin-left:1em;color:#5C5C5C" id="titleName">
+                   
+                </div>
+                <div class="ub fa fa-1x fa-angle-right" style="margin-right: 1em"></div>
+            </div>
+            <div class="ub ub-hor " style="background-color: white;height:2.5em;color:#5C5C5C;border-bottom:1px solid #5C5C5C">
+                <div class="ub ub-f1 ub-ac ub-pc" style="border-right: 1px solid #5C5C5C" id="addPhoto">
+                    加照片
+                </div>
+                <div class="ub ub-f1 ub-ac ub-pc" id="write">
+                    写游记
+                </div>
+            </div>
+            <div class="ub ub-f1 ub-ver">
+                <ul id="imgList" style="color:">
+                    <!-- <li>
+                        <div class="ub ub-ver">
+                            <div class="ub ub-f1 ub-hor" style="background-color: #CDCDCD;height:2em">
+                                <div class="ub ub-pc ub-ac" style="margin-right: 2em">
+                                    第一天
+                                </div>
+                                <div class="ub ub-pc ub-ac" style="color:#868585">
+                                    2015.10.8
+                                </div>
+                            </div>
+                            <div class="ub ub-f1 ub-hor" style="margin: 0.5em">
+                                <img src="images/destination_1.png" style="width:6em" />
+                                <div class="ub ub-ver ub-f1 ulev-1" style="margin-left: 1em">
+                                    <div class="ub " style="margin-bottom: 1em;margin-top: 1em;color:red" id="place">
+                                        关联地点
+                                    </div>
+                                    <div class="ub " id="describePhoto">
+                                        添加照片描述
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='ub ulev-1' style="line-height: 1.5em;text-indent: 1.5em;color:#868585;margin:0 0.5em 0.5em 0.5em" id="journal">计算点达到较大的昆仑山的几率计算点达到较大的昆仑山的几率计算点达到较大的昆仑山的几率计算点达到较大的昆仑山的几率</div>
+                        </div>
+                    </li> -->
+                    <!-- <li>
+                        <div class="ub ub-ver">
+                            <div class="ub ub-f1 ub-hor" style="background-color: #CDCDCD;height:2em">
+                                <div class="ub ub-pc ub-ac" style="margin-right: 2em">
+                                    第二天
+                                </div>
+                                <div class="ub ub-pc ub-ac" style="color:#868585">
+                                    2015.10.8
+                                </div>
+                            </div>
+                            <div class="ub ub-f1 ub-hor" style="margin: 0.5em">
+                                <img src="images/destination_1.png" style="width:6em" />
+                                <div class="ub ub-ver ub-f1 ulev-1" style="margin-left: 1em">
+                                    <div class="ub " style="margin-bottom: 1em;margin-top: 1em;color:red">
+                                        关联地点
+                                    </div>
+                                    <div class="ub ">
+                                        添加照片描述
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li> -->
+                </ul>
+            </div>
+
+        </div>
+
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+    <script>
+    /**
+     *缓存 
+     */
+     var headId=appcan.locStorage.getVal("headId");
+     var actionSheetList = [{"name":"巴人河"},{"name":"链子溪"},{"name":"无源洞"},
+     {"name":"神龙温泉"},{"name":"神农溪"},{"name":"寇准文化公园"},{"name":"大面山"},
+     {"name":"邓玉麟将军故居"},{"name":"三里城"},{"name":"水布垭高坝"},{"name":"野山峡"},{"name":"清江风景区"}];
+    var index = 0;
+     /*获取当前日期*/
+         
+    // 创建上传对象,上传单张照片,
+    function createUexUploaderMgr(imgArr){
+        uexWindow.toast("1", "5", "图标加载中，请稍等", 6000);
+        if(index >= imgArr.length){
+            // 图片上传完成   
+            index = 0;          
+            //alert('传完了,调接口');
+            showContent();
+            return;
+        }
+        
+        var nowDate='';// 图片创建时间 字符串 yyyy-MM-dd
+        var time = imgArr[index].timestamp;
+        var filePath = imgArr[index].localPath;
+        if(time){
+            var date = new Date(parseInt(time + '000'));
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            var D = date.getDate() + ' ';
+            nowDate = Y + M + D;
+        }else{
+            var now= new Date();    
+            var year=now.getFullYear();        
+            var month=now.getMonth();        
+            var date=now.getDate();
+            nowDate = year+"-"+(month+1)+"-"+date;
+        }
+        var uploadHttp = ipVal+"travelset/save_photo?id="+headId+"&dateStr="+nowDate;
+        uexUploaderMgr.createUploader(1, uploadHttp);
+        uexUploaderMgr.uploadFile(1, filePath, "inputName", 0);
+        index++;
+        uexUploaderMgr.onStatus = function(opCode, fileSize, percent, serverPath, status) {
+                switch (status) {
+                    case 0:
+                        //alert("00");
+                        break;
+                    case 1:
+                        //alert("第" + index + "张成功");
+                        //uexWindow.toast("1", "5", "图标加载中，请稍等", 3000);
+                        uexUploaderMgr.closeUploader(1);
+                        createUexUploaderMgr(imgArr);
+                        break;
+                    case 2:
+                        //alert("第" + index + "张失败");
+                        uexUploaderMgr.closeUploader(1);
+                        createUexUploaderMgr(imgArr);
+                        break;
+                }
+            };
+     }
+     function createrCamery(url){
+         if(index >= 1){
+            // 图片上传完成   
+            index = 0;          
+            //alert('传完了,调接口');
+            showContent();
+            return;
+        }
+        var now= new Date();    
+        var year=now.getFullYear();        
+        var month=now.getMonth();        
+        var date=now.getDate();
+        nowDate = year+"-"+(month+1)+"-"+date;
+        var filePath = url;
+        var uploadHttp = ipVal+"travelset/save_photo?id="+headId+"&dateStr="+nowDate;
+        uexUploaderMgr.createUploader(1, uploadHttp);
+        uexUploaderMgr.uploadFile(1, filePath, "inputName", 0);
+        index++;
+        uexUploaderMgr.onStatus = function(opCode, fileSize, percent, serverPath, status) {
+                switch (status) {
+                    case 0:
+                        //alert("00");
+                        break;
+                    case 1:
+                       // alert("第" + index + "张成功");
+                        //uexWindow.toast("1", "5", "图标加载中，请稍等", 3000);
+                        uexUploaderMgr.closeUploader(1);
+                        createrCamery(url);
+                        break;
+                    case 2:
+                        //alert("第" + index + "张失败");
+                        uexUploaderMgr.closeUploader(1);
+                        createrCamery(url);
+                        break;
+                }
+            };
+     }
+        var photoId;
+        // var titleName = appcan.locStorage.getVal("headIName");
+         var flag=appcan.locStorage.getVal("flag");
+        appcan.ready(function() {
+          
+            if(headId==null){
+                return;
+            }
+                showContent(); 
+             uexImage.onPickerClosed = function(info) {                                      
+                var data = JSON.parse(info); 
+                createUexUploaderMgr(data.detailedImageInfo);
+             }
+             uexCamera.cbOpenInternal=function (opCode, dataType, data){//仅android    
+                   var img_url=data;
+                    createrCamery(img_url);
+                }
+                 uexCamera.cbOpen=function (opCode, dataType, data){
+                   var img_url=data;
+                   createrCamery(img_url);
+                }
+        });
+        function showContent(){
+            var ImgUrl =ipVal+"travelset/get_travel?id="+headId;
+                appcan.request.ajax({
+                    url : ImgUrl,
+                    type : 'get',
+                    dataType : 'json',                   
+                    success : function(data) {
+                        if (200 == data.status) {
+                            var headName=data.body.travel_head.name;
+                            $("#titleName").html(headName);
+                            var html = "";         
+                            var _item = data.body.travel_item;
+                            var headerImg=data.body.travel_head.coverurl.split("WEB-INF/");
+                            //$("#set").removeClass("hcolor").css("background-image","url('"+headerImg[1]+"')");
+                            for(var j=0;j<_item.length;j++){
+                               var day=_item[j].day;
+                               var date=_item[j].date;
+                               var item=_item[j].item;                               
+                                html +='<li>'
+                                +'<div class="ub ub-ver">'
+                                +'<div class="ub ub-f1 ub-hor" style="background-color: #CDCDCD;height:2em">'
+                                +'<div class="ub ub-pc ub-ac" style="margin-right: 2em">'
+                                +day 
+                                +'</div>'
+                                +'<div class="ub ub-pc ub-ac" style="color:#868585">'
+                                +date
+                                +'</div>'
+                                +'</div>';                                
+                                for(var k=0;k<item.length;k++){
+                                    var url = item[k].imgUrl;
+                                    var contents=item[k].content;
+                                    var place=item[k].linkSite;
+                                    var type=item[k].itemType;
+                                    if(type=="pic"){
+                                        if(place==''||place==null){
+                                            place="关联地点";
+                                        } 
+                                        if(contents=='' || contents == null){
+                                            contents = "添加照片描述";
+                                        }
+                                       // $("#set").removeClass("hcolor").attr("background-image","url('"+data.body.travel_head.coverurl+"')");
+                                       
+                                        //$("#set").removeClass("hcolor").attr("background-image","url('"+item[0].imgUrl+"')");
+                                         html+='<div class="ub ub-f1 ub-hor" style="margin: 0.5em">'
+                                        +'<img id="'+item[k].id+'" src="" style="width:6em;min-height:6em" />'
+                                        +'<div class="ub ub-ver ub-f1 ulev-1" style="margin-left: 1em">'
+                                        +"<div class='ub ' style='margin-bottom: 1em;margin-top: 1em;color:red' onclick='change(" +item[k].id+ ")' id='place"+item[k].id+"'>"
+                                        +place
+                                        +'</div>'
+                                        +"<div class='ub ' onclick='changedescribePhoto(" + item[k].id+ ")' id='photo"+ item[k].id+"'>" 
+                                        +contents
+                                        +'</div>'   
+                                        +'</div>'    
+                                        +'</div>' 
+                                    }
+                                    else{
+                                      html+='<div class="ub " style="line-height: 1.5em;text-indent: 1.5em;margin:0 0.5em 0 0.5em;background-color:white" id="journal">'+contents+ '</div>';  
+                                    }  
+                                }                                
+                                html += '</div>' +'</li>';
+                           }                           
+                           $("#imgList").html(html);                           
+                           var option = {
+                             maxtask : 3,
+                             url : '',
+                             success : function(path, session) { 
+                                 if(this.index==0){
+                                     $("#set").removeClass("hcolor").html("").css("background-image","url('"+path+"')");
+                                     $("#" + this.name).attr("src", path); 
+                                     return;
+                                 }                                
+                                $("#" + this.name).attr("src", path);
+                             },
+                             fail : function(session) {
+                                 if(this.index==0){
+                                     $("#set").removeClass("hcolor").html("").css("background-image","url('"+url+"')");
+                                     $("#" + this.name).attr("src", url); 
+                                     return;
+                                 }
+                                 $("#" + this.name).attr("src", url);
+                             }
+                         };
+                         var cache = appcan.icache(option);                                     
+                           for(var j=0;j<_item.length;j++){
+                               var item=_item[j].item;
+                               for(var k=0;k<item.length;k++){
+                                   var type=item[k].itemType;
+                                   if(type == 'pic'){
+                                       var id = item[k].id;
+                                       var url = item[k].imgUrl;
+                                       var url_img = url.split("WEB-INF/");     
+                                       option.url = ipVal + url_img[1];
+                                       option.name = id;
+                                       option.index=k;
+                                       cache.run(option);
+                                   }
+                               }  
+                           }                         
+                        }
+                         else {
+                            //alert(data.error);
+                        }
+                    },
+                    error : function(xhr, type) {
+                        uexWindow.toast(0, 5, "获取失败", 1500);
+                    }
+                }) 
+        }
+        function change(id){
+           // alert(id);
+            createActionSheetPlace(id);
+        }
+        appcan.button("#badong", "btn-act", function() {
+            uexWindow.evaluateScript('write_title', '0', 'focus()');
+           // uexWindow.evaluateScript('write_traval', '0', 'appcan.window.close(-1)');
+           appcan.locStorage.setVal("flag",1);
+           appcan.locStorage.setVal("headId",headId);
+           uexWindow.closeAboveWndByName("write_traval");
+            
+        })
+        // appcan.button("#set", "ani-act", function() {
+            // if ($("#set").hasClass("hcolor")) {
+                // alert("请先加图片再修改封面");
+            // } else {
+                // return;
+            // }
+        // })
+        appcan.button("#write", "btn-act", function() {
+            appcan.window.open("writeJournal", "writeJournal.html", 10);
+        })
+        appcan.button("#addPhoto", "btn-act", function() {
+            createActionSheet();
+        })
+        // appcan.button("#describePhoto", "btn-act", function() {
+            // uexWindow.openPopover("photo_describe", 0, "photo_describe.html", "", 0, 150, '', 790, '', 0, 0);
+        // })
+        function changedescribePhoto(id){            
+            appcan.locStorage.setVal("describePhotoId",id);
+            var addDescribeCont=$("#photo"+id).html();
+            if(addDescribeCont=='添加照片描述'){
+                addDescribeCont='';
+            }
+             appcan.locStorage.setVal("photoContent",addDescribeCont);
+             //alert($("#photo"+id).html());
+            uexWindow.openPopover("photo_describe", 0, "photo_describe.html", "", 0, 150, '', 790, '', 0, 0);
+        }
+       
+        function showDescribe(id) {
+            var photoDes = appcan.locStorage.getVal("photoDes");            
+            if (photoDes == '') {
+                //alert("return");
+                return;
+            }            
+            $("#photo"+id).html(photoDes);
+            
+            /*保存信息*/
+            var regUrl=ipVal+'travelset/save_item/'
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'POST',
+                dataType : 'json',
+                data:{
+                    id:id,
+                    content:photoDes
+                } 
+            }) 
+        }
+
+        function onClickItem(dateType) {
+            if (dateType == 0) {
+                takephoto();
+            } else {
+               var data = {
+                    min : 1,
+                    max : 5,
+                    quality : 0.3,
+                    detailedInfo : true
+                };
+                var json = JSON.stringify(data);
+                uexImage.openPicker(json);
+            }
+        }
+        function takephoto(){  
+            if(uexWidgetOne.platformName == "iOS" || uexWidgetOne.platformName == "ios"){
+                uexCamera.open();   
+            }else{
+                uexCamera.openInternal();     
+            }       
+        }
+        
+        function onClickItemPlace(data) {
+           var placeId=appcan.locStorage.getVal('PlaceId')
+           //alert("itemIndex:" + data + ' ---->' + actionSheetList[data].name);
+           $("#place"+placeId).html(actionSheetList[data].name);
+           var regUrl=ipVal+'travelset/save_item/';
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'POST',
+                dataType : 'json',
+                data:{
+                    id:placeId,
+                    linkSite:actionSheetList[data].name
+                }            
+                
+            })
+            
+        }
+        function createActionSheetPlace(id){
+            appcan.locStorage.setVal('PlaceId',id);
+            uexActionSheet.onClickItem = onClickItemPlace;
+            var x = 0;
+            var y = 0;
+            //没有用
+            var width = 0;
+            //如果传0，默认是屏幕宽度
+            var height = 0;
+            var JsonData = '{"actionSheet_style":{"frameBgColor":"#ffffff","frameBroundColor":"#00000000","frameBgImg":"","btnSelectBgImg":"res://btn-act.png","btnUnSelectBgImg":"res://btn.png","cancelBtnSelectBgImg":"res://cancel-act.png","cancelBtnUnSelectBgImg":"res://cancel.png","textSize":"17","textNColor":"#ffffff","textHColor":"#ffffff", "cancelTextNColor":"#ffffff","cancelTextHColor":"#ffffff", "actionSheetList":' + JSON.stringify(actionSheetList) +'}}';
+            uexActionSheet.open(x, y, width, height, JsonData);
+        }
+
+        function createActionSheet() {
+           // alert("createActionSheet");
+            uexActionSheet.onClickItem = onClickItem;
+            var x = 0;
+            var y = 0;
+            //没有用
+            var width = 0;
+            //如果传0，默认是屏幕宽度
+            var height = 0;
+            //没用的高度
+            //var JsonData = '{"actionSheet_style":{"frameBgColor":"#ffffff","frameBroundColor":"#ff0000","frameBgImg":"","btnSelectBgImg":"res://btn-act.png","btnUnSelectBgImg":"res://btn.png","cancelBtnSelectBgImg":"res://cancel-act.png","cancelBtnUnSelectBgImg":"res://cancel.png","textSize":"17","textColor":"#ffffff","actionSheetList":[{"name":"新浪微博"},{"name":"腾讯微博"},{"name":"分享"}]}}';
+            var JsonData = '{"actionSheet_style":{"frameBgColor":"#ffffff","frameBroundColor":"#00000000","frameBgImg":"","btnSelectBgImg":"res://btn-act.png","btnUnSelectBgImg":"res://btn.png","cancelBtnSelectBgImg":"res://cancel-act.png","cancelBtnUnSelectBgImg":"res://cancel.png","textSize":"17","textNColor":"#ffffff","textHColor":"#ffffff", "cancelTextNColor":"#ffffff","cancelTextHColor":"#ffffff", "actionSheetList":[{"name":"拍照"},{"name":"打开相册"}]}}';
+            //var Jsontsr =JSON.stringify(JsonData);
+            uexActionSheet.open(x, y, width, height, JsonData);
+        }
+    </script>
+</html>

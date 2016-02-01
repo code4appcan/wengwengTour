@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <body class="um-vp bc-bg ulev-1" ontouchstart style="background-color:  rgba(0,0,0,0.4);color:#3B3B3B">
+        <div class="ub ub-ver " style="background-color: white;width:100%;padding-bottom: 2em;position: absolute;bottom: 0">
+            <div class="ub " style="margin-top: 2em;margin-bottom: 1em">
+                <div class="ub ub-f1 ub-ver ub-ac ub-pc" onclick="wx_share(0)">
+                    <img src="images/weixinFriend.png" style="height:4em;width:4em" >
+                    <div class="ub ub-ac ub-pc text" style="margin-top: 0.5em">
+                        微信好友
+                    </div>
+                </div>
+                <div class="ub ub-f1 ub-ver ub-ac ub-pc" onclick="wx_share(1)">
+                    <img src="images/weixinQuan.png"  style="height:4em;width:4em" >
+                    <div class="ub ub-ac ub-pc text" style="margin-top: 0.5em">
+                        朋友圈
+                    </div>
+                </div>
+
+                <div class="ub  ub-f1 ub-ver ub-ac ub-pc" id="QQ">
+                    <img src="images/QQ.png"  style="height:4em;width:4em" >
+                    <div class="ub ub-ac ub-pc text" style="margin-top: 0.5em">
+                        QQ
+                    </div>
+                </div>
+
+            </div>
+            <div class="ub " style="margin-bottom: 1em">
+                <div class="ub ub-f1 ub-ver ub-ac ub-pc" id="QQk">
+                    <img src="images/QQk.png" style="height:4em;width:4em" >
+                    <div class="ub ub-ac ub-pc text" style="margin-top: 0.5em">
+                        QQ空间
+                    </div>
+                </div>
+                <div class="ub ub-f1 ub-ver ub-ac ub-pc" id="message">
+                    <img src="images/message.png" style="height:4em;width:4em" >
+                    <div class="ub ub-ac ub-pc text" style="margin-top: 0.5em">
+                        短信
+                    </div>
+                </div>
+                <div class="ub  ub-f1 ub-ver ub-ac ub-pc" id="copy">
+                    <img src="images/copy.png" style="height:4em;width:4em" >
+                    <div class="ub ub-ac ub-pc text" style="margin-top: 0.5em">
+                        复制
+                    </div>
+                </div>
+
+            </div>
+            <div class="ub ub-ac ub-pc" style="width: 100%;height: 3em;color:#6F6F6F;font-size:.8em;background: #FFFFFF;">
+                <div class="ub ub-ac ub-pc ulev-3" onclick="appcan.frame.close('share_content')" style="width:80%;height: 2.4em;border-radius:.5em;color:#00C1F9;background-color:#FFFFFF;border: 1px solid #00C1F9;">
+                    取消
+                </div>
+            </div>
+            <!-- <div class="ub ub-f1 ub-ac ub-pc ulev" onclick="appcan.frame.close('share_content')" style="background-color: white;height:3em;margin-top: 1em" id="cancle" >
+                取消
+            </div> -->
+        </div>
+
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+    <script>
+        var weixin_appId = "wxd7ff3acbfbb05ff0";
+        var weixin_app_serect = "d4624c36b6795d1d99dcf0547af5443d";
+        var qq_appId = '1104873173';
+        appcan.ready(function() {
+            uexWeiXin.cbShareLinkContent = function(opCode, dataType, data) {
+                alert(data);
+            }
+            uexQQ.cbShareQQ = function(opId, dataType, data) {
+               // alert(data);
+                if(JSON.parse(data).errCode==0){
+                    //addPoints();
+                }
+            }
+            uexWindow.setReportKey(0, 1);
+            uexWindow.onKeyPressed = function(keyCode) {
+                if (keyCode == 0) { 
+                   appcan.frame.close('share_content'); 
+                }
+            }
+        });
+
+        /*微信分享文本给指定好友*/
+        function wx_share(type)//0是发送好友，1是分享到朋友圈
+        {
+            uexWeiXin.registerApp(weixin_appId);
+            uexWeiXin.cbRegisterApp = function(opCode, dataType, data) {
+                if (data == 0)//授权成功
+                {
+                    uexWeiXin.isWXAppInstalled();
+                    uexWeiXin.cbIsWXAppInstalled = function(opCode, dataType, data) {
+                        if (data == 0) {
+                            var con = {
+                                "thumbImg" : "res://icon.png",
+                                "wedpageUrl" : "http://www.badongtour.com/",
+                                "scene" : type,
+                                "title" : "秘境巴东",
+                                "description" : "秘境巴东一日游！"
+                            };
+                            var JsonData = JSON.stringify(con);
+                            uexWeiXin.shareLinkContent(JsonData);
+                        } else if (data == 1) {
+                            appcan.window.alert({
+                                title : "提示",
+                                content : "检测到您未安装微信",
+                                button : ["确定"]
+                            })
+                        }
+                    }
+                } else {
+                    appcan.window.alert({
+                        title : "提示",
+                        content : "授权失败",
+                        button : ["确定"]
+                    })
+                }
+            }
+        }
+
+        function shareTextFriend() {
+            uexWeiXin.registerApp(weixin_appId);
+            var JsonData = '{"text":"中国最大的移动中间键平台AppCan对微信分享的图片支持测试","scene":0}';
+            uexWeiXin.shareTextContent(JsonData);
+        }
+
+        function shareLinkContentF() {
+            var JsonData = '{"thumbImg":"res://No1.jpg","wedpageUrl":"http://www.badongtour.com/","scene":0,"title":"醉美巴东","description":"秘境巴东"}';
+            uexWeiXin.shareLinkContent(JsonData);
+        }
+
+        /*微信分享文本到朋友圈*/
+        function shareTextQuan() {
+            uexWeiXin.registerApp(weixin_appId);
+            var JsonData = '{"text":"中国最大的移动中间键平台AppCan对微信分享的图片支持测试","scene":1}';
+            uexWeiXin.shareTextContent(JsonData);
+        }
+
+        /*微信分享链接到朋友圈*/
+        function shareLinkContent() {
+            var JsonData = '{"thumbImg":"res://No1.jpg","wedpageUrl":"http://www.badongtour.com/","scene":1,"title":"醉美巴东","description":"秘境巴东"}';
+            uexWeiXin.shareLinkContent(JsonData);
+        }
+
+        /*qq分享图文到qq好友*/
+        function shareWebImgTextToQQ() {
+            var json = '{"title":"图文分享标题","summary":"图文分享消息摘要","targetUrl":"http://appcan.cn","imageUrl":"res://aa.jpg","appName":"uexQQ", "cflag":"2"}';
+            uexQQ.shareWebImgTextToQQ(qq_appId, json);
+        }
+
+        /*qq分享图文到qq空间*/
+        function shareWebImgTextToQQK() {
+            var json = '{"title":"图文分享标题","summary":"图文分享消息摘要","targetUrl":"http://appcan.cn","imageUrl":"res://aa.jpg","appName":"uexQQ", "cflag":"1"}';
+            uexQQ.shareWebImgTextToQQ(qq_appId, json);
+        }
+        appcan.button("#QQ", "btn-act", function() {
+            uexQQ.login(qq_appId);
+            shareWebImgTextToQQ();
+        })
+        /*分享到qq空间*/
+        appcan.button("#QQk", "btn-act", function() {
+            uexQQ.login(qq_appId);
+            shareWebImgTextToQQK();
+        })
+        
+        appcan.button("#copy", "btn-act", function() {
+            uexClipboard.copy("中国最大的移动中间键平台AppCan对剪贴板的测试");
+        })
+        appcan.button("#message", "btn-act", function() {
+            uexSMS.open("10086", "中国最大的移动中间键平台AppCan对剪短信的测试");
+        })
+        
+    </script>
+</html>

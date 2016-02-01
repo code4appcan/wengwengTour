@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <style type="text/css">
+        .fa-2x{
+            font-size: 1.5em
+        }
+    </style>
+    <body class="um-vp bc-bg" ontouchstart style="background-color: #DCDCDC">
+        <ul>
+            <li>
+               <img src="" style="height:12em;width:100%" id="headImg"/>
+               <div class="ub" style="position: absolute;top: 1em;left:1em;color:white" id="titleName"></div>
+           </li>
+        </ul>
+       <ul id="imgList">
+           
+            <!-- <li>
+               <div class="ub ub-hor ub-ac ub-pc" style="margin-top: 0.5em">
+                   <div class="ub">-----------------------</div>
+                   <div class="ub" style="font-weight: bold;margin: 0 0.2em 0 0.2em">第一天</div>
+                   <div class="ub">-----------------------</div>
+               </div>
+               <div class="ub ub-ac ub-pc" style="margin-top: 0.5em">2015.10.13</div>
+           </li>
+           <li>
+              <div class="ub ub-hor ub-ac" style="background-color: white;height:2em;margin-top:1em;padding:0 0.5em 0 0.5em ">
+                  <div class="ub ub-f1 ">神龙溪</div>
+                   <div class="fa fa-angle-right fa-2x"></div>
+              </div> 
+           </li>  -->
+       </ul>
+       <div class="ub ub-ac ub-pc uhide" style="background-color: white;color:#cdcdcd;font-size: 2.5em;padding: 0.5em 0 0.5em 0;margin-top: 0.2em" id='end'>旅行结束</div>
+       
+       
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+    <script>
+    
+    var headId=appcan.locStorage.getVal("headId");
+    //var headId=271;
+        appcan.ready(function() {
+          showContent();
+          uexWindow.setPopHardwareEnable('content',1);
+        });
+        function showContent(){
+            var ImgUrl =ipVal+"travelset/get_travel?id="+headId;//+headId;
+                appcan.request.ajax({
+                    url : ImgUrl,
+                    type : 'get',
+                    dataType : 'json',                   
+                    success : function(data) {
+                        if (200 == data.status) {
+                            //alert(111);
+                            var html = "";         
+                            var _item = data.body.travel_item; 
+                              $("#titleName").html(data.body.travel_head.name); 
+                              // var headerImg=data.body.travel_head.coverurl.split("WEB-INF/");
+                            // $("#headImg").attr("src",headerImg[1]);                        
+                            for(var j=0;j<_item.length;j++){
+                               var day=_item[j].day;
+                               var date=_item[j].date;
+                               var item=_item[j].item;                               
+                                html +=' <li>'
+                                        +'<div class="ub ub-hor ub-ac ub-pc" style="margin-top: 0.5em">'
+                                        +'<div class="ub">----------</div>'
+                                        +'<div class="ub" style="font-weight: bold;margin: 0 0.2em 0 0.2em">'+ day+'</div>'
+                                        +'<div class="ub">----------</div>'
+                                        +'</div>'
+                                        +'<div class="ub ub-ac ub-pc" style="margin-top: 0.5em">'+date+'</div>'
+                                        +'</li>'                                
+                                
+                                for(var k=0;k<item.length;k++){
+                                    var url = item[k].imgUrl;
+                                    var contents=item[k].content;
+                                    var place=item[k].linkSite;
+                                    var type=item[k].itemType;
+                                    if(contents==null){
+                                        contents='';
+                                    }
+                                    //$("#set").removeClass("hcolor").attr("background-image","url('"+item[0].imgUrl+"')");
+                                      if(type=="pic"){
+                                         html+='<div class="ub ub-f1 ub-ver" style="margin: 0.5em">'
+                                         +'<div class="ub">'+contents
+                                         +'</div>'
+                                        +'<img id="'+item[k].id+'" src="" style="width:100%;min-height:10em" />'                                           
+                                        +'</div>';
+                                      }
+                                      else{
+                                          html+='<div class="ub " style="line-height: 1.5em;text-indent: 1.5em;margin:0 0.5em 0 0.5em;background-color:white" id="journal">'+contents+ '</div>';  
+                                      }
+                                }
+                                
+                                html += '</div>' +'</li>';
+                               
+                           }                           
+                           $("#imgList").html(html);
+                           $("#end").removeClass('uhide');
+                           
+                           var option = {
+                             maxtask : 3,
+                             url : '',
+                             success : function(path, session) { 
+                                 if(this.index==0){
+                                     $("#headImg").attr("src",path);
+                                     $("#" + this.name).attr("src", path); 
+                                      appcan.locStorage.setVal("backImagePath",path);
+                                     return;
+                                 }   
+                                $("#" + this.name).attr("src", path);
+                             },
+                             fail : function(session) {
+                                 if(this.index==0){
+                                     $("#set").removeClass("hcolor").css("background-image","url('"+url+"')");
+                                     $("#" + this.name).attr("src", url); 
+                                     return;
+                                 }
+                                 $("#" + this.name).attr("src", url);
+                             }
+                         };
+                         var cache = appcan.icache(option);
+                                     
+                           for(var j=0;j<_item.length;j++){
+                               var item=_item[j].item;
+                               for(var k=0;k<item.length;k++){
+                                   var type=item[k].itemType;
+                                   if(type == 'pic'){
+                                       var id = item[k].id;
+                                       var url = item[k].imgUrl;
+                                       var url_img = url.split("WEB-INF/");     
+                                       option.url = ipVal + url_img[1];
+                                       option.name = id;
+                                       option.index=k;
+                                       cache.run(option);
+                                   }
+                               }  
+                           }                         
+                        }
+                         else {
+                            //alert(data.error);
+                        }
+                    },
+                    error : function(xhr, type) {
+                        uexWindow.toast(0, 5, "获取失败", 1500);
+                    }
+                }) 
+        }
+
+    </script>
+</html>

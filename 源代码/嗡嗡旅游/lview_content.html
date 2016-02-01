@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/lyw.css">
+        <link rel="stylesheet" href="css/gstyle.css">
+    </head>
+    <style type="text/css">
+        #b_gd_img {
+            position: absolute;
+            left: 70%;
+            top: -1.7em;
+            display: none;
+            width: 3.5em;
+        }
+
+
+    </style>
+
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver" style="margin-top: 0.5em">
+            <ul id="imageList" >
+                <!-- <li style="background-color: white;border-radius: 0.3em;margin: 0.3em 0.3em 0.5em 0.3em;height:10em">
+                <div class="ub " onclick="alert(111)">
+                <div class="ub ub-f1 ub-ver" style="width:0%" id="btn1">
+                <div class="ub ub-f1" >
+                <img src="images/landscape_2.jpg" style="width:100%;margin: 0.2em"/  >
+                </div>
+                <div class="ub ub-f1 ulev-1" style="position: absolute;bottom: 0.6em;color:white;background-color: rgba(0,0,0,0.5);margin-left: 0.2em;width:100%;">
+                <div class="ub ub-f1 ub-ver" >
+                <div class="ub " style="margin: 0.2em 0 0 0.2em">
+                巴人河
+                </div>
+                <div class="ub  ulev-1" style="margin: 0.2em 0 0 0.2em">
+                长江三峡里的香格里拉
+                </div>
+                </div>
+                </div>
+
+                </div>
+                <div class="ub ub-f1  ub-ver" style="width:0%;font-size:1em">
+                <div class="ub  ub-pc ub-f1 ub-ver" style="margin-left: 1em;color:#AAAAAA" >
+                <div class="ub">
+                星级&nbsp;&nbsp; <img src='images/star5.png' style='height:1em'/>
+
+                </div>
+                <div >
+                票价&nbsp;&nbsp;&nbsp;40元
+                </div>
+                </div>
+                <div class="ub ub-ac  ub-f1" style="color:red;margin-left: 1em">
+                我要订票
+                </div>
+                </div>
+                </div>
+                </li> -->
+
+            </ul>
+
+        </div>
+        <div class="ub ub-ac ub-pc ub-ver" style="margin-top: 30%" id="load">
+            <div class="ub">
+                <img src="images/u=3698289450,3299496463&fm=21&gp=0.jpg.gif" style="width:100%"/>
+            </div>
+            <div class="ub">
+                正在加载中~~
+            </div>
+        </div>
+
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/gsyx.js"></script>
+    </body>
+    <script>
+        var cText = 0;
+        var cJson = 1;
+        var cInt = 2;
+        j = 1;
+        pageSize = 5;
+        appcan.ready(function() {
+            firstshow();
+            /*设置上拉刷新*/
+            appcan.window.setBounce({
+                bounceType : "1",
+                downEndCall : function(type) {
+                    show();
+                    setTimeout(function() {
+                        appcan.window.resetBounceView(1);
+                    }, 1500);
+                }
+            });
+            uexWindow.setPopHardwareEnable('content', 1);
+
+        });
+        /*显示的第一页*/
+        function firstshow() {
+            var url = ipVal + 'get_landscape_list?pageSize=5&pageNo=' + j;
+            // document.write(url);
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        //alert( data.body.landscaps[0].id);
+                        var temp = 0;
+                        var html = '';
+                        var len = data.body.landscaps.length;
+                        var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                    // alert("下载中");
+                                    break;
+                                case 1:
+                                    alert("下载完成");
+                                    break;
+                                case 2:
+                                    alert("下载失败");
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {
+                                var html = "";
+                                var img_id = data.body.landscaps[temp].id;
+                                var description = data.body.landscaps[temp].description;
+                                // alert( img_id);
+                                $("#load").addClass("uhide");
+                                html += "<li style='background-color: white;border-radius: 0.3em;margin: 0.3em 0.3em 0.5em 0.3em'>" + "<div class='ub' onclick='change(" + img_id + ")'>" + " <div class='ub ub-f1 ub-ver' style='width:0%' id='btn1'>" + "<div class='ub ub-f1 ub-ac ub-pc' >" + "<img src='" + path + "' style='width:100%;margin: 0.2em'/  >" + "</div>" + ' <div class="ub ub-f1 ulev-1" style="position: absolute;bottom: 0.6em;color:white;background-color: rgba(0,0,0,0.5);margin-left: 0.3em;width:99.5%;">' + '<div class="ub ub-f1 ub-ver" >' + '<div class="ub " style="margin: 0.2em 0 0 0.2em">' + data.body.landscaps[temp].name + '</div>' + "</div>" + "</div>" + "</div>" + " <div class='ub ub-f1  ub-ver' style='width:0%;font-size:1em'>" + "<div class='ub  ub-pc ub-f1 ub-ver' style='margin-left: 1em;color:#AAAAAA' >" + "<div class='ub'>" + "星级&nbsp;&nbsp; <img src='images/star" + data.body.landscaps[temp].star + ".png' style='height:0.7em'/>" + "</div>" + "<div >" + "票价&nbsp;&nbsp;&nbsp;" + data.body.landscaps[temp].price + "元" + "</div>" + "</div>" + "<div class='ub ub-ac  ub-f1' style='color:red;margin-left: 1em'>" + "我要订票" + " </div>" + " </div>" + " </div>" + "</li>";
+                                temp++;
+                                $("#imageList").append(html);
+
+                            },
+                            fail : function(session) {
+                            }
+                        }
+                        cache = appcan.icache(option);
+                        for (var i = 0; i < len; i++) {
+                            url_img = data.body.landscaps[i].photo.split("WEB-INF/");
+                            option.url = ipVal + url_img[1];
+                            cache.run(option);
+                        }
+                    }
+                },
+
+                error : function(xhr, type) {
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                }
+            })
+        }
+
+        /*上拉刷新时显示的分页*/
+        function show() {
+            j++;
+            var url = ipVal + 'get_landscape_list?pageSize=5&pageNo=' + j;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        //alert( data.body.landscaps[0].id);
+                        /*上拉刷新没有数据显示时*/
+                        if (data.body.landscaps.length == 0) {
+                            appcan.window.openToast("没有更多数据", 5000, 5);
+                        } else {
+                            var temp = 0;
+                            var len = data.body.landscaps.length;
+                            /*缓存图片*/
+                            var option = {
+                                maxtask : 3,
+                                url : '',
+                                progress : function(data, session) {
+                                    var sdata = JSON.parse(JSON.stringify(data));
+                                    var statu = sdata['status'];
+                                    var percent = sdata['percent'];
+                                    switch (statu) {
+                                    case 0:
+                                        // alert("下载中");
+                                        break;
+                                    case 1:
+                                        alert("下载完成");
+                                        break;
+                                    case 2:
+                                        alert("下载失败");
+                                        break;
+                                    default:
+                                        break;
+                                    }
+                                },
+                                success : function(path, session) {
+                                    var html = "";
+                                    var img_id = data.body.landscaps[temp].id;
+                                    var description = data.body.landscaps[temp].description;
+                                    if (description == null) {
+                                        description = '';
+                                    };
+                                    // alert( img_id);
+                                    html += "<li style='background-color: white;border-radius: 0.3em;margin: 0.3em 0.3em 0.5em 0.3em'>" + "<div class='ub' onclick='change(" + img_id + ")'>" + " <div class='ub ub-f1 ub-ver' style='width:0%' id='btn1'>" + "<div class='ub ub-f1'>" + "<img src='" + path + "' style='width:100%;margin: 0.2em'/  >" + "</div>" + ' <div class="ub ub-f1 ulev-1" style="position: absolute;bottom: 0.6em;color:white;background-color: rgba(0,0,0,0.5);margin-left: 0.3em;width:99.5%;">' + '<div class="ub ub-f1 ub-ver" >' + '<div class="ub " style="margin: 0.2em 0 0 0.2em">' + data.body.landscaps[temp].name + '</div>' + '<div class="ub  ulev-1" style="margin: 0.2em 0 0 0.2em">' + description + "</div>" + "</div>" + "</div>" + "</div>" + " <div class='ub ub-f1  ub-ver' style='width:0%;font-size:1em'>" + "<div class='ub  ub-pc ub-f1 ub-ver' style='margin-left: 1em;color:#AAAAAA' >" + "<div class='ub'>" + "星级&nbsp;&nbsp; <img src='images/star" + data.body.landscaps[temp].star + ".png' style='height:0.7em'/>" + "</div>" + "<div >" + "票价&nbsp;&nbsp;&nbsp;" + data.body.landscaps[temp].price + "元" + "</div>" + "</div>" + "<div class='ub ub-ac  ub-f1' style='color:red;margin-left: 1em'>" + "我要订票" + " </div>" + " </div>" + " </div>" + "</li>";
+                                    temp++;
+                                    $("#imageList").append(html);
+
+                                },
+                                fail : function(session) {
+
+                                }
+                            }
+                            cache = appcan.icache(option);
+                            for (var i = 0; i < len; i++) {
+                                //alert(data.body.landscaps[i].id);
+                                // appcan.locStorage.setVal("img_id",data.body.landscaps[i].id);
+                                url_img = data.body.landscaps[i].photo.split("WEB-INF/");
+                                option.url = ipVal + url_img[1];
+
+                                cache.run(option);
+                            }
+                        }
+                    }
+                },
+
+                error : function(xhr, type) {
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                    ;
+                }
+            })
+        }
+
+        /*点击景点图片进入相应的详情页*/
+        function change(id) {
+            appcan.locStorage.setVal("lview_id", id);
+            //appcan.window.open("lvdetail", "lvdetail.html",10);
+            uexWindow.open("lvdetail", 0, "lvdetail.html", 10, '', '', 0, '', '{"hardware":"1"}');
+        }
+
+    </script>
+</html>

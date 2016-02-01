@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver" >
+            <ul id="imageList" style="margin-top: 0.5em;margin-left: 0.5em">
+                <!-- <li>
+                    <div class="ub " onclick="alert(111)">
+                        <div class="ub ub-f1 ub-ver" style="width:0%" id="btn1">
+                            <div class="ub ub-f1">
+                                <img src="images/landscape_2.jpg" style="width:100%;margin: 0.2em"/  >
+                            </div>
+                            
+                        </div>
+                        <div class="ub ub-f1  ub-ver" style="width:0%;font-size:1em;margin-left: 0.5em">
+                            <div class="ub  ub-pc ub-f1 ub-ver" style="margin-left: 1em;color:#AAAAAA" >
+                                <div class="ub">腊猪蹄</div>
+                                <div class="ub">
+                                    星级&nbsp;&nbsp; <img src="images/star4.png" style="height:0.8em"/>
+
+                                </div>
+                                <div >
+                                 查看详情
+                                </div>
+               
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="ub " onclick="alert(111)">
+                        <div class="ub ub-f1 ub-ver" style="width:0%" id="btn1">
+                            <div class="ub ub-f1">
+                                <img src="images/landscape_2.jpg" style="width:100%;margin: 0.2em"/  >
+                            </div>
+                            <div class="ub ub-f1 ub-ver" style="position: absolute;bottom: 1em;left: 0.5em;color:white;font-weight: bold">
+                                <div class="ub " >
+                                    巴人河
+                                </div>
+                                <div class="ub  ulev-1" style="margin-top: 0.8em">
+                                    长江三峡里的香格里拉
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ub ub-f1  ub-ver" style="width:0%;font-size:1em;margin-left: 0.5em">
+                            <div class="ub  ub-pc ub-f1 ub-ver" style="margin-left: 1em;color:#AAAAAA" >
+                                <div class="ub">
+                                    星级&nbsp;&nbsp; <img src="images/star4.png" style="height:0.8em"/>
+
+                                </div>
+                                <div >
+                                    票价&nbsp;&nbsp;&nbsp;40元
+                                </div>
+                            </div>
+                            <div class="ub ub-ac  ub-f1" style="color:red;margin-left: 1em">
+                                我要订票
+                            </div>
+                        </div>
+                    </div>
+                </li> -->
+
+            </ul>
+
+        </div>
+        
+        <div class="ub ub-ac ub-pc ub-ver uhide" style="margin-top: 50%" id="noon">
+           <img src="images/noon.png" style="" class="ub ub-ac ub-pc"/>
+        <div class="ub ub-ac ub-pc">暂时还没有收藏~~</div>
+       </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+     <script src="js/main.js"></script>
+    </body>
+    <script>
+    var user_id = appcan.locStorage.getVal("user_id");
+    //alert(user_id);
+  // var user_id=159;
+    var j=1;
+        appcan.ready(function() {
+            if(user_id==''||user_id==null){
+               appcan.window.openToast("请先登录或注册", 5000, 5);
+                return; 
+            }
+            firstShow();
+            appcan.window.setBounce({
+                bounceType:"1",
+                downEndCall:function(type){                   
+                    show();
+                    setTimeout(function() {
+                        appcan.window.resetBounceView(1);                      
+                    }, 1500);
+                }
+            }) 
+       });
+
+
+        function firstShow(){            
+            var url = ipVal+'get_collection?pageSize=100&userid=' +user_id+'&pageNo='+j;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                       //alert(data.body.collection[0].id);
+                        temp = 0;
+                        var len = data.body.collection.length;
+                        if(len==0){
+                            $("#noon").removeClass("uhide");
+                        }
+                        /*缓存图片*/
+                        var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                    break;
+                                case 1:
+                                    break;
+                                case 2:
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {
+                                //appcan.locStorage.setVal("img_path",path); 
+                                                             
+                                var html = "";
+                                var img_id = data.body.collection[temp].typeid;
+                                var type=data.body.collection[temp].type;
+                                //alert(path);
+                                if(data.body.collection[temp].type==4){
+                                    html +='<li style="margin-bottom:0.5em">'                                    
+                                +'<div class="ub" onclick="change(\'' + img_id + '\', \'' + type + '\')">' 
+                                + " <div class='ub ub-f1 ub-ver' style='width:0%' id='btn1'>" 
+                                + "<div class='ub ub-f1' style='width:80%'>"
+                                 + "<img src='" + path + "' style='width:100%;margin: 0.2em'/  >" 
+                                 + "</div>" 
+                                 // + "<div class='ub ub-f1 ub-ver' style='position: absolute;bottom: 1em;left: 0.5em;color:white;font-weight: bold'>" 
+                                 // + "<div class='ub ulev-1' style='margin-top: 0.8em'>" + data.body.landscaps[temp].address + "</div>"
+                                  // + "</div>" 
+                                  + "</div>" 
+                                  + " <div class='ub ub-f1  ub-ver' style='width:0%;font-size:1em'>" 
+                                  + "<div class='ub  ub-pc ub-f1 ub-ver' style='margin-left: 1em;color:#AAAAAA' >" 
+                                   +"<div >" + data.body.collection[temp].name 
+                                  + "</div>" 
+                                  + "</div>" 
+                                  + "<div class='ub ub-ac  ub-f1' style='margin-left: 1em;color:#AAAAAA'>" + "查看详情" + " </div>" 
+                                  + " </div>" 
+                                  + " </div>"
+                                  +"</li>";
+                                temp++;                                
+                                $("#imageList").append(html); 
+                                }
+                                else if(data.body.collection[temp].type==3){
+                                   html +="<li style='margin-bottom:0.5em'>"
+                                  +'<div class="ub" onclick="change(\'' + img_id + '\', \'' + type + '\')">' 
+                                + " <div class='ub ub-f1 ub-ver' style='width:0%' id='btn1'>" 
+                                + "<div class='ub ub-f1' style='width:80%'>"
+                                 + "<img src='" + path + "' style='width:100%;margin: 0.2em'/  >" 
+                                 + "</div>" 
+                                 // + "<div class='ub ub-f1 ub-ver' style='position: absolute;bottom: 1em;left: 0.5em;color:white;font-weight: bold'>" 
+                                 // + "<div class='ub'>" + data.body.collection[temp].name + " </div>"                                 
+                                  // + "</div>" 
+                                  + "</div>" 
+                                  + " <div class='ub ub-f1  ub-ver' style='width:0%;font-size:1em'>" 
+                                  + "<div class='ub  ub-pc ub-f1 ub-ver' style='margin-left: 1em;color:#AAAAAA' >" 
+                                  + "<div class='ub'>" + data.body.collection[temp].name + " </div>"  
+                                   + "<div class='ub'>" 
+                                  + "星级&nbsp;&nbsp; " 
+                                  +"<img src='images/star" + data.body.collection[temp].star + ".png' style='height:0.8em'/>" 
+                                  + "</div>"
+                                  + "</div>" 
+                                  + "<div class='ub ub-ac  ub-f1' style='color:#AAAAAA;margin-left: 1em'>" + "查看详情" + " </div>" 
+                                  + " </div>" 
+                                  + " </div>"
+                                  +"</li>";
+                                temp++;
+                                $("#imageList").append(html);  
+                                }
+                                else{
+                                   html +="<li style='margin-bottom:0.5em'>"
+                                +'<div class="ub" onclick="change(\'' + img_id + '\', \'' + type + '\')">'  
+                                + " <div class='ub ub-f1 ub-ver' style='width:0%' id='btn1'>" 
+                                + "<div class='ub ub-f1' style='width:80%'>"
+                                 + "<img src='" + path + "' style='width:100%;margin: 0.2em'/  >" 
+                                 + "</div>" 
+                                 // + "<div class='ub ub-f1 ub-ver' style='position: absolute;bottom: 1em;left: 0.5em;color:white;font-weight: bold'>" 
+                                 // + "<div class='ub'>" + data.body.collection[temp].name + " </div>"                                 
+                                  // + "</div>" 
+                                  + "</div>" 
+                                  + " <div class='ub ub-f1  ub-ver' style='width:0%;font-size:1em'>" 
+                                  + "<div class='ub  ub-pc ub-f1 ub-ver' style='margin-left: 1em;color:#AAAAAA' >"
+                                   + "<div class='ub'>" + data.body.collection[temp].name + " </div>"   
+                                 + "<div class='ub'>" 
+                                  + "星级&nbsp;&nbsp; " 
+                                  +"<img src='images/star" + data.body.collection[temp].star + ".png' style='height:0.8em'/>" 
+                                  + "</div>"
+                                  + "</div>" 
+                                  + "<div class='ub ub-ac  ub-f1' style='color:#AAAAAA;margin-left: 1em'>" + "查看详情" + " </div>" 
+                                  + " </div>" 
+                                  + " </div>"
+                                  +"</li>";
+                                temp++;                                
+                                $("#imageList").append(html);  
+                                }                              
+                            },
+                            fail : function(session) {
+                                //alert("session:" + JSON.stringify(session));
+                               // alert("Download Fail");
+                            }
+                        }
+                        cache = appcan.icache(option);
+                        for (var i = 0; i < len; i++) {
+                           url_img = data.body.collection[i].photo.split("WEB-INF/");
+                           //document.write(url_img);
+                            option.url = ipVal + url_img[1];
+                            cache.run(option);
+                        }
+                    }
+                },
+                error : function() {
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                }
+            })   
+        }
+        
+        function show(){
+            j++;
+            var url = ipVal+'get_collection?pageSize=5&userid=' + user_id+'&pageNo='+j;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        //alert(data.body.food[0].id);
+                        temp = 0;
+                        var len = data.body.food.length;
+                        /*缓存图片*/
+                        var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                    // alert("下载中");
+                                    break;
+                                case 1:
+                                    alert("下载完成");
+                                    break;
+                                case 2:
+                                    alert("下载失败");
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {
+                                //appcan.locStorage.setVal("img_path",path);
+                               
+                                var html = "";
+                                var img_id = data.body.food[temp].typeid;
+                                var type=
+                                html += "<li style='width:32.3%;display: inline-block;'>" + "<div class='ub ub-f1 ub-hor' >" + "<div class='ub ub-f1 ub-ver' style='margin: 0.5em' onclick='change(" + img_id + ")'>" + "<div class='ub ub-f1 ub-ver'>" + "<img src='" + path + "' style='width:100%'>" + "<div class='ub ' style='position: absolute;height:1.5em;background-color:rgba(0,0,0,0.6);background-color:rgba(60,60,60,0.5) ;color:white;bottom:0;width:50%'>" + data.body.food[temp].foodName + "</div>" + "</div>" + "<div class='ub ub-hor ub-ac ub-f1' style='background-color:white;height:1.5em;top:-0.2em'>" + "<div class='ub ub-f1'>" + "<div class='fa fa-heart-o ulev-2'>" + data.body.food[temp].loveNum + "</div>" + "</div>" + " <div class='ub ub-f1'>" + "<div class='fa fa-comment-o ulev-2' >评论</div>" + "</div>" + "<div class='ub ub-f1'>" + "<div class='fa fa-external-link ulev-2'>分享</div>" + "</div>" + " </div>" + "</div>" + "</li>"
+                                temp++;
+                                $("#imgList").append(html);
+
+                            },
+                            fail : function(session) {
+                                //alert("session:" + JSON.stringify(session));
+                               // alert("Download Fail");
+                            }
+                        }
+                        cache = appcan.icache(option);
+                        for (var i = 0; i < len; i++) {
+                           url_img = data.body.food[0].photos.split("WEB-INF/");
+                            //alert(url_img);
+                            option.url = ipVal + url_img[1];
+                            cache.run(option);
+                        }
+                    }
+                },
+                error : function() {
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                }
+            })   
+        }
+        
+         function change(id,type){
+             var myType=type;
+             if(myType==3){
+                appcan.locStorage.setVal("lview_id",id); 
+                   appcan.window.open("lvdetail.html", "lvdetail.html",10);  
+             }
+             else if(myType==4){
+                 appcan.locStorage.setVal("lfood_id",id);   
+                   appcan.window.open("food_details", "food_details.html",10);
+             }
+             if(myType==1){
+                 appcan.locStorage.setVal("lhotel_id",id); 
+                  appcan.window.open("hotel_detail", "hotel_detail.html",10);
+             }
+            
+        }
+          
+    </script>
+</html>

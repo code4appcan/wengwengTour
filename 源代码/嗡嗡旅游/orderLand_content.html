@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <style type="text/css">
+        .fa-1x {
+            font-size: 1.5em !important;
+        }
+        .uinput2 input, .uinput textarea {
+            margin: 0px;
+            width: 70%;
+            height: 70%;
+            -webkit-appearance: none;
+            padding: .2em 0;
+            line-height: 1.2em;
+            text-decoration: none;
+            font-size: 1em;
+            display: block;
+        }
+
+    </style>
+    <body class="um-vp bc-bg " ontouchstart style="background-color: #cdcdcd">
+        <div class="ub ub-ver">
+            <div class="ub ub-ver ">
+                <div class="ub ub-ac ub-pc" style="height:10em;color:#5B5B5B">
+                    链子溪风景区门票
+                </div>
+            </div>
+            <div id="listview" class="ubt bc-border  umar-b " style="background-color: white">
+                <ul >
+                    <li class="ub  bc-text ub-ac lis ub-hor"   data-index="0">
+                        <div  class=" ub-f1  ub" style="width:3em;color:#5B5B5B;margin-left: .7em">
+                            使用日期
+                        </div>
+                        <div class="ub-f1 " id=""  style="color:#BDBBBC">
+                            请选择游玩日期
+                        </div>
+                        <div class="ub  fa fa-1x fa-angle-right" style="margin-right: 0.6em"></div>
+                    </li>
+                    <li style="background-color: #cdcdcd;height:1.6em">
+
+                    </li>
+                    <li class="ub  bc-text ub-ac lis pj"  >
+                        <div  class="ub ub-f1" style="width:3em;color:#5B5B5B;margin-left: .7em">
+                            预定份数
+                        </div>
+                        <div class="ub ">
+                            <div class="btn1  ub ub-ac ub-pc" style="border: 1px solid #00A1EA;padding: 0 0.2em 0 0.2em;width:1.2em">
+                                -
+                            </div>
+                            <div class="ub-f1 uinput2" >
+                                <input type="text" id="number" placeholder="1" id="oldPsd" value="" class="uc-a1  uinn uba " style="width:1.8em;border-color:#5B5B5B;"  maxlength="3"/>
+                            </div>
+                            <div class="btn2 ub ub-ac ub-pc" style="border: 1px solid #00A1EA;padding: 0 0.2em 0 0.2em;width:1.2em">
+                                +
+                            </div>
+                        </div>
+                    </li>
+                    <li style="background-color: #cdcdcd;height:1.6em">
+
+                    </li>
+                    <li class="ub  bc-text ub-ac lis ub-hor"   data-index="0">
+                        <div  class=" ub-f1  ub" style="width:3em;color:#5B5B5B;margin-left: .7em">
+                            联系手机
+                        </div>
+                        <div class="ub-f1 uinput2" id="">
+                            <input type="text" placeholder="用来接收短信" id="oldPsd" value="" class="uc-a1  uinn uba " style="border-color: white" onfocus="hide()" onblur="show()"/>
+                        </div>
+
+                    </li>
+                    <li style="background-color: #cdcdcd;height:1.6em">
+
+                    </li>
+                    <li class="ub  bc-text ub-ac lis ub-pj"   data-index="0">
+                        <div  class=" ub-f1  ub" style="width:3em;color:#5B5B5B;margin-left: .7em">
+                            附加保险
+                        </div>
+                        <div class="ub  fa fa-1x fa-angle-right" style="margin-right: 0.6em"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="ub ub-hor" style="position: fixed;bottom: 0;width:100%;z-index: 99" id="footer">
+            <div class="ub ub-f3 ub-ac ub-pc" style="background-color: #F86F01;height:3em;color:white">
+                订单总额
+            </div>
+            <div class="ub ub-f1 ub-ac ub-pc" style="background-color: #F84101;color:white">
+                去支付
+            </div>
+        </div>
+        </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+        });
+        appcan.button(".btn1", "btn-act", function() {
+            var number = $("#number").val();
+            number--;
+            if(number<=0){
+                return;
+            }
+            $("#number").val(number);
+        })
+        appcan.button(".btn2", "btn-act", function() {
+            var number = $("#number").val();
+            number++;
+            $("#number").val(number);
+        })
+
+    </script>
+
+</html>

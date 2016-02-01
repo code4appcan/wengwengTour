@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <style type="text/css">
+        .change {
+            background-color: red;
+        }
+        .image {
+            background-image: url('images/heart-o.png');
+            background-size: 100% 100%;
+            width: 1em;
+            height: 1em;
+        }
+        .aa {
+            -webkit-line-clamp: 2;
+        }
+        #pinglun_1 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+        #pinglun_2 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+        #pinglun_3 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+        .ulev1 {
+            font-size: 0.9em !important;
+        }
+        .ulev1+ div {
+            font-size: 0.8em;
+        }
+
+
+    </style>
+    <body class="um-vp " ontouchstart>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head" style="height: 2.8em">
+                <div class="nav-btn" id="nav-left">
+                    <div class="fa fa-angle-left fa-2x"></div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0" id="bar"></h1>
+                <div class="nav-btn nav-bt ub" style="margin-right: 0.7em">
+                    <div class="ub ub-f1 fa fa-comment-o " style="margin-right: 0.8em" id="comment"></div>
+                    <div class="ub ub-f1 fa fa-heart-o" style="margin-right: 0.8em;" id="conlect" ></div>
+                    <div class="ub ub-f1 image uhide " style="margin-right: 0.8em;" id="delete" ></div>
+                    <div class="ub ub-f1 fa fa-external-link " id="share"></div>
+                    <div>
+                        <!-- <img class="uh" src="css/icons/icon-forward-act.png"/>background-image: url('images/heart.png');background-size: 100% 100%;width:1em;height:1em -->
+                    </div>
+                </div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l">
+                   
+            </div>
+            <!--content结束-->
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+         <script src="js/main.js"></script>
+    </body>
+    <script>
+       var food_id = appcan.locStorage.getVal("lfood_id");
+        //var food_id=172;
+      var user_id = appcan.locStorage.getVal("user_id");
+       //var user_id=202;
+        flag = "";
+        var name;
+        var collection_img;
+        appcan.ready(function() {
+            var titHeight = $('#header').offset().height;
+            appcan.frame.open("content", "food_details_content.html", 0, titHeight);
+            window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+            }
+            //判断是否登录
+            if (user_id == null) {
+                //alert(444);
+                var food_url = ipVal+"/get_food?type=4&pageSize=5&pageNo=1&typeid="+food_id;
+            } else {
+                var food_url = ipVal+'/get_food?type=4&pageSize=5&pageNo=1&typeid=' + food_id + "&userid=" + user_id;
+            }
+            appcan.request.ajax({
+                url : food_url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        $("#bar").html(data.body.food.foodName);
+                        name=data.body.food.foodName;
+                        appcan.locStorage.setVal("headerName",name);
+                      collection_img=data.body.food.photos;
+                         flag = data.body.isCollection;//红心变红                     
+                        if (flag != "" && flag != undefined && flag != '') {                            
+                            conlect_id = data.body.isCollection[0].id;
+                            $("#conlect").addClass("uhide");
+                            $("#delete").removeClass("uhide");
+                        } else {
+                            // alert(333);
+                            return;
+                        }
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+        });
+        appcan.button("#nav-left", "btn-act", function() {
+            appcan.window.close(-1);
+        })
+        appcan.button("#delete", "btn-act", function() {           
+            var remove_url = ipVal+"delete_collection?id=" + conlect_id+"&type=4&typeid="+food_id;
+            appcan.request.ajax({
+                url : remove_url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                  //alert(data.status);
+                    if (200 == data.status) {
+                        alert("取消收藏成功！");
+                        $("#conlect").removeClass("uhide");
+                        $("#delete").addClass("uhide");                    }
+                },
+                error : function(xhr, type) {
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                }
+            })
+
+        })
+
+        appcan.button("#conlect", "btn-act", function() {
+
+            if (user_id == "" || user_id == null) {
+                //alert("抱歉，您还没有登录或注册，暂不能使用此功能，请先登录^_^");
+                appcan.window.alert({
+                    title : "提示",
+                    content : "抱歉，您还没有登录或注册，暂不能使用此功能，请先登录^_^",
+                    buttons : ['确定', '取消'],
+                    callback : function(err, data, dataType, optId) {
+                        if( ['确定', '取消'][data]=="确定"){
+                           appcan.window.close(-1);
+                           appcan.window.open("login","login.html",10);
+                        }                       
+                    }
+                });
+                return;
+            } else {
+                
+                var regurl = ipVal+"save_collection?";
+                appcan.request.ajax({
+                    url : regurl,
+                    type : 'POST',
+                    dataType : 'json',
+                    data : {
+                        userid : user_id,
+                        typeid : food_id,
+                        type : 4,
+                        photo :collection_img,
+                        name:name
+                    },
+                    success : function(data) {
+                        //alert(data);
+                        if (200 == data.status) {
+                            alert("收藏成功");
+                            $("#conlect").addClass("uhide");
+                            $("#delete").removeClass("uhide");
+                            food_url = ipVal+'is_collection?type=4&typeid=' + food_id + "&userid=" + user_id;
+                            appcan.request.ajax({
+                                url : food_url,
+                                type : 'get',
+                                dataType : 'json',
+                                success : function(data) {
+                                    if (200 == data.status) {
+                                        conlect_id = data.body.isCollection[0].id;
+                                        //alert(conlect_id);
+                                    }
+                                },
+                                error : function(xhr, type) {
+                                    //alert('连接失败!')
+                                }
+                            })
+                        }
+                    },
+                    error : function(xhr, type) {
+                        uexWindow.toast(0, 5, "获取失败", 1500);
+                    }
+                })
+            }
+
+        })
+        
+        appcan.button("#comment", "btn-act", function() {
+        if(user_id==null){
+            //alert("抱歉，您还没有登录或注册，暂不能使用此功能，请先登录^_^");
+          //appcan.window.open('publish_comment', 'publish_comment.html', 10);
+          appcan.window.alert({
+                    title : "提示",
+                    content : "抱歉，您还没有登录或注册，暂不能使用此功能，请先登录^_^",
+                    buttons : ['确定', '取消'],
+                    callback : function(err, data, dataType, optId) {
+                        if( ['确定', '取消'][data]=="确定"){
+                           appcan.window.close(-1);
+                           appcan.window.open("login","login.html",10);
+                        }                       
+                    }
+                });
+                return;
+        }
+        else{
+           appcan.window.open('publish_comment', 'publish_comment.html', 10); 
+        }
+            
+        })
+         appcan.button("#down_1", "ani-act", function() {
+            $("#pinglun_1").toggleClass("aa");
+            
+        });
+        appcan.button("#share", "btn-act", function() {
+            if(user_id==null){
+            alert("抱歉，您还没有登录或注册，暂不能使用此功能，请先登录^_^");
+            //appcan.frame.open('share_content', 'share_content.html', 0);
+        }
+        else{
+           appcan.frame.open('share_content', 'share_content.html', 0);
+        }
+           
+        })
+        appcan.button("#down_2", "ani-act", function() {
+            $("#pinglun_2").toggleClass("aa");
+        });
+        appcan.button("#down_3", "ani-act", function() {
+            $("#pinglun_3").toggleClass("aa");
+        });
+        appcan.button("#more", "ani-act", function() {
+            alert("更多评论");
+        });
+
+    </script>
+</html>

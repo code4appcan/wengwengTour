@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver">
+            <div class="ub" style="background-size: 100% 100%;height:12em;" id="backImage">
+             
+            </div>
+           
+            <div class="ub ub-f1 ub-hor ub-ac" style="background-color: white;height:3.5em;margin: 0 0 0.7em 0">
+                <div class="ub" style="font-weight: bold;margin-left: 1em">
+                    景区门票：
+                </div>
+                <div class="ub ub-f3" id="price">
+                    <!-- 40元每人（成人） -->
+                </div>
+            </div>
+            <div class="ub ub-f1 ub-ver" style="background-color: white;padding: 0.8em">
+                <div class="ub " style="font-weight: bold">
+                    周边酒店
+                </div>
+
+                <div class="ub ub-f1 ub-ver" style="margin: 0.5em;padding-bottom: 0.5em" id="imageList">
+                    <!-- <div class="ub ub-hor" style="border-bottom: 1px solid #B5B6B6;margin: 0.2em">
+                    <div class="ub " style="background-image: url('images/destination_1.png');background-size: 100% 100%;width:5em;height:5em"></div>
+                    <div class="ub ub-ver ub-f1" style="margin: 0.5em">
+                    <div class="ub ub-f2" style="margin-top: 2em">
+                    帅巴人酒店
+                    </div>
+
+                    <div class="ub ub-f1" style="color: #64B8E2;margin-top: 0.2em">
+                    去看看
+                    </div>
+                    </div>
+                    <div class="ub ub-pc ub-ac" style="color:red;margin-top: 2em">
+                    我要订票
+                    </div>
+                    </div> -->
+                    <!-- <div class="ub ub-hor" style="border-bottom: 1px solid #3B5B6B6;margin: 0.2em">
+                    <div class="ub " style="background-image: url('images/destination_1.png');background-size: 100% 100%;width:5em;height:5em"></div>
+                    <div class="ub ub-ver ub-f1" style="margin: 0.5em">
+                    <div class="ub ub-f2" style="margin-top: 2em">
+                    帅巴人酒店
+                    </div>
+
+                    <div class="ub ub-f1" style="color: #64B8E2;margin-top: 0.2em">
+                    去看看
+                    </div>
+                    </div>
+                    <div class="ub ub-pc ub-ac" style="color:red;margin-top: 2em">
+                    我要订票
+                    </div>
+                    </div> -->
+                    <!-- <div class="ub ub-hor" style="border-bottom: 1px solid #B5B6B6;margin: 0.2em">
+                    <div class="ub " style="background-image: url('images/destination_1.png');background-size: 100% 100%;width:5em;height:5em"></div>
+                    <div class="ub ub-ver ub-f1" style="margin: 0.5em">
+                    <div class="ub ub-f2" style="margin-top: 2em">
+                    帅巴人酒店
+                    </div>
+
+                    <div class="ub ub-f1" style="color: #64B8E2;margin-top: 0.2em">
+                    去看看
+                    </div>
+                    </div>
+                    <div class="ub ub-pc ub-ac" style="color:red;margin-top: 2em">
+                    我要订票
+                    </div>
+                    </div> -->
+                </div>
+
+            </div>
+            <div class="ub ub-f1 ub-ver" style="background-color: white;padding: 0.8em;margin-top: 0.5em">
+                <div class="ub " style="font-weight: bold">
+                    周边美食
+                </div>
+
+                <!-- <div class="ub ub-f1 ub-hor"  >
+
+                <div class="ub ub-f1" style="background-image: url('images/food.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+                </div>
+                <div class="ub ub-f1" style="background-image: url('images/food.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+                </div>
+                <div class="ub ub-f1" style="background-image: url('images/food.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+                </div>
+                <div class="ub ub-f1" style="background-image: url('images/food.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+                </div>
+                </div> -->
+                <div class="">
+                    <ul id="foodList">
+                        <!-- <li style='width:24%;display: inline-block;'>
+                        <div class="ub" style="background-image: url('images/food.png');height:6em;background-size: 100% 100%;margin: 0.3em"></div>
+                        </li>
+                        <li style='width:24%;display: inline-block;'>
+                        <div class="ub" style="background-image: url('images/food.png');height:6em;background-size: 100% 100%;margin: 0.3em"></div>
+                        </li>
+                        <li style='width:24%;display: inline-block;'>
+                        <div class="ub" style="background-image: url('images/food.png');height:6em;background-size: 100% 100%;margin: 0.3em"></div>
+                        </li>
+                        <li style='width:24%;display: inline-block;'>
+                        <div class="ub" style="background-image: url('images/food.png');height:6em;background-size: 100% 100%;margin: 0.3em"></div>
+                        </li> -->
+
+                    </ul>
+
+                </div>
+
+            </div>
+            <!-- <div class="ub ub-f1 ub-ver" style="background-color: white;height:20em;padding: 0.8em">
+            <div class="ub " style="font-weight: bold">
+            推荐导游
+            </div>
+            <div
+            <div class="ub ub-f1 ub-hor" >
+
+            <div class="ub ub-f1" style="background-image: url('images/daoyou.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+            </div>
+            <div class="ub ub-f1" style="background-image: url('images/daoyou.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+            </div>
+            <div class="ub ub-f1" style="background-image: url('images/daoyou.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+            </div>
+            <div class="ub ub-f1" style="background-image: url('images/daoyou.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+            </div>
+            </div>
+            <div class="ub ub-f1 ub-hor" >
+
+            <div class="ub ub-f1 " style="background-image: url('images/daoyou.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+            </div>
+            <div class="ub ub-f1" style="background-image: url('images/daoyou.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+            </div>
+            <div class="ub ub-f1" style="background-image: url('images/daoyou.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+            </div>
+            <div class="ub ub-f1" style="background-image: url('images/daoyou.png');height:6em;background-size: 100% 100%;margin: 0.3em">
+
+            </div>
+            </div>
+
+            </div> -->
+
+        </div>
+
+        </div>
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    <script>
+        var landscapeId = appcan.locStorage.getVal("lview_id");//appcan.locStorage.getVal("lview_id");
+        var temp;
+        var html;
+        appcan.ready(function() {
+            appcan.initBounce();
+            var url = ipVal + 'destination_detail?id=' + landscapeId;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        $("#price").html(data.body.landscape.price);
+                        $("#backImage").append('<div class="ub ub-pe ub-ac" style="background-color: rgba(0,0,0,0.4);height:2em;position: absolute;bottom: 0;width:100%;color:white;margin-right: -2em" id="detail" onclick="showDetail('+landscapeId+')">了解详情</div>   ');
+                        //alert(data.status);
+                        var arr = [];
+                        temp = 0;
+                        var landscape = {
+                            "id" : data.body.landscape.id,
+                            "name" : data.body.landscape.name,
+                            "photo" : data.body.landscape.photo,
+                            "type" : data.body.landscape.type
+                        };
+                        arr.push(landscape);
+                       
+                        if (data.body.hostWineshop.length) {
+                            for (var i = 0; i < data.body.hostWineshop.length; i++) {
+                               var newarr = {
+                                    "id" : data.body.hostWineshop[i].id,
+                                    "name" : data.body.hostWineshop[i].name,
+                                    "photo" : data.body.hostWineshop[i].photo,
+                                    "type" : data.body.hostWineshop[i].type
+                                }
+                                arr.push(newarr);
+                            }
+                        }
+                        if (data.body.hotFood.length) {
+                            for (var j = 0; j < data.body.hotFood.length; j++) {
+                               var newarr = {
+                                    "id" : data.body.hotFood[j].id,
+                                    "name" : data.body.hotFood[j].foodName,
+                                    "photo" : data.body.hotFood[j].photos,
+                                    "type" : data.body.hotFood[j].type
+                                }
+                                arr.push(newarr);
+                            }
+                        }
+
+                        len = arr.length;
+                        var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                    break;
+                                case 1:
+                                    break;
+                                case 2:
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {
+                                var html = "";
+                                var html2 = '';
+                                var img_id = arr[temp].id;
+                                var type = arr[temp].type;
+                                
+                                if (type == 3) {
+                                    $('#backImage').css("background-image", "url('" + path + "')");
+                                    
+                                    var a = $('#backImage').css("background-image");
+                                    
+                                   // alert(a);
+                                }else if (type == 1) {
+                                    html += "<div class='ub ub-hor' style='border-bottom: 1px solid #B5B6B6;margin: 0.2em'>" 
+                                    + "<img src='" + path + "' style='width:5em;height:5em'/>" 
+                                    + "<div class='ub ub-ver ub-f1' style='margin: 0.5em'>" 
+                                    + "<div class='ub ub-f2' style='margin-top: 2em'>" + arr[temp].name + "</div>" 
+                                    + '<div class="ub ub-f1" style="color: #64B8E2;margin-top: 0.2em" onclick="change_Wineshop(\'' + img_id + '\', \'' + type + '\')">' + "去看看 " + " </div>" + "</div>"
+                                    // + "<div class='ub ub-pc ub-ac' style='color:red;margin-top: 2em'> 我要订票 </div>"                               + "</div>"
+                                    $("#imageList").append(html);
+                                }else if (type == 4) {
+                                    
+                                    html2 += "<li style='width:24%;display: inline-block;'>" 
+                                    + "<div class='ub ub-zf1 ub-hor' >" 
+                                    + "<div class='ub ub-f1 ub-ver' style='margin: 0.5em' onclick='change_food(" + img_id + ")'>" 
+                                    + "<div class='ub ub-f1 ub-ver'>" 
+                                    + "<img src='" + path + "' style='width:100%'>"                                     
+                                     + "</div>" 
+                                     + "</div>" 
+                                     + "</li>"
+                                    $("#foodList").append(html2);
+                                }
+                                temp++;
+                            },
+                            fail : function(session) {
+                                var html = "";
+                                var html2 = '';
+                                var img_id = arr[temp].id;
+                                var type = arr[temp].type;
+                                
+                                if (type == 3) {
+                                    $('#backImage').css("background-image", "url('images/fail.png')");
+                                    
+                                    var a = $('#backImage').css("background-image");
+                                   
+                                }else if (type == 1) {
+                                    html += "<div class='ub ub-hor' style='border-bottom: 1px solid #B5B6B6;margin: 0.2em'>" + "<img src='" + path + "' style='width:5em;height:5em'/>" + "<div class='ub ub-ver ub-f1' style='margin: 0.5em'>" + "<div class='ub ub-f2' style='margin-top: 2em'>" + arr[temp].name + "</div>" + '<div class="ub ub-f1" style="color: #64B8E2;margin-top: 0.2em" onclick="change_Wineshop(\'' + img_id + '\', \'' + type + '\')">' + "去看看 " + " </div>" + "</div>"
+                                                              + "</div>"
+                                    $("#imageList").append(html);
+                                }else if (type == 4) {
+                                 
+                                    html2 += "<li style='width:24%;display: inline-block;'>" 
+                                    + "<div class='ub ub-zf1 ub-hor' >" 
+                                    + "<div class='ub ub-f1 ub-ver' style='margin: 0.5em' onclick='change_food(" + img_id + ")'>" 
+                                    + "<div class='ub ub-f1 ub-ver'>" 
+                                    + "<img src='images/fail.png' style='width:100%'>"                                    
+                                     + "</div>" 
+                                     + "</div>" 
+                                     + "</li>"
+                                    $("#foodList").append(html2);
+                                }
+                                temp++;
+                            }
+                        }
+                        cache = appcan.icache(option);
+                        for (var m = 0; m < len; m++) {
+                            url_img = arr[m].photo.split("WEB-INF/");
+                            option.url = ipVal + url_img[1];
+                            cache.run(option);
+                        }
+                    }
+
+                },
+                error : function(xhr, type) {
+                    uexWindow.toast(0, 5, "获取失败", 1500);;
+                }
+            })
+        })
+        function change_Wineshop(id, type) {
+            appcan.locStorage.setVal("lhotel_id", id);
+            appcan.window.open("hotel_detail", "hotel_detail.html", 10);
+        }
+
+        function change_food(id) {
+            appcan.locStorage.setVal("lfood_id", id);
+            appcan.window.open("food_details", "food_details.html", 10);
+        }
+        
+        function showDetail(id){
+           appcan.locStorage.setVal("lview_id",id);   
+            appcan.window.open("lvdetail", "lvdetail.html",10); 
+            
+        }
+        
+
+    </script>
+</html>

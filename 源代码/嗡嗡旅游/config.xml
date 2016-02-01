@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<widget appId="tour" channelCode="0000" height="480" pid="" sreensize="4.5" version="00.00.0000" viewmode="application" widgetId="" width="320">
+	
+	<name>嗡嗡旅游</name>
+	<description/>
+	<author email=""> </author>
+	<icon src="icon.png"/>
+	<license href=""/>
+	<content encoding="utf-8" src="lhome.html"/>
+	<updateurl/>
+	<logserverip>192.168.1.137</logserverip> 
+	<showmyspace>false</showmyspace>
+	<obfuscation>true</obfuscation>
+	<bgcolor>#fefefe</bgcolor>
+	<orientation>11</orientation>
+	<hardware>false</hardware>
+<debug/>
+<partobfuscation>false</partobfuscation>
+<webapp/>
+    <config desc="uexWeiXin" type="URLSCHEME">
+    <urlScheme name="uexWeiXin" schemes="['wxd7ff3acbfbb05ff0']"/>
+    </config>
+    <config desc="uexQQ" type="KEY">
+    <param name="$UEXQQ_APPID$" platform="Android" value="tencent1104873173"/>
+	</config>
+	<config desc="uexGaode" type="KEY">        
+        <param name="$uexGaodeMap_APIKey$" platform="Android" value="ea95d8a3d702c5607e16ecc70946f767"/>
+        <param name="$uexGaodeMap_APIKey$" platform="IOS" value="4e2f26c89d15e17e4c0cbea4bfe3533f"/> 
+    </config>
+        <config desc="whiteList" type="AUTHORITY">
+        <permission info="urlSchemeWhiteList" platform="iOS">
+       	<string>wechat</string>
+        <string>weixin</string>
+        <string>sinaweibohd</string>
+        <string>sinaweibo</string>
+        <string>sinaweibosso</string>
+        <string>sinaweibohdsso</string>
+        <string>weibosdk</string>
+        <string>weibosdk2.5</string>        
+        <string>mqzoneopensdk</string> 
+        <string>mqzoneopensdkapi</string>
+        <string>mqzoneopensdkapi19</string>
+        <string>mqzoneopensdkapiV2</string>
+        <string>mqqOpensdkSSoLogin</string>
+        <string>mqqopensdkapiV2</string>
+        <string>mqqopensdkapiV3</string>
+        <string>wtloginmqq2</string>
+        <string>mqqapi</string>
+        <string>mqqwpa</string>
+        <string>mqzone</string>
+        <string>mqq</string>
+        <string>alipay</string>
+        <string>alipayshare</string>
+        </permission>
+    </config>
+</widget>

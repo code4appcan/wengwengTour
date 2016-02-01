@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver">
+            <div id="listview1" class="ubt bc-border ubb c-wh " style="background-color: white">
+                <ul>
+                    <li class="ubb ub bc-border bc-text ub-ac lis ub-pj"  id="order">
+                        <div class=" ub ub-ac ub-f1" >
+                            <img src="" class="" style="width: 2.5em;width:2.5em;border-radius:3em"id="circle_photo"/ >
+                        </div>
+                        <div class=" ulev" style="color:#00A1EA" id="user_image">
+                            设置头像
+                        </div>
+                        <div class="fa fa-angle-right ulev2 sc-text" style="margin-left: 0.5em"></div>
+                    </li>
+                    <li class="ubb ub bc-border bc-text ub-ac lis ub-pj"  id="order">
+                        <div class=" ub ub-ac ub-f1 tx-r" style="color:#676766;width:3em" >
+                            昵&nbsp;&nbsp&nbsp;称
+                        </div>
+                        <div class=" ub ub-ac ub-f4" style="color:#676766;" id="userName">
+
+                        </div>
+                        <div class=" ulev" style="color:#00A1EA;margin-left: 1em" id="nickname">
+                            修改
+                        </div>
+                        <div class="fa fa-angle-right ulev2 sc-text" style="margin-left: 0.5em"></div>
+                    </li>
+                    <li class="ubb ub bc-border bc-text ub-ac lis ub-pj"  id="order">
+                        <div class=" ub ub-ac ub-f1" style="color:#676766;width:3em">
+                            手机号
+                        </div>
+                        <div class=" ub ub-ac ub-f4" style="color:#676766;" id="phone">
+
+                        </div>
+                         <div class=" ulev" style="color:#00A1EA;margin-left: 1em" id="nickname">
+                            
+                        </div>
+                        <div class="fa fa-angle-right ulev2 sc-text" style="margin-left: 0.5em"></div>
+                    </li>
+                    <li class="ub  bc-text ub-ac lis ub-pj"  id="order">
+                        <div class=" ub ub-ac ub-f1" style="color:#676766;width:3em" id="psd">
+                            密&nbsp;&nbsp;&nbsp;码
+                        </div>
+                        <div class=" ub ub-ac ub-f4" style="color:#676766">
+                            *****
+                        </div>
+                        <div class=" ulev" style="color:#00A1EA" id="changepsd">
+                            修改
+                        </div>
+                        <div class="fa fa-angle-right ulev2 sc-text" style="margin-left: 0.5em"></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a"  id="out" style="margin: 2em;background-color:#00A1EA">
+                退出登录
+            </div>
+
+        </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+    <script>
+        var userId = appcan.locStorage.getVal("user_id");
+        var imagepath;
+        var serverpath_2;
+        var serverpath_3
+
+        appcan.ready(function() {
+            var regUrl = ipVal + 'get_user';
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'POST',
+                dataType : 'json',
+                data:{
+                   id: userId
+                },
+                success : function(data) {
+                    if (200 == data.status) {
+                        //alert(data.body.account.userName);
+                        var phone = data.body.account.mobile;
+                        var a = phone.substr(0, 3);
+                        var b = phone.substr(7, 4);
+                        $("#phone").html(a + "****" + b);
+                        if(data.body.account.userName==null){
+                           $("#userName").html(a + "****" + b); 
+                        }else{
+                           $("#userName").html(data.body.account.userName); 
+                        } 
+                        var photoURL = data.body.account.photoURL;
+                        if (photoURL != '' && photoURL != null) {
+                            var option = {
+                                maxtask : 3,
+                                url : '',
+                                progress : function(data, session) {
+                                    var sdata = JSON.parse(JSON.stringify(data));
+                                    var statu = sdata['status'];
+                                    var percent = sdata['percent'];
+                                    switch (statu) {
+                                    case 0:
+                                        //alert("下载中");
+                                        break;
+                                    case 1:
+                                        alert("下载完成");
+                                        break;
+                                    case 2:
+                                        alert("下载失败");
+                                        break;
+                                    default:
+                                        break;
+                                    }
+                                },
+                                success : function(path, session) {
+                                    //alert("success");
+                                    $("#circle_photo").attr("src", path);
+                                },
+                                fail : function(session) {
+                                    //alert("session:" + JSON.stringify(session));
+                                   // alert("Download Fail");
+                                }
+                            }
+
+                            cache = appcan.icache(option);
+                            var url_img = photoURL.split("WEB-INF/");
+                            option.url = ipVal + url_img[1];
+                            //document.write(option.url);
+                            cache.run(option);
+                        }
+                        else{
+                           $("#circle_photo").attr("src", "images/logo.png"); 
+                        }
+                        //$("#image").css("background-image", "url('" + path + "')");
+
+                    } else {
+                        alert(data.error);
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+            // uexImageBrowser.cbPick = function(opCode, dataType, data) {
+            // alert(data);
+            // imagepath = data;
+            // var uploadHttp = "http://114.215.145.215:8080/Tour/uploadPhotoAccount";
+            // var filePath = data;
+            // uexUploaderMgr.createUploader(1, uploadHttp);
+            // uexUploaderMgr.uploadFile(1, filePath, "inputName", 0);
+            //
+            // }
+            uexImageBrowser.cbCropImage = function(opId, dataType, data) {
+                //alert(data);
+                imagepath = data;
+                var uploadHttp = ipVal + "uploadPhotoAccount";
+                var filePath = data;
+                uexUploaderMgr.createUploader(1, uploadHttp);
+                uexUploaderMgr.uploadFile(1, filePath, "inputName", 0);
+            }
+
+            uexCamera.cbOpen = function(opCode, dataType, data) {
+                // alert(data);
+                // $("#circle_photo").css()
+                imagepath = data;
+                var uploadHttp = ipVal + "uploadPhotoAccount";
+                var filePath = data;
+                uexUploaderMgr.createUploader(1, uploadHttp);
+                uexUploaderMgr.uploadFile(1, filePath, "inputName", 0);
+            }
+
+            uexUploaderMgr.onStatus = function(opCode, fileSize, percent, serverPath, status) {
+                switch (status) {
+                case 0:
+                    break;
+                case 1:
+                    serverpath_2 = serverPath.split('"');
+                    serverpath_3 = serverpath_2[1];
+                    // alert(serverpath_3);
+                    uexUploaderMgr.closeUploader(1);
+                    var regUrl = ipVal + 'update_user?id=' + userId + '&photoURL=' + serverpath_3;
+                   
+                    appcan.request.ajax({
+                        url : regUrl,
+                        type : 'get',
+                        dataType : 'json',
+                        success : function(data) {
+                            if (200 == data.status) {
+                                $("#circle_photo").attr("src", imagepath);
+
+                            } else {
+                                
+                                uexWindow.toast(0, 5, data.error, 1500);
+                            }
+                        },
+                        error : function(xhr, type) {
+                            uexWindow.toast(0, 5, "获取失败", 1500);
+                        }
+                    })
+                    break;
+                case 2:
+                    alert("上传失败");
+                    break;
+                }
+            }
+
+            uexUploaderMgr.cbCreateUploader = function(opCode, dataType, data) {
+                if (data == 0) {
+                    // alert("创建成功");
+                } else {
+                    //  alert("创建失败");
+                }
+
+            }
+        });
+        appcan.button("#user_image", "btn-act", function() {
+            //appcan.window.openPopover("set_userimg_content","set_userimg_content.html",)
+            createActionSheet();
+            //uexWindow.actionSheet("菜单","Cancel","Opt1,Opt2")
+        })
+        appcan.button("#nickname", "btn-act", function() {
+            appcan.window.open("change_nickname", "change_nickname.html", 10)
+        })
+        appcan.button("#changepsd", "btn-act", function() {
+            appcan.window.open("change_psd", "change_psd.html", 10)
+        })
+        appcan.button("#out", "btn-act", function() {
+            //alert("out");
+            appcan.locStorage.remove('user_id');
+            appcan.locStorage.remove('welcome');
+           // setTimeout(appcan.window.publish("reload", ""), 2000);
+            //
+           //uexWindow.evaluatePopoverScript("root", "d", "TEST()");
+         // uexWindow.evaluatePopoverScript('root', 'd', 'TEST()');
+         // uexWindow.evaluateScript('my_information', '0', 'appcan.window.close(-1)');
+           //uexWindow.closeAboveWndByName("index");
+            uexWindow.toast("1","5","页面跳转中",-1);
+           // uexWindow.evaluateMultiPopoverScript('root','content','d','changePhoto()');
+            uexWindow.evaluateScript('my','0','changePhoto()');                        
+           //uexWindow.evaluateScript("login","content","appcan.window.close(-1)");
+           
+           uexWindow.closeAboveWndByName("my_information");
+           
+           
+            ///////////////////////////////////////////////
+             //uexWindow.evaluatePopoverScript('root', '0', 'reload()');
+             //uexWindow.evaluateScript('my_information', '0', 'appcan.window.close(-1)');
+            //
+            // setTimeout(function() {
+                // appcan.window.open('index', 'index.html', 10);
+            // }, 2000);
+           
+            //uexWindow.evaluateScript('equipment_add', '0', 'appcan.window.close(-1)');
+            //uexWindow.evaluatePopoverScript('index', '0', alert("index"));
+            //uexWindow.evaluatePopoverScript('equipment', 'content', 'showEquipmentList()');
+            //  uexWindow.evaluateScript('my_information', '0', 'appcan.window.close(-1)');
+            // appcan.window.open("index","index.html",10);
+        })
+        function onClickItem(dateType) {
+            //alert("itemIndex:" + dateType);
+            if (dateType == 0) {
+                //alert("拍照");
+                uexCamera.open(0, 50);
+            } else {
+                //alert("打开相册");
+                //uexImageBrowser.pickMulti(1);
+                uexImageBrowser.cropImage();
+            }
+        }
+
+        function createActionSheet() {            
+            uexActionSheet.onClickItem = onClickItem;
+            var x = 0;
+            var y = 0;
+            //没有用
+            var width = 0;
+            //如果传0，默认是屏幕宽度
+            var height = 0;
+            //没用的高度
+            //var JsonData = '{"actionSheet_style":{"frameBgColor":"#ffffff","frameBroundColor":"#ff0000","frameBgImg":"","btnSelectBgImg":"res://btn-act.png","btnUnSelectBgImg":"res://btn.png","cancelBtnSelectBgImg":"res://cancel-act.png","cancelBtnUnSelectBgImg":"res://cancel.png","textSize":"17","textColor":"#ffffff","actionSheetList":[{"name":"新浪微博"},{"name":"腾讯微博"},{"name":"分享"}]}}';
+            var JsonData = '{"actionSheet_style":{"frameBgColor":"#ffffff","frameBroundColor":"#00000000","frameBgImg":"","btnSelectBgImg":"res://btn-act.png","btnUnSelectBgImg":"res://btn.png","cancelBtnSelectBgImg":"res://cancel-act.png","cancelBtnUnSelectBgImg":"res://cancel.png","textSize":"17","textNColor":"#ffffff","textHColor":"#ffffff", "cancelTextNColor":"#ffffff","cancelTextHColor":"#ffffff", "actionSheetList":[{"name":"拍照"},{"name":"打开相册"}]}}';
+            //var Jsontsr =JSON.stringify(JsonData);
+            uexActionSheet.open(x, y, width, height, JsonData);
+        }
+
+        function changeNickname() {
+            var nickname_2 = appcan.locStorage.getVal("nickname_2");
+            $("#userName").html(nickname_2);
+        }
+
+    </script>
+</html>

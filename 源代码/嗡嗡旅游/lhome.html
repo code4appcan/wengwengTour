@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/lyw.css">
+        <link rel="stylesheet" href="css/ui-tab.css">
+        <link rel="stylesheet" href="css/mystyle.css">
+    </head>
+    <style type="text/css">
+        .uinput2 input, .uinput textarea {
+            margin: 0px;
+            width: 70%;
+            height: 100%;
+            -webkit-appearance: none;
+            padding: .4em 0;
+            line-height: 1.2em;
+            text-decoration: none;
+            font-size: 1em;
+            display: block;
+        }
+        ::-webkit-input-placeholder {/* WebKit browsers */
+           padding-left:0.6em;
+            color: white;
+        }
+        :-moz-placeholder {/* Mozilla Firefox 4 to 18 */
+            color: white;
+            padding-left:0.6em;
+        }
+        ::-moz-placeholder {/* Mozilla Firefox 19+ */
+            color: white;
+            padding-left:0.6em;
+        }
+        :-ms-input-placeholder {/* Internet Explorer 10+ */
+            color: white;
+            padding-left:0.6em;
+        }
+        
+        /*.searchBox{
+         background-image:url('images/iconSEARCH.png');
+         background-repeat:no-repeat;
+         height:0.4em;
+         width:0.4em;
+         background-size: contain;
+
+         }*/
+
+    </style>
+    <body class="um-vp bc-bg" ontouchstart style='background-color: white'>
+        <div id="page_0" class="up ub ub-ver " tabindex="0" >
+            <!--header开始-->
+
+            <div id="header" class="uh bc-text-head ub  ub-ac ub-pc" style="background-color: #0093DD;height:2.8em">
+                <!-- <div class=" ub ub-ac  " >
+                <img src="images/001.png" style="height:2em;margin-left: 0.5em" >
+
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0"></h1>
+                <div class="nav-btn nav-bt" id="scanner">
+                <img src="images/002.png" style="height:2em;margin-left: 0.5em" >
+                </div>  -->
+
+                <div class="ub uinput2 ub-ac ub-pc" style="height:1em;width:90%;top:-0.4em">
+
+                    <input type="text" id="search" value="" class=" uc-a1  uinn uba ulev-1 searchBox ub ub-ac ub-pc" placeholder="搜索景点、酒店、游记、攻略" style="background-color:rgba(255, 255, 255,0.4);border-color: rgba(0,0,0,0.1);width:90%"/>
+                    <img src="images/iconSEARCH.png" style="width:1.2em;position: relative;right:1.5em;top:0.3em" class="ub ub-ac ub-pc"/>
+                </div>
+                <img src="images/banner.png" style="width:1.6em" id="banner"/>
+            </div>
+
+            <!--header结束-->
+            <!--content开始-->
+            <div id="content" class="ub-f1 tx-l t-bla ub-img6 res10">
+
+            </div>
+            <!--content结束-->
+            <!--footer开始-->
+            <div id="footer" class="uf t-bla ub tab  b-gra2 c-gra2" style="border-top: 1px solid #5BAAFF;background-color: #EFEFF0;border-top-color: #636363;padding-top: 0.2em">
+                <div class="pos_re ub ub-f1">                    
+                    <div id="lhome" class="ub-f1 ub ub-ver ">
+                        <div class="ub-f1 ub-img5 tp-map"></div>
+                        <div class="uinn-a13 ulev-1 tx-c " style="color:#00A1EA">
+                            首页
+                        </div>
+                    </div>
+                </div>
+                <div class="pos_re ub ub-f1">                   
+                    <div id="destination" class="ub-f1 ub ub-ver ">
+                        <div class="ub-f1 ub-img5 tp-talk"></div>
+                        <div class="uinn-a13 ulev-1 tx-c act-col">
+                            目的地
+                        </div>
+                    </div>
+                </div>
+                <div class="pos_re ub ub-f1">                    
+                    <div id="getacross" class="ub-f1 ub ub-ver ">
+                        <div class="ub-f1 ub-img5 tp-set"></div>
+                        <div class="uinn-a13 ulev-1 tx-c act-col">
+                            发现
+                        </div>
+                    </div>
+                </div>
+                <div class="pos_re ub ub-f1">                   
+                    <div id="my" class="ub-f1 ub ub-ver ">
+                        <div class="ub-f1 ub-img5 tp-my"></div>
+                        <div class="uinn-a13 ulev-1 tx-c act-col">
+                            我的
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--footer结束-->
+        </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <!-- <script src="js/appcan.tab.js"></script> -->
+    <script src="js/zy_click.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+             var welcome = appcan.locStorage.getVal('welcome');
+            if (!welcome) {
+            appcan.frame.open("page_0", "guide_pager.html", 0);
+            appcan.locStorage.setVal('welcome', '1');
+            return false;
+            }else{
+             $("#page_0").removeClass('uhide');
+            }
+            var titHeight = $('#header').offset().height;
+            appcan.frame.open("content", "lhome_content.html", 0, titHeight);
+            window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+            }
+            uexWindow.open("destination","0","destination.html","0","0","0","32","200");
+            uexWindow.open("getacross","0","getacross.html","0","0","0","32","200");
+            uexWindow.open("my","0","my.html","0","0","0","32","200");          
+            uexWindow.setReportKey(0, 1);
+            uexWindow.onKeyPressed = function(keyCode) {
+                if (keyCode == 0) {                   
+                    uexWidgetOne.exit(1);
+                }
+            }
+        });
+        appcan.button("#banner", "ani-act", function() {
+            //uexWindow.toast(0, 5, "敬请期待", 1500);
+           appcan.frame.open('banner_content', 'banner_content.html', 0);
+        })
+    
+        appcan.button("#destination", "btn-act", function() {
+            //alert("目的地");
+           uexWindow.open("destination","0","destination.html","0","0","0","0","200");
+        })
+        appcan.button("#my", "btn-act", function() {
+           // alert("发现");
+           uexWindow.open("my","0","my.html","0","0","0","0","200");
+        })
+         appcan.button("#getacross", "btn-act", function() {
+            // alert("我的");
+           uexWindow.open("getacross","0","getacross.html","0","0","0","0","200");
+        })
+
+    </script>
+</html>

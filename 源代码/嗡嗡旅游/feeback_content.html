@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <style type="text/css">
+        .item {
+
+            background-color: white;
+            border: 1px solid #00A1EA;
+            color: #00A1EA
+        }
+        .change {
+            color: white;
+            background-color: #00A1EA;
+        }
+
+    </style>
+    <body class="um-vp bc-bg" ontouchstart style="background-color: #DCDCDC">
+        <div class="ub ub-ver">
+            <div class="ub ub-f1 ub-ac " style="height:3em; ">
+                <div class="ub ulev-1" style="margin-left: 1.5em;">
+                    您是在哪里遇到的问题？
+                </div>
+            </div>
+            <div class="ub ub-f1 ub-ac ub-pc" style="height:3em; ">
+                <div class="ub ub-ac ub-pc item"  id="ticket" style=" height:1.8em;width:19%; margin: 2.6%;">
+                    门票
+                </div>
+                <div class="ub item ub-ac ub-pc"  id="hotel" style=" height:1.8em;width:19%; margin: 2.6%;">
+                    酒店
+                </div>
+                <div class="ub item ub-ac ub-pc"  id="move" style=" height:1.8em;width:19%; margin: 2.6%;">
+                    客户端
+                </div>
+                <div class="ub item ub-ac ub-pc"  id="other" style=" height:1.8em;width:19%; margin: 2.6%;">
+                    其他
+                </div>
+            </div>
+        </div>
+        <div class="uba bc-border uinput ub ub-f1" style="background-color: white;height:12em;margin: 0.2em">
+            <textarea placeholder="请输入您要反馈的问题！如果反馈的问题与订单有关系，请提供订单号" type="text" class="ub-f1"></textarea>
+        </div>
+
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+     <script src="js/main.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+        });
+
+        appcan.button(".item", "btn-act", function() {
+            switch(this.id) {
+            case "ticket":
+                $("#ticket").toggleClass("change");
+                break;
+            case "hotel":
+                $("#hotel").toggleClass("change");
+                break;
+            case "move":
+                $("#move").toggleClass("change");
+                break;
+            case "other":
+                $("#other").toggleClass("change");
+                break;
+            }
+
+        });
+
+    </script>
+</html>

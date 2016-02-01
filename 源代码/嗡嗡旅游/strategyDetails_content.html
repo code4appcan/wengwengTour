@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/ui_media.css">
+    </head>
+    <style type="text/css">
+        #List img {            
+            text-indent: 0 !important;
+        }
+        .indent {
+            margin-left: -2em;
+        }
+    </style>
+    <body class="um-vp bc-bg" ontouchstart >
+        <div class="ub ub-ver ub-ac ub-pc"  style="background-color: white;line-height: 1.5em;padding: 0 0.5em 2em 0.5em; " id="List"></div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+    <script>
+        var strategy_id = appcan.locStorage.getVal("strategy_id");;
+        //appcan.locStorage.getVal("strategy_id");
+        appcan.ready(function() {
+            var w = document.body.clientWidth * 90 / 100;
+            show(w);
+            uexWindow.setPopHardwareEnable('content',1);
+
+        });
+        function show(w) {
+            // http://localhost:8080/Tour/raiders/get?id=1
+            var url = ipVal + 'raiders/get?id=' + strategy_id;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        $("#List").html(data.body.content);                        
+                        var p = {
+                            "font-size" : "0.9em",
+                            "margin-bottom" : "0.5em",
+                            "margin-top" : "0.5em",
+                            "text-indent" : "1.7em"
+                        };
+                        $("#List p").css(p);                        
+                        var div = {"font-size": "1em"};
+                        $("#List div").css(div);                        
+                        var aa={
+                            "width":w,
+                            "margin-top":"-1em"
+                        }
+                        $("#List img").css(aa);
+                        $("#List img").addClass("indent");
+                        $("#List img").removeClass("text-indent");
+                        var bb={
+                           "text-decoration": "none",
+                            "font-size":"0.9em"
+                        }
+                        $("#List a").css(bb);               
+                        $('#List a').removeAttr('href');                      
+                        $('#List a').removeAttr('onclick');
+
+                    } else {
+
+                    }
+
+                }
+            })
+        }
+    </script>
+</html>

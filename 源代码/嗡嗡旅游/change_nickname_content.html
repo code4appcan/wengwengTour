@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        
+    </head>
+    <style type="text/css">
+        .uinput2 input, .uinput textarea {
+    margin: 0px;
+    
+    width: 70%;
+    height: 100%;
+    -webkit-appearance: none;
+    padding: .4em 0;
+    line-height: 1.2em;
+    
+    text-decoration: none;
+    font-size: 1em;
+    display: block;
+}
+
+    </style>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="listview" class="ubt bc-border  umar-b " style="background-color: white">
+                <ul>
+                <li class="ubb ub bc-border bc-text ub-ac lis"   data-index="0">
+                <div id="regdid2" class="lv_title ub-f1 marg-l ub ub-ver ut-m line1" >昵称：</div>
+                <div class="ub-f1 uinput2"><input type="text" id="nickname" value="" class="uc-a1  uinn uba " style="border-color: white"/></div>
+                </li>
+                </ul>
+                </div>
+                <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a"  id="save" style="margin: 2em;background-color:#00A1EA">
+    保存
+</div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+     <script src="js/main.js"></script>
+    </body>
+    <script>
+    var userId=appcan.locStorage.getVal("user_id");
+        appcan.ready(function() {
+           
+        });
+         appcan.button("#save", "btn-act", function() {
+             
+              var nick=$("#nickname").val(); 
+             // alert(nick);
+              if(nick==""){
+                  alert("你输入为空,请重新输入！");
+                  return;
+              } 
+              else{
+                  var regUrl = ipVal+'update_user?id='+userId+'&userName='+nick;
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'POST',
+                dataType : 'json',               
+                success : function(data) {
+                    if (200== data.status) {
+                        appcan.window.openToast("保存成功，页面跳转中", 5000, 5);
+                        //appcan.window.open("my_information","my_information.html");
+                        appcan.locStorage.setVal("nickname_2",nick);
+                         uexWindow.evaluatePopoverScript('my_information', 'content', 'changeNickname()');
+                        //打开新页面
+                        uexWindow.evaluateScript('change_nickname', '0', 'appcan.window.close(-1)');
+                        //关闭当前页面
+                    }
+                    else{
+                        alert("错误");
+                    }
+                },
+                error : function(xhr, type) {
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                }
+            })
+             
+              }         
+             
+         })
+
+    </script>
+</html>

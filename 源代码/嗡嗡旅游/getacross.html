@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/ui-tab.css">
+        <link rel="stylesheet" href="css/mystyle.css">
+        <style type="text/css">
+            #tabview {
+                background: transparent;
+                width: 80%;
+                margin: 0.8em -2em 0;
+            }
+            #tabview .ub-f1 {
+                color: #fff !important;
+            }
+            .focus {
+                background-color: #5EBBEA;
+                height: 0.4em !important;
+            }
+
+        </style>
+    </head>
+    <body class="um-vp " ontouchstart>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head" style="">
+                <div class="nav-btn" id="nav-left"></div>
+                <!-- <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">登录</h1> -->
+                <div id="tabview" class="uf sc-bg"></div>
+
+                <div class="nav-btn nav-bt" id="nav-right"></div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l">
+                
+            </div>
+            <div id="footer" class="uf t-bla ub tab  b-gra2 c-gra2" style="border-top: 1px solid #636363;padding-top: 0.2em">
+                 <div class="pos_re ub ub-f1">                    
+                    <div id="lhome" class="ub-f1 ub ub-ver ">
+                        <div class="ub-f1 ub-img5 lhome-act"></div>
+                        <div class="uinn-a13 ulev-1 tx-c " >
+                            首页
+                        </div>
+                    </div>
+                </div>
+                <div class="pos_re ub ub-f1">                   
+                    <div id="destation" class="ub-f1 ub ub-ver ">
+                        <div class="ub-f1 ub-img5 tp-talk"></div>
+                        <div class="uinn-a13 ulev-1 tx-c act-col">
+                            目的地
+                        </div>
+                    </div>
+                </div>
+                <div class="pos_re ub ub-f1">
+                    <div id="getacross" class="ub-f1 ub ub-ver ">
+                        <div class="ub-f1 ub-img5 set-act"></div>
+                        <div class="uinn-a13 ulev-1 tx-c act-col" style="color:#00A1EA">
+                            发现
+                        </div>
+                    </div>
+                </div>
+                <div class="pos_re ub ub-f1">
+                    <input class="uhide" type="radio" name="tabSwitch" >
+                    <div id="my" class="ub-f1 ub ub-ver tab-act">
+                        <div class="ub-f1 ub-img5 tp-my"></div>
+                        <div class="uinn-a13 ulev-1 tx-c act-col">
+                            我的
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--content结束-->
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/appcan.tab.js"></script>
+        <script src="js/zy_click.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            uexWindow.setReportKey(0, 1);
+            uexWindow.onKeyPressed = function(keyCode) {
+                if (keyCode == 0) {                  
+                   uexWidgetOne.exit(1);
+                }
+            }
+           
+            var titHeight = $('#header').offset().height;
+            appcan.frame.open({
+                id : "content",
+                url : [{
+                    "inPageName" : "a",
+                    "inUrl" : "recomend.html",
+                }, {
+                    "inPageName" : "b",
+                    "inUrl" : "must_eat.html",
+                }, {
+                    "inPageName" : "c",
+                    "inUrl" : "must_play.html",
+                }, {
+                    "inPageName" : "d",
+                    "inUrl" : "must_live.html",
+                }, {
+                    "inPageName" : "e",
+                    "inUrl" : "mustHang.html",
+                }],
+                top : titHeight,
+                left : 0,
+                index : 0,
+                change : function(err, res) {//标点
+                    tabview.moveTo(res.multiPopSelectedIndex);
+                }
+            });
+            window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+            }
+        });
+
+        var tabview = appcan.tab({
+            selector : "#tabview",
+            hasIcon : false,
+            hasAnim : true,
+            hasLabel : true,
+            hasBadge : false,
+            data : [{
+                label : "推荐",
+            }, {
+                label : "必吃",
+            }, {
+                label : "必玩",
+            }, {
+                label : "必住",
+            }, {
+                label : "必逛",
+            }]
+        });
+        tabview.on("click", function(obj, index) {
+            appcan.window.selectMultiPopover("content", index);
+        })
+        appcan.button("#destation", "btn-act", function() {
+           uexWindow.open("destination","0","destination.html","0","0","0","0","200");
+        })
+        appcan.button("#my", "btn-act", function() {
+           uexWindow.open("my","0","my.html","0","0","0","0","200");
+        })
+         appcan.button("#lhome", "btn-act", function() {
+           uexWindow.open("lhome","0","lhome.html","0","0","0","0","200");
+        })
+
+
+        function setWindowHidden() {
+            uexWindow.setWindowHidden(0);
+        }
+    </script>
+</html>

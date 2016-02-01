@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/lyw.css">
+        <style type="text/css">
+            .aa {
+                -webkit-line-clamp: 3;
+            }
+            #box {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+            }
+            #box_2 {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+            }
+            .ulev1 {
+                font-size: 0.9em !important;
+            }
+            .ulev1+ div {
+                font-size: 0.8em;
+            }
+            .ub-ver .ub-ac {
+                padding: 0 1em;
+            }
+            .header-image {
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-lw "  ontouchstart>
+        <div class="ub ub-ver" style="border-bottom:0.7em solid #DDDDDE">
+            <div class="ub header-image" style="background-size:100% 100%;height:14em;width:100%;background-repeat: no-repeat;" id="img">
+            </div>
+            <div class="ub ulev1 ub-ac" style="margin-top: 0.5em">
+                相关图片
+            </div>
+            <div style="width:100%;height:7em; overflow-x:auto;margin-top: 0.2em;" class="ub ">
+                <table>
+                    <tr id="imgList">
+                        <td id="img0"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="ub ub-ac ulev1" style="height:2em;margin:0.6em 0;color:black; ">
+                简介
+            </div>
+            <div class="ub ub-ver" style="border-bottom: 1px solid #DDDDDE ;">
+                <div id="test" class="ub ub-ver " style="color:#6B6B6B ;padding-bottom: 1em;line-height: 1.5em">
+                    <div class="ub ub-f1 aa" id="box" style="padding: 0 1em;text-indent: 1em">
+                    </div>
+                    <div class="ub ub-f1  ub-pc" id="down">
+                        <img src="images/xiangxia.png" style="width: 1.5em" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ub ub-ac ulev1 " style="height:2em;margin:0.6em 0 0.6em 1em">
+            营业时间
+        </div>
+        <div class="ub" style="color:#6B6B6B;padding: 0 1em;" id="time">
+        </div>
+        <div class="ub ub-ver " style="margin:1em 0;padding: 0 0 1em 1em;border-bottom: 1px solid #DDDDDE;">
+            <div class="ulev1 " style=" ">
+                电话
+            </div>
+            <div style="color:#6B6B6B;margin-top: 1em" id="phone">
+            </div>
+        </div>
+        <div class="ub ">
+            <div class="ub ub-f1 ub-ver" style="padding: 0 1em;">
+                <div class="ulev1" style="color: black">
+                    门票
+                </div>
+                <div style="color:#6B6B6B;margin-left: 0.1em;margin-top: 1em;margin-bottom: 1em" id="price">
+                </div>
+            </div>
+            <div class="ub ub-ac ub-pc ulev1" style="color:red;margin:-2em 2em 0 0;font-weight: bold;" id="callToOrder">
+                我要订票
+            </div>
+        </div>
+        </div>
+        <div class="ub ub-ver" style="border-bottom: 0.7em solid #DDDDDE">
+            <div class="ub ub-hor" style="">
+                <div class="ub ub-f1 ub-ver"  >
+                    <div class="ub ub-hor">
+                        <div class="ub ub-f1 ub-ac ulev1" style="height:2em;color:black">
+                            地址
+                        </div>
+                        <img src="images/map.png" class="ub " style="width:1.1em;height:1.3em;margin-right: 0.6em" id="map"/>
+                    </div>
+                    <div class="ub ulev-1" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE;padding: 0 0 0.8em 0.8em;margin-top: 0.3em ;line-height: 1.4em" id="address"></div>
+                </div>
+
+            </div>
+            <div class="ub ub-ver" style="border-bottom: 1px solid #DDDDDE ;">
+                <div id="test" class="ub ub-ver " style="color:#6B6B6B ;padding-bottom: 1em;line-height: 1.5em">
+                    <div class="ub ub-ac ulev1" style="height:2em;color:black">
+                        如何到达
+                    </div>
+                    <div class="ub ub-f1 aa ulev-1" id="box_2" style="padding: 0.5em 1em;" ></div>
+                </div>
+                <div class="ub ub-f1  ub-pc" id="down_2">
+                    <img src="images/xiangxia.png" style="width: 1.5em" />
+                </div>
+            </div>
+
+        </div>
+        <div class="ub ub-ver " style="">
+            <div class="ub ub-ac ulev1" style="height:2em;color:#00A1EA">
+                小贴士
+            </div>
+            <div class="ub ulev-1" style="color:#6B6B6B;padding:0 1em 1em;text-indent: 1em" id="tips">
+                <!-- 安全(戏水,悬崖) -->
+            </div>
+
+        </div>
+
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+    <script>
+        // var landscapeId=1;
+        var longitude;
+        var latitude;
+        var landcapeName;
+        var landscapeId_2 = appcan.locStorage.getVal("lview_id");
+        // appcan.locStorage.getVal("lview_id");;
+        var phone;
+        var openFlag;
+        appcan.ready(function() {
+            appcan.window.enableBounce();
+            openFlag = 0;
+            show();
+
+            /*地图加载完成的监听方法*/
+
+            // uexGaodeMap.onMapLoadedListener = function() {
+            //
+            //
+            // }
+            uexGaodeMap.cbSetCustomButton = function(json) {
+                var ids = ["11"];
+                var Str = JSON.stringify(ids);
+                uexGaodeMap.showCustomButtons(Str);
+            }
+            uexGaodeMap.onCustomButtonClick = function(id) {
+                uexGaodeMap.close();
+            }
+        });
+        function show() {
+            var url = ipVal + 'get_landscape?type=3&typeid=' + landscapeId_2;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        appcan.locStorage.setVal("type", 3);
+                        appcan.locStorage.setVal("typeid", landscapeId_2);
+                        var introduction = data.body.landscape.introduction;
+                        var businessTime = data.body.landscape.businessTime;
+                        phone = data.body.landscape.phone;
+                        var price = data.body.landscape.feature;
+                        var address = data.body.landscape.address;
+                        var howToGo = data.body.landscape.howToGo;
+                        var tips = data.body.landscape.tips;
+                        var photo = ipVal + data.body.landscape.photo.split("WEB-INF/")[1];
+                        $("#img").css("background-image", "url('" + photo + "')");
+                        longitude = data.body.landscape.longitude;
+                        latitude = data.body.landscape.latitude;
+                        landcapeName = data.body.landscape.name;
+                        // alert(photo);
+                        $("#box").html(introduction);
+                        $("#time").html(businessTime);
+                        $("#phone").html(phone);
+                        $("#price").html(price);
+                        $("#address").html(address);
+                        $("#box_2").html(howToGo);
+                        $("#tips").html(tips);
+                        appcan.locStorage.setVal("backImagePath", photo);
+                        $("#img0").html('<div style="width:7em;height:7em; background-image: url(' + photo + ');background-size: 100% 100%;margin-right: 0.2em" onclick="changeImg(\'' + photo + "\')\"></div>");
+                        showImg();
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+        }
+
+        function showImg() {
+            var url = ipVal + "/photos/json?type=3&typeid=" + landscapeId_2;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        var len = data.body.photos.length;
+                        var html = '';
+                        for (var k = 0; k < len; k++) {
+                            var imgUrl = ipVal + data.body.photos[k].url.split("WEB-INF/")[1];
+                            var straegyId = data.body.photos[k].id;
+                            html += "<td>" + '<div style="width:7em;height:7em; background-image: url(' + imgUrl + ');background-size: 100% 100%;margin-right: 0.2em" onclick="changeImg(\'' + imgUrl + '\')">' + "</div>" + "</td>";
+                        }
+                        $('#img0').after(html);
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+        }
+
+        function closeMap() {
+            uexGaodeMap.close();
+        }
+
+        function changeImg(url) {
+            $("#img").css("background-image", "url('" + url + "')");
+        }
+
+        function change(id) {
+            appcan.locStorage.setVal("strategyId", id);
+            appcan.window.open("strategy", "strategy.html", 10);
+        }
+
+
+        appcan.button("#down", "btn-act", function() {
+            $("#box").toggleClass("aa");
+        })
+        appcan.button("#down_2", "btn-act", function() {
+            $("#box_2").toggleClass("aa");
+        })
+        appcan.button("#callToOrder", "btn-act", function() {
+            uexCall.dial(phone);
+        })
+        appcan.button("#map", "btn-act", function() {
+            appcan.locStorage.setVal("mapFlag", "1");
+            var params = {
+                left : 0,
+                top : 0,
+                width : screen.availWidth,
+                height : screen.availHeight - 10,
+                isScrollWithWeb : false,
+                longitude : longitude,
+                latitude : latitude
+            };
+            var data = JSON.stringify(params);
+            var centerData = {
+                longitude : longitude,
+                latitude : latitude
+            }
+            var jsoncenterData = JSON.stringify(centerData);
+            uexGaodeMap.setCenter(jsoncenterData);
+            uexGaodeMap.open(data);
+            setTimeout("a()", 300);
+
+        })
+        function a() {
+            var param = [{
+                id : 10002,
+                longitude : longitude,
+                latitude : latitude,
+                // icon : "http://www.iconpng.com/png/mapmarkers/marker_inside_azure.png",
+                bubble : {
+                    title : landcapeName
+                }
+            }];
+            var data = JSON.stringify(param);
+            uexGaodeMap.addMarkersOverlay(data);
+
+            var params = {
+                type : 0
+            };
+            var data2 = JSON.stringify(params);
+            uexGaodeMap.setCompassEnable(data2);
+            var paramButton = {
+                id : "11",
+                bgImage : "res://aa.png",
+                title : "",
+                titleColor : "#FFF",
+                x : 20,
+                y : 20,
+                width : 50,
+                height : 50
+            }
+            var jsonStr = JSON.stringify(paramButton)
+            uexGaodeMap.setCustomButton(jsonStr);
+
+        }
+
+    </script>
+</html>

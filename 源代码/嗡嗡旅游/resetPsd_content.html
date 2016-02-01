@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <style type="text/css">
+        .c-fdb {
+            background-color: white !important;
+        }
+        .cuowu::-webkit-input-placeholder {
+            color: #f00;
+        }
+
+    </style>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-con ub-ver">
+
+          
+            <div class="ub c-fdb b-gra2" style="border-bottom: 1px solid #C3C3C3" >
+                <div class="ub-f1 uinn uba uc-a"  style="border-color:#fff">
+                    <div class=" uinput uinn4  ub">
+                        <div class="ub ub-f1 ub-hor uinn4">
+                            <div class="ub-f1 ub ub-ac ub-pc"   style="color:#0093DD;width:5em">
+                                密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:
+                            </div>
+                            <div class="ub  ub-f1">
+                                <input type="password" id="psd1"  placeholder="请输入密码" maxlength=20 class=" uc-a1 " value="" style="width:65%" onblur="checkPsd(this)"/>
+                            </div>
+                            <div class="ub ub-f1" id="errpsd"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ub c-fdb b-gra2" style="border-bottom: 1px solid #C3C3C3" >
+                <div class="ub-f1 uinn uba uc-a"  style="border-color:#fff">
+                    <div class=" uinput uinn4  ub">
+                        <div class="ub ub-f1 ub-hor uinn4">
+                            <div class="ub-f1 ub ub-ac ub-pc"   style="color:#0093DD;width: 5em">
+                                确认密码:
+                            </div>
+                            <div class="ub  ub-f1">
+                                <input type="password" id="psd2"  placeholder="确认密码" maxlength=20 class=" uc-a1 " value="" style="width:65%" onblur="confirmPsd(this)"/>
+                            </div>
+                            <div class="ub ub-f1" id="errpsd_2"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a"  id="register" style="margin: 2em;background-color:#0093DD">
+          保存
+            </div>
+
+        </div>
+
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+   
+    <script>
+    var flagId=appcan.locStorage.getVal("userFlag");
+        appcan.ready(function() {
+           
+        });
+
+
+appcan.button("#register", "ani-act", function() {
+           var psd1=$("#psd1").val();
+           var psd2=$("#psd2").val();
+           if(psd1!=psd2){
+               alert("两次密码输入不对");
+               return;
+           }
+           else{
+             var regUrl = ipVal + 'update_user?id=' +flagId + '&password=' + psd1;
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'POST',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        appcan.window.open("login","login.html",10);
+                    } else {
+                        uexWindow.toast(0, 5, data.error, 1500);
+                    }
+                },
+                error : function(xhr, type) {
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                }
+            })   
+           }
+        })
+    </script>
+</html>

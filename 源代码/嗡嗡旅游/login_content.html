@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="my_content/css/main.css">
+        <link rel="stylesheet" href="css/lf.css">
+    </head>
+    <style type="text/css">
+        .c-fdb {
+            background-color: white !important;
+        }
+         .cuowu::-webkit-input-placeholder {
+            color: #f00;
+        }
+    </style>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-con ub-ver">
+
+            <!-- <div class="ub c-fdb b-gra2"  >
+                <div class="ub-f1 uinn uba uc-a"  style="border-color:#fff">
+                    <div class=" uinput uinn4  ub" style="border-bottom: 1px solid #C3C3C3">
+                        <div class="ub ub-f1 ub-hor uinn4">
+                            <div class="ub-f1 ub ub-ac ub-pc" style="color:#0093DD;width:5em;float: right">
+                                国家/地区:
+                            </div>
+                            <div class="ub  ub-f1">
+                                <input type="text" id="white1"  placeholder="中国+大陆" maxlength=20 class=" uc-a1 " value="" style="width:65%" />
+                            </div>
+                            <div class="fa fa-angle-right ulev2 sc-text"></div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="ub c-fdb b-gra2" style="border-bottom: 1px solid #C3C3C3" >
+                <div class="ub-f1 uinn uba uc-a"  style="border-color:#fff">
+                    <div class=" uinput uinn4  ub">
+                        <div class="ub ub-f1 ub-hor uinn4">
+                            <div class="ub-f1 ub ub-pc ub-ac "   style="color:#0093DD;width:5em;float: right">
+                                手机号:
+                            </div>
+                            <div class="ub  ub-f1">
+                                <input type="text" id="phone"  placeholder="请输入手机号" maxlength=20 class=" uc-a1 " value="" style="width:65%" onblur="checkTel(this)"/>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ub c-fdb b-gra2" style="border-bottom: 1px solid #C3C3C3" >
+                <div class="ub-f1 uinn uba uc-a"  style="border-color:#fff">
+                    <div class=" uinput uinn4  ub">
+                        <div class="ub ub-f1 ub-hor uinn4">
+                            <div class="ub-f1 ub ub-ac ub-pc"   style="color:#0093DD;width:5em;">
+                                密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:
+                            </div>
+                            <div class="ub  ub-f1">
+                                <input type="password" id="psd"  placeholder="请输入密码" maxlength=20 class=" uc-a1 " value="" style="width:65%" onblur="checkPsd(this)"/>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a"  id="login" style="margin: 2em;background-color: #0093DD;border-radius: 0.6em">
+                登录
+            </div>
+            <div class="ub ub-ac ub-pc ulev-1" style="color:#5B5B5B;margin-top: -1em" id="findPsd">找回密码</div>
+
+            <!-- <div class="ub umar-a  " style="padding:0.5em 2em 0.5em 2em;margin-top: 1em;">
+            <div class="btn bth ub ub-ac bc-text-head ub-pc bc-btn"  id="save2">
+            保存
+            </div>
+            </div> -->
+        </div>
+
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/languages.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+
+        });
+        //验证手机号
+        function checkTel(object) {
+            var guardianphone = object.value;
+            var patrn = /^([+]{0,1}[0-9])+$/;
+            if (guardianphone.length == 0) {
+                object.value = '';
+                object.placeholder = "手机号不能为空";
+                object.className = 'cuowu uc-a1';
+                $("#errphone").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (0 <= guardianphone.indexOf(' ')) {
+                object.value = '';
+                object.placeholder = "中间不能有空格";
+                object.className = 'cuowu ';
+                $("#errphone").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (guardianphone.length > 20 || guardianphone.length < 3) {
+                object.value = '';
+                object.placeholder = "号码长度在3-20之间";
+                object.className = 'cuowu ';
+                $("#errphone").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else {
+                object.placeholder = '';
+                $("#errphone").html("<span class='fa fa-check unregister'></span>");
+                return true
+            }
+        }
+
+        //验证密码
+        function checkPsd(object) {
+            var psd = object.value;
+            var patrn = /^([+]{0,1}[0-9])+$/;
+            if (psd.length == 0) {
+                object.value = '';
+                object.placeholder = "密码不能为空";
+                object.className = 'cuowu uc-a1';
+                $("#errpsd").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (0 <= psd.indexOf(' ')) {
+                object.value = '';
+                object.placeholder = "中间不能有空格";
+                object.className = 'cuowu ';
+                $("#errpsd").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (psd.length > 12 || psd.length < 6) {
+                object.value = '';
+                object.placeholder = "6-12位数字或字母";
+                object.className = 'cuowu ';
+                $("#errpsd").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (!patrn.exec(psd)) {
+                object.value = '';
+                object.placeholder = "6-12位数字或字母";
+                object.className = 'cuowu ';
+                $("#errpsd").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else {
+                object.placeholder = '';
+                $("#errpsd").html("<span class='fa fa-check unregister'></span>");
+                return true
+            }
+        }
+
+        //确认密码
+        function confirmPsd(object) {
+            var password_confirm = $("#psd").val();
+            var confirmPsd = object.value;
+            var patrn = /^[0-9a-zA-Z]+$/;
+            if (confirmPsd.length == 0) {
+                object.value = '';
+                object.placeholder = "确认密码不能为空";
+                object.className = 'cuowu ';
+                $("#errpsd_2").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (0 <= confirmPsd.indexOf(' ')) {
+                object.value = '';
+                object.placeholder = "中间不能有空格";
+                object.className = 'cuowu ';
+                $("#errpsd_2").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (!patrn.exec(confirmPsd)) {
+                object.value = '';
+                object.placeholder = "6-12位数字或字母";
+                object.className = 'cuowu ';
+                $("#errpsd_2").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (confirmPsd.length > 12 || confirmPsd.length < 6) {
+                object.value = '';
+                object.placeholder = "6-12位数字或字母";
+                object.className = 'cuowu ';
+                $("#errpsd_2").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (password_confirm != confirmPsd) {
+                object.value = '';
+                object.placeholder = "两次密码不一致";
+                object.className = 'cuowu ';
+                $("#errpsd_2").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else {
+
+                object.placeholder = '';
+                $("#errpsd_2").html("<span class='fa fa-check unregister'></span>");
+                //$$(object.id+"success").innerHTML = "<span class='uinn inp_name ub-img ub ub-ac' style='margin-right:0.35em;background-image:url(css/img/gou.png);'></span></div>";
+                return true;
+            }
+        }
+
+
+        appcan.button("#login", "ani-act", function() {
+            var phone_login=$("#phone").val();
+            var psd=$("#psd").val();
+            var regUrl = ipVal+'login?';
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'POST',
+                dataType : 'json',
+                data : {
+                    loginProof : phone_login,
+                    password : psd,
+                },
+                success : function(data) {
+                    if (200 == data.status) {
+                        //uexWindow.evaluateScript("register","0","appcan.window.close(-1)");
+                        appcan.locStorage.setVal("user_id", data.body.id);
+                        if(data.body.photoURL!=''&&data.body.photoURL!=null){
+                            appcan.locStorage.setVal("userPhoto", data.body.photoURL.split("WEB-INF")[1]); 
+                        }
+                       
+                        //alert(userPhoto+"hahahah");
+                        //appcan.window.publish("change", "");
+                        //uexWindow.evaluatePopoverScript('root', 'd', 'TEST()')
+                       uexWindow.toast("1","5","页面跳转中",-1);
+                        uexWindow.evaluateScript('my','0','changePhoto()');                        
+                       //uexWindow.evaluateScript("login","content","appcan.window.close(-1)");                       
+                       uexWindow.closeAboveWndByName("login");
+                              // setTimeout(function(){
+                                  // //uexWindow.closeAboveWndByName("my");},2000);                                  
+                                     // appcan.window.open('index', 'index.html', 10);},2000);
+                                     //appcan.window.close(-1);                                    
+                    }
+                    else{
+                        
+                        uexWindow.toast(0, 5, data.error, 1500);
+                    }
+                },
+                error : function(xhr, type) {  
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                }
+            })
+
+            // appcan.window.open("getcode","getcode.html","10");
+        })
+        
+        appcan.button("#findPsd", "ani-act", function() {
+           appcan.window.open("findPsd","findPsd.html","10");
+        })
+    </script>
+</html>

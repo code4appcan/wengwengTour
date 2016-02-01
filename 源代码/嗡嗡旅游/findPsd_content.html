@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="my_content/css/main.css">
+        <link rel="stylesheet" href="css/lf.css">
+    </head>
+    <style type="text/css">
+        .c-fdb {
+            background-color: white !important;
+        }
+        .cuowu::-webkit-input-placeholder {
+            color: #f00;
+        }
+        .blue{
+            background-color: #00A1EA;
+        }
+        .gray{
+            background-color: #A6A6A5;
+        }
+    </style>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-con ub-ver">
+
+            <div class="ub c-fdb b-gra2"  >
+                <div class="ub-f1 uinn uba uc-a"  style="border-color:#fff">
+                    <div class=" uinput uinn4  ub" style="border-bottom: 1px solid #C3C3C3">
+                        <!-- <div class="ub ub-f1 ub-hor uinn4">
+                        <div class="ub-f1 ub ub-ac ub-pc" style="color:#0093DD;width: 5em">
+                        国家/地区:
+                        </div>
+                        <div class="ub  ub-f1">
+                        <input type="text" id="white1"  placeholder="中国+大陆" maxlength="20" class=" uc-a1 " value="" style="width:65%" />
+                        </div>
+                        <!-- <div class="ub ub-f1" id="errphone"></div> -->
+                        <div class="ub ub-f1 fa fa-angle-right ulev2 sc-text" style="margin-right: -2em"></div>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </div>
+        <div class="ub c-fdb b-gra2" style="border-bottom: 1px solid #C3C3C3" >
+            <div class="ub-f1 uinn uba uc-a"  style="border-color:#fff">
+                <div class=" uinput uinn4  ub">
+                    <div class="ub ub-f1 ub-hor uinn4">
+                        <div class=" ub ub-ac ub-pc"   style="color:#0093DD;width: 5em">
+                            手&nbsp;机&nbsp;号:
+                        </div>
+                        <div class="ub  ub-f1">
+                            <input type="text" id="phone"  placeholder="请输入手机号" maxlength=20 class=" uc-a1 " value="" style="width:65%" onblur="checkTel(this)"/>
+                        </div>
+                        <div class="ub ub-f1" id="errphone"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ub c-fdb b-gra2" style="border-bottom: 1px solid #C3C3C3" >
+            <div class="ub-f1 uinn uba uc-a"  style="border-color:#fff">
+                <div class=" uinput uinn4  ub">
+                    <div class="ub ub-f1 ub-hor uinn4">
+                        <div class=" ub ub-ac ub-pc"   style="color:#0093DD;width: 5em">
+                            验&nbsp;证&nbsp;码:
+                        </div>
+                        <div class="ub  ub-f1">
+                            <input type="text" id="verifycode"  placeholder="请输入验证码" maxlength=20 class=" uc-a1 " value="" style="width:65%" onblur="checkCode(this)"/>
+                        </div>
+                        <!-- <div class="ub ub-f1" id="errcode"></div> -->
+                        <!-- <div class="ub ub-ac ub-pc ulev-1" style="width: 3em;height:2em;border: 1px solid #0093DD;border-radius: 0.4em;color:#373737" id="sendCode">
+                            发送                              
+                        </div> -->
+                        <div class="ub blue" style=";padding:0 0.2em 0.2em" id="changeColor"><input type="button" name=""  value="发送验证码" style="color:white;" id="sendCode"/></div>
+                           </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn ub ub-ac bc-text-head ub-pc bc-btn uc-a"  id="register" style="margin: 2em;background-color:#0093DD">
+            下一步
+        </div>
+
+        </div>
+
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    <script>
+        var Code;
+        appcan.ready(function() {
+            appcan.initBounce();
+            var phone = $("#phone").val();
+            var verifycode = $("#verifycode").val();
+            var psd = $("#psd").val();
+
+        });
+
+        //验证手机号
+        function checkTel(object) {
+            var guardianphone = object.value;
+            var patrn = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+            if (guardianphone.length == 0) {
+                object.value = '';
+                object.placeholder = "手机号不能为空";
+                object.className = 'cuowu uc-a1';
+                $("#errphone").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (0 <= guardianphone.indexOf(' ')) {
+                object.value = '';
+                object.placeholder = "中间不能有空格";
+                object.className = 'cuowu ';
+                $("#errphone").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (!guardianphone.match(patrn)) {
+                object.value = '';
+                object.placeholder = "6-12位数字或字母";
+                object.className = 'cuowu ';
+                $("#errphone").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else if (guardianphone.length > 20 || guardianphone.length < 3) {
+                object.value = '';
+                object.placeholder = "号码长度在3-20之间";
+                object.className = 'cuowu ';
+                $("#errphone").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else {
+                object.placeholder = '';
+                $("#errphone").html("<span class='fa fa-check unregister'></span>");
+                return true
+            }
+        }
+
+        //验证验证码
+        function checkCode(object) {
+            var code = object.value;
+            var patrn = /^([+]{0,1}[0-9])+$/;
+            if (code.length == 0) {
+                object.value = '';
+                object.placeholder = "验证码不能为空";
+                object.className = 'cuowu uc-a1';
+                $("#errcode").html("<span class='fa fa-close unregister'></span>");
+                return false;
+            } else {
+                object.placeholder = '';
+                $("#errcode").html("<span class='fa fa-check unregister'></span>");
+                return true
+            }
+        }
+
+
+        appcan.button("#register", "ani-act", function() {
+
+            var phone = $("#phone").val();
+            var verifycode = $("#verifycode").val();
+            var userCode = $("#verifycode").val();
+            
+            if (phone != '' && verifycode != '' && userCode != '') {
+                if (userCode != Code) {
+                    alert("您输入的验证码不正确");
+                    return;
+                }
+            appcan.window.open("resetPsd","resetPsd.html",10);
+            }
+
+        })
+        appcan.button("#sendCode", "btn-act", function() {
+            var patrn1 = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+           
+            var userPhone = $("#phone").val();
+            if ( userPhone =='') {
+                alert("手机号不能为空");
+                return;
+            }
+            // else if(!userPhone.match(patrn1)){
+            // alert("手机号格式不对");
+            // return;
+            // }
+            // alert(123);
+          //return;
+             var codeURl = ipVal+'resetpwd_code?phone='+userPhone;
+            appcan.request.ajax({
+                url : codeURl,
+                type : 'get',
+                dataType : 'json',               
+                success : function(data) {
+                    if (200 == data.status) {
+                        Code = data.body.code;
+                        var flagId=data.body.userid;
+                         appcan.locStorage.setVal("userFlag", flagId);
+                        // alert(Code);
+                        n = 60;
+                        getTime = window.setInterval(function() {
+                            getCode();
+                        }, 1000);
+                    } else {
+                       
+                        uexWindow.toast(0, 5, data.error, 1500);
+                    }
+                },
+                error : function(xhr, type) {
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                }
+            })
+
+        });
+/*
+        function getCode() {
+            n--;
+            if (n == 0) {
+                $("#sendCode").html('<certer>閲嶅彂</certer>');
+                //sendCode.disabled = false;
+                window.clearInterval(getTime);
+            } else {
+                $("#sendCode").html('<certer><span style="color:red">' + n + '</span>绉�/certer>');
+            }
+
+        }*/
+       
+       function getCode() {
+            n--;
+            if (n == 0) {
+                $("#changeColor").removeClass("gray").addClass("blue");
+                $("#sendCode").removeAttr("disabled");
+                $("#sendCode").val('重新发送');
+                window.clearInterval(getTime);
+            } else {//'<certer><span style="color:red">' + n + '</span>秒</certer>'
+               $("#sendCode").val('重新发送'+n+'秒');
+               $("#changeColor").removeClass("blue").addClass("gray");
+               $("#sendCode").attr("disabled","disabled");
+            }
+
+        }
+
+    </script>
+</html>

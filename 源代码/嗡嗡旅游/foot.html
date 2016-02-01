@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <body class="um-vp " ontouchstart>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head">
+                <div class="nav-btn" id="nav-left">
+                    <div class="fa fa-2x fa-angle-left"></div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">自驾</h1>
+                <div class="nav-btn nav-bt" id="nav-right"></div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l "  >
+                <!-- <div class="ub ub-f1">
+                    巴东县境内沪渝、沪蓉高速公路、宜巴高速公路和宜万铁
+路的相继通车，便捷、畅通、高效、安全的交通网络四通
+八达。
+                </div>
+                <div class="ub ub-ac ub-pc" style="margin-top: 0.5em;">
+                    <img src="images/bike.jpg" style="height:20em"/>
+                </div>
+                <div class="ub ub-ac ub-pc ub-ver">
+                
+                   名称：湖北省巴东县<br>
+                  
+位置：湖北西部，恩施州东北部，长江中下游<br>
+坐标：东经110°04’-110°32’，<br>
+          北纬30°28’-31°28’<br>
+下辖：10个镇，2个乡<br>
+县城：信陵镇<br>
+气候：亚热带季风气候<br>
+电话区号：0718<br>
+邮政编码：444300<br>
+车牌代码：鄂Q<br>
+               
+                </div> -->
+            </div>
+            <!--content结束-->
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            var titHeight = $('#header').offset().height;
+            appcan.frame.open("content", "foot_content.html", 0, titHeight);
+            window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+            }
+        });
+        appcan.button(".nav-btn", "btn-act", function() {
+            appcan.window.close(-1);
+        })
+
+    </script>
+</html>

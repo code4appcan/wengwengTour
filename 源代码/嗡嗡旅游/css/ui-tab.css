@@ -1,0 +1,50 @@
+.tab
+{
+	height:3em;
+}
+.uinn-a13{
+	padding:0.1em 0 0.2em 0;
+}
+
+input[type="radio"]:checked + div.tab-act-bg
+{
+	background-color:#cacaca;
+}
+
+
+
+input[type="radio"] + div>div.tp-map{
+	background-image: url(../images/index.png);
+}
+input[type="radio"]:checked + div>div.tp-map{
+	background-image: url(../images/index_2.png);
+}
+
+
+input[type="radio"] + div>div.tp-talk{
+	background-image: url(../images/map_1.png);
+}
+input[type="radio"]:checked + div>div.tp-talk{
+	background-image: url(../images/map_2.png);
+}
+
+input[type="radio"] + div>div.tp-set{
+	background-image: url(../images/find.png);
+}
+input[type="radio"]:checked + div>div.tp-set{
+	background-image: url(../images/find_2.png);
+}
+input[type="radio"]:checked + div.tab-act-bg>div.tp-search{
+	background-image: url(../images/find_2.png);
+}
+
+input[type="radio"] + div>div.tp-my{
+	background-image: url(../images/my_2.png);
+}
+input[type="radio"]:checked + div>div.tp-my{
+	background-image: url(../images/my.png);
+}
+input[type="radio"]:checked + div.tab-act-bg>div.tp-my{
+	background-image: url(../images/my.png);
+}
+

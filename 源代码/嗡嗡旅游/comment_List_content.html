@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart >
+        <div class="ub ub-ver" style="background-color: white">
+            <div class="ub header-image" style="background-size: 100% 100%;height:12em;width:100%;background-repeat: no-repeat;" id="img">
+                <!-- <img src="images/fish.png" style="width:100%;height:10em;" id="img"/> background-image: url('images/photo.png')-->
+            </div>
+            <div class="ub ub-pj" style="border-bottom: 1px solid #aaaaaa;margin-top: 0.7em">
+                
+                <div class="ub ub-f1 ub-ac" id="name" style="color:#636363;padding-left: 0.7em">评论列表</div>
+                <div class="ub ub-hor" style="margin: 1em 1em 1em 0.5em;">
+                    <img class="ub" src="images/black_collect.png" style="width: 1.5em;height:1.5em" id="comment"/>
+                    <!-- <img class="ub" src="images/black_share.png" style="width: 1.5em;height:1.5em;margin-left: 1em" id="share"/> -->
+                </div>
+            </div>
+            
+        </div>
+        <div class="ub ub-ac ulev-1" style="margin-top: 0.7em;background-color: white;height:2.8em;color:#aaaaaa;padding-left: 0.7em;border-bottom: 1px solid #aaaaaa">
+            共<span id="number"></span>条评论
+        </div>
+        <div class="ub ulev-1 ub-ver" style="background-color: white;color:#aaaaaa;line-height: 1.5em;padding-left:0.7em;padding-right:0.7em  ">
+            <ul id="commentList">                 
+                 <!-- 
+              <li>
+                  <div class="ub ub-ver">
+                     <div class="ub ub-f1 ub-pj" style="margin-top: 0.2em">
+                         <div class='ub ' style="">wenwende</div>
+                         <div class="ub  ub-ac ub-pc" style="background-color:#00A1EA;width:4em;height:1.5em;color:white;border-radius: 0.5em">dada</div>
+                     </div> 
+                     <div class="ub ub-f1">
+                         <img  class=""  src="images/comment3.jpg" style="height:0.8em;width:4em;margin-top: 0.2em" id="headerImg" />
+                     </div>
+                      <div class="ub ub-f1" style="margin-top: 0.2em">hihi</div>
+                  </div>
+              </li> -->
+            
+            </ul>
+        </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+     <script src="js/main.js"></script>
+    </body>
+    <script>
+        var backImagePath = appcan.locStorage.getVal("backImagePath");
+        $("#img").css("background-image","url('"+backImagePath+"')");
+        var type=appcan.locStorage.getVal("type");
+        var typeid=appcan.locStorage.getVal("typeid");
+        var height=appcan.locStorage.getVal("titHeight");
+        var image_hight=$("#img").height();
+        var j=1;
+        var user_id = appcan.locStorage.getVal("user_id");
+        appcan.ready(function() {
+            firstShow();
+            appcan.window.setBounce({
+                bounceType:"1",
+                downEndCall:function(type){                   
+                    show();
+                    setTimeout(function() {
+                        appcan.window.resetBounceView(1);                      
+                    }, 1500);
+                }
+            }) 
+           
+        });
+        function firstShow(){
+            // typeid = 96;
+            // type = 3;
+             var url = ipVal+'get_comments?pageSize=10&typeid='+typeid+"&type="+type+"&pageNo="+j;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        $("#commentList").html('');
+                        var len=data.body.comments.length;
+                        //alert(len);
+                        $("#number").html(len);
+                        var html='';
+                        for(var i=0;i<len;i++){
+                            var name=data.body.comments[i].userName;
+                            if(name==null){
+                                name='匿名';
+                            }
+                            var star=data.body.comments[i].score;
+                            var comment=data.body.comments[i].comment;
+                             html+="<li>"
+                                 +"<div class='ub ub-ver'>"                                 
+                                   +'<div class="ub ub-f1 ub-hor" style="margin-top: 0.2em">' 
+                                   +"<div class='ub ub-f1' style='margin-top: 0.2em'>"+name+"</div>"
+                                   +'<div class="ub ub-ac ub-pc" style="background-color:#00A1EA;width:4em;height:1.5em;color:white;border-radius: 0.5em">第'+(i+1)+'楼</div>'                              
+                                 +'</div>' 
+                                     +" <img  class='ub ub-f1'  src='images/comment"+star+".jpg' style='height:0.8em;width:4em;margin-top: 0.2em;margin-bottom:0.3em' id='headerImg'/>"
+                                     + "<div class='ub' style='margin-top: 0.2em'>"+comment+"</div>"
+                                 +"</div>"
+                                 +" </li>";
+                        }
+                        $("#commentList").append(html);                             
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+        }
+       function show(){
+           j++;
+           var url = ipVal+'get_comments?pageSize=10&typeid='+typeid+"&type="+type+"&pageNo="+j;
+           appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        var len=data.body.comments.length;
+                        var len1=parseInt($("#number").html());
+                        var len2=parseInt($("#number").html())+len;
+                        $("#number").html(len2);
+                        if (len == 0) {
+                            appcan.window.openToast("没有更多数据", 5000, 5);
+                        }
+                        else{
+                           for(var i=0;i<len;i++){
+                            var name=data.body.comments[i].userName;
+                            var star=data.body.comments[i].score;
+                            var comment=data.body.comments[i].comment;
+                            var html='';
+                             html+="<li>"
+                                 +"<div class='ub ub-ver'>"
+                                 +" <div class='ub' style='margin-top: 0.2em'>"+name+"</div>"
+                                  +'<div class="ub ub-ac ub-pc" style="background-color:#00A1EA;width:4em;height:1.5em;color:white;border-radius: 0.5em">第'+(len1+i+1)+'楼</div>'                              
+                                 +'</div>' 
+                                 +" <img  class='ub ub-f1'  src='images/comment"+star+".jpg' style='height:0.8em;width:4em;margin-top: 0.2em;margin-bottom:0.3em' id='headerImg/ >"
+                                 + "<div class='ub' style='margin-top: 0.2em'>"+comment
+                                 +"</div>"
+                                 +"</div>"
+                                 +" </li>"
+                             $("#commentList").append(html); 
+                            
+                        }  
+                        }
+                        //alert(len);
+                       
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+       }
+
+
+appcan.button("#comment", "btn-act", function() {
+        if(user_id==null){          
+           appcan.window.alert({
+                    title : "提示",
+                    content : "抱歉，您还没有登录或注册，暂不能使用此功能，请先登录^_^",
+                    buttons : ['确定', '取消'],
+                    callback : function(err, data, dataType, optId) {
+                        if( ['确定', '取消'][data]=="确定"){
+                             appcan.window.open("login","login.html",10);
+                            uexWindow.evaluateScript('write_traval', '0', 'close()');                          
+                        }                       
+                    }
+            });
+            return;
+        }
+        else{
+          appcan.locStorage.setVal("commentFlag","1");
+           appcan.window.open('publish_comment', 'publish_comment.html', 10); 
+        }
+            
+        })
+        
+        
+    </script>
+</html>

@@ -1,0 +1,163 @@
+*{
+    padding: 0;
+    margin:0;
+}
+/*背景图片*/
+.logo{
+    background-image: url('img/logo.png');
+    width:5.09em;
+    height:1.625em;
+}
+.icon-search{
+    background-image: url('img/icon-search.png');
+    width:1em;
+    height:1.4em;
+}
+.ad-bg{
+    background-image: url('img/ad-bg.png');
+    width:100%;
+    height:6.28em;
+    
+}
+.index-icon1{
+    background-image: url('img/index-icon1.png');
+    width:2.656em;
+    height:2.656em;
+}
+.index-icon2{
+    background-image: url('img/index-icon2.png');
+    width:2.656em;
+    height:2.656em;
+}
+.index-icon3{
+    background-image: url('img/index-icon3.png');
+    width:2.656em;
+    height:2.656em;
+}
+.index-icon4{
+    background-image: url('img/index-icon4.png');
+    width:2.656em;
+    height:2.656em;
+}
+.indexbg{
+    /*background-image: url('img/indexbg.png');*/
+    width:8.4375em;/*8.06em;*/
+    height:6.8em;/*6.343em;*/
+}
+.movie{
+    background-image: url('img/movie.png');
+    width:2.718em;
+    height:2.718em;
+    
+}
+.bbx{
+    background-image: url('img/bbx.png');
+    width:6.1875em;
+    height:4.3125em;
+}
+/*footer部分*/
+.icon-index{
+    background-image: url('img/icon-index.png');
+ }
+.icon-index-act   {
+    background-image: url('img/icon-index-act.png');
+ }
+ .icon-vip{
+    background-image: url('img/icon-vip.png');
+ }
+ .icon-vip-act{
+    background-image: url('img/icon-vip-act.png');
+ }
+ .icon-my{
+    background-image: url('img/icon-user.png');
+ }
+ .icon-my-act{
+    background-image: url('img/icon-user-act.png');
+ }
+ .icon-shanghu{
+     background-image: url('img/icon-shanghu.png');
+ }
+ .icon-shanghu-act{
+     background-image: url('img/icon-shanghu-act.png');
+ }
+ .bc-blue{
+     color:#0085cf;
+ }
+
+ /*修改边界*/
+.umar-r1{
+    margin-right: 1em;
+}
+.umar-t1{
+    margin-top: 0.4375em;
+}
+.umar-t2{
+    margin-top: 0.3125em;
+}
+.umar-t3{
+    margin-top:1.2em;
+}
+
+/*背景颜色*/
+.bc-bg1{
+    background-color: white;
+}
+.bc-theater{
+    background-color: #fc7863;
+}
+.bc-sport{
+    background-color: #e4bd06;
+}
+.bc-orange{
+    color:#f1920a;
+}
+.bc-listview{
+    border-color: #b3b3b3;
+}
+.umar-wh{
+    color:white;
+    padding-top:0.46875em;
+    margin-left: 2.8125em;
+}
+.umar-th{
+    color:white;
+    padding-top:0.46875em;
+    margin-left: 0.7em;
+    font-size: 0.875em !important;
+}
+.umar-th2{
+    color:#e1e1e1;
+    margin-left: 0.7em;
+    padding-top:0.39em;
+}
+/*修改宽高*/
+.umwh1{
+    width:1.5em;
+    height:1.4375em;
+}
+.umw10{
+    width:10.375em;
+}
+/*修改字体大小*/
+.ulev5{
+    font-size: 0.6875em !important;
+}
+
+.birthday{
+     background-image: url('img/birthday.png');
+ }
+.woman{
+     background-image: url('img/woman.png');
+     margin-top: 0.5625em;
+     height:5em;
+ }
+.son{
+     background-image: url('img/son.png');
+     margin-top: 0.5625em;
+     height:5em;
+ }
+ .umwh-vip{
+    width:100%;
+  background-size:100% 100%;
+     height:9em;
+}

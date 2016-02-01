@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+
+    </head>
+    <style type="text/css">
+        .aa {
+            -webkit-line-clamp: 3;
+        }
+        #box {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+        .ulev1 {
+            font-size: 0.9em !important;
+        }
+        .ulev1+ div {
+            font-size: 0.8em;
+        }
+        .ub-ver .ub-ac {
+            padding: 0 1em;
+        }
+
+    </style>
+    <body class="um-vp  "  ontouchstart style='background-color: white'>
+        <div class="ub ub-ver" style="border-bottom:0.7em solid #DDDDDE">
+            <div class="ub ub-f1">
+                <div class="ub ub-f1" style="background-size: 100% 100%;height:15em;width:100%;background-repeat: no-repeat;" id="img" >
+                    <!-- <img src="" style="width:100%;height:10em" id="img"/> -->
+                </div>
+                <div class="" style="position: absolute;bottom:0.87em;left:0.8em;color:white;font-weight: bold">
+                    用诚信交天下朋友、
+                    <br>
+                    用热情迎四方宾客、
+                    <br>
+                    用信誉留八方客人!
+                </div>
+            </div>
+            <div class="ub ub-ver" style="padding: 0 0.5em;border-bottom:3em solid #DDDDDE;margin-top:0.5em">
+                <div class="ub ulev1">
+                    相关图片
+                </div>
+                <div style="width:100%;height:7em; overflow-x:auto;margin-top: 0.2em">
+                    <table>
+                        <tr id="imgList">
+                            <td id="img0"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="ub  ulev1" style="height:2em;color:black;margin-top: 0.5em">
+                    星级
+                </div>
+                <div class="ub ub-ver" style="border-bottom: 1px solid #DDDDDE ">
+                    <div id="test" class="ub ub-ver " style="color:#6B6B6B ;padding-bottom: 1em;line-height: 1.5em">
+                        <div class="" id="level" style="">
+                            <!-- <img  class='ub ub-f1'  src='images/comment3.jpg' style='height:0.8em;width:4em;margin-top: 0.2em;margin-bottom:0.3em' id='headerImg'/> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="ub  ulev1 txc" style="height:2em; margin-top: 0.5em">
+                    住房时间/退房时间
+                </div>
+                <div class="ub" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE;padding-bottom: 1em " id="timeInOut">
+                    <!-- 08:00/13:00 -->
+                </div>
+                <div class="ub ub-ver " style="margin:1em 0;">
+                    <div class="ulev1 txc" >
+                        电话
+                    </div>
+                    <div class="ub ub-hor ub-pj" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE;padding-bottom: 1em ">
+                        <div style="color:#6B6B6B;margin-top: 1em" id="phone">
+                            <!-- 0718-6343555 -->
+                        </div>
+                        <!-- <div style="color:#6B6B6B;margin-top: 1em">
+                        12345678900
+                        </div> -->
+                    </div>
+                </div>
+                <div class="ub ">
+                    <div class="ub ub-f1 ub-ver" style="border-bottom: 1px solid #DDDDDE">
+                        <div class="ub ub-f1 ub-hor ub-pj">
+                            <div class="ulev1" style="color: black">
+                                房型/价格
+                            </div>
+                            <div class="ub ub-ac ub-pc ulev1" style="color:red;font-weight: bold" id="callToOrder">
+                                我要订房
+                            </div>
+                        </div>
+                        <div style="color:#6B6B6B;margin-left: 0.1em;margin-top: 1em;margin-bottom: 1em; " class="ub ub-f1 ub-ver ulev-1" id="comments">
+                            <!-- <div class="ub ub-f1" style="margin: 0.5em 0 0.5em">普通标间：88元</div>
+                            <div class="ub ub-f1" style="margin: 0 0 0.5em">标准双人房标间：108元</div>
+                            <div class="ub ub-f1" style="margin: 0 0 0.5em">豪华套房：200元</div>
+                            <div class="ub ub-f1" style="margin: 0 0 0.5em">终点客房：50元2小时</div>
+                            <div class="ub ub-f1" style="margin: 0 0 0.5em">（以牌价为准）</div> -->
+                        </div>
+                    </div>
+                    <!-- <div class="ub ub-ac ub-pc ulev1" style="color:red;margin:-2em 2em 0 0;font-weight: bold;">
+                    我要订票
+                    </div> -->
+                </div>
+
+                <div class="ub ub-ver" >
+                    <div class="ub ub-hor" style="">
+                        <div class="ub ub-f1 ub-ver"  >
+                            <div class="ub ub-f1 ub-hor">
+                                <div class="ub ub-f1 ulev-1" style="height:2em;color:black;margin-top: 0.5em">
+                                    地址
+                                </div>
+                                <img src="images/map.png" class="ub " style="width:1.1em;height:1.3em;margin-right: 0.3em;margin-top: 0.3em" id="map"/>
+                            </div>
+
+                            <div class="ub" style="color:#6B6B6B;padding-bottom: 1em;border-bottom: 1px solid #DDDDDE;" id="address">
+                                <!-- 湖北省巴东县茶店子镇朱砂图村55号 -->
+                            </div>
+                        </div>
+                        <!-- <div class="ub ub-f1">
+                        <img src="images/map2.png" style="width: 0.8em;position:absolute;top:1em;right:1em"/>
+                        </div> -->
+                    </div>
+                    <div class="ub ub-ver">
+                        <div class="ub  ulev1" style="height:2em;color:black;padding-top: 0.5em">
+                            如何到达
+                        </div>
+                        <div class="ub ub-ver" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE ;line-height:1.5em">
+                            <div class="ub ub-f1 aa" id="box">
+                                <!-- 1、走宜巴高速在溪邱弯下高速顺209国道至巴东县城到茶店
+                                子镇再前行5公里即到巴人河景区；
+                                <br>
+                                2、走宜万铁路或沪蓉西高速在巴东站（野三关镇）下车。顺
+                                209国道至巴人河景区。 -->
+                            </div>
+                            <div class="ub ub-f1  ub-pc">
+                                <img src="images/xiangxia.png" style="width: 1.5em" id="down"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ub ub-ver">
+                        <div class="ub  ulev1" style="height:2em;color:black;padding-top: 0.5em">
+                            停车场地
+                        </div>
+                        <div class="ub" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE ;line-height:1.5em">
+                            <span id="park"> </span>个免费停车位
+                        </div>
+                    </div>
+                    <div class="ub ub-ver">
+                        <div class="ub  ulev1" style="height:2em;color:black;padding-top: 0.5em">
+                            客房设备
+                        </div>
+                        <div class="ub" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE ;line-height:1.5em" id="roomEquipment">
+                            <!-- 空调、电视、洗衣机、沐浴、电话、无线WIFI -->
+                        </div>
+                    </div>
+                    <div class="ub ub-ver">
+                        <div class="ub  ulev1" style="height:2em;color:black;padding-top: 0.5em">
+                            旅店设施
+                        </div>
+                        <div class="ub" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE ;line-height:1.5em" id="roomFacilities">
+                            <!-- 棋牌室、娱乐室 -->
+                        </div>
+                    </div>
+                    <div class="ub ub-ver">
+                        <div class="ub  ulev1" style="height:2em;color:black;padding-top: 0.5em">
+                            餐饮服务
+                        </div>
+                        <div class="ub" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE ;line-height:1.5em" id="foodBeverages">
+                            <!-- 主要以当地农家菜为主，特别推出巴东茶店干锅牛肉，承接各种高、中、低档次标准餐、旅游接团。 -->
+                        </div>
+                    </div>
+                    <div class="ub ub-ver">
+                        <div class="ub  ulev1" style="height:2em;color:black;padding-top: 0.5em">
+                            行车保障
+                        </div>
+                        <div class="ub" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE ;line-height:1.5em" id="drivingSupport">
+                            <!-- 加油站：酒店向西500米 -->
+                        </div>
+                    </div>
+                    <div class="ub ub-ver">
+                        <div class="ub  ulev1" style="height:2em;color:black;padding-top: 0.5em">
+                            刷卡服务
+                        </div>
+                        <div class="ub" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE ;line-height:1.5em" id="payByCard">
+                            <!-- 可接受银联卡，信用卡 -->
+                        </div>
+                    </div>
+                    <div class="ub ub-ver" >
+                        <div class="ub  ulev1" style="height:2em;color:black;padding-top: 0.5em">
+                            酒店简介
+                        </div>
+                        <div class="ub" style="color:#6B6B6B;border-bottom: 1px solid #DDDDDE ;line-height:1.5em;padding-bottom: 3em" id="introduction">
+                            <!-- 茶香源宾馆地处209国道，宜巴高速连接线和巴巫省道交汇处，是
+                            游玩国家五A景区神农溪、神农架、小三峡的必经之地，宾馆地理
+                            位置优越，交通便利，环境优雅，气候宜人，既有“四季如春”的
+                            惬意，又有“一览众山小”的娴雅；既有如诗般的田园文法；又有
+                            如画般的茶园风光；是旅游、休闲、娱乐、度假的最佳场所！
+                            宾馆秉承人性化的服务，合理性价格，创造性特色，大众化宾馆的
+                            经营理念，也许此刻您正远道而来，风尘仆仆，那么就让土家妹子
+                            用真诚和热忱的笑脸为您服务！
+                            我们真诚欢迎四海五洲的朋友来喝一杯滚烫浓香的富硒茶，来品一
+                            道土家地道的农家菜，来享一阵怡谈舒适的休闲乐！ -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+    <script>
+        var hotel_id = appcan.locStorage.getVal("lhotel_id");
+        var phone;
+        var longitude;
+        var latitude;
+        var wineshopName;
+        appcan.ready(function() {
+            uexWindow.setWindowScrollbarVisible(false);
+            //禁止滚动条
+            appcan.initBounce();
+            show();
+
+            /*地图加载完成的监听方法*/
+            uexGaodeMap.cbSetCustomButton = function(json) {
+                var ids = ["22"];
+                var Str = JSON.stringify(ids);
+                uexGaodeMap.showCustomButtons(Str);
+            }
+            uexGaodeMap.onCustomButtonClick = function(id) {
+                uexGaodeMap.close();
+            }
+        })
+        function show() {
+
+            var url = ipVal + 'get_wineshop?type=1&typeid=' + hotel_id;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+
+                        phone = data.body.wineshop.phone;
+                        var address = data.body.wineshop.address;
+                        var howToGo = data.body.wineshop.howToGo;
+                        var park = data.body.wineshop.park;
+                        var roomEquipment = data.body.wineshop.roomEquipment;
+                        var roomFacilities = data.body.wineshop.roomFacilities;
+                        var foodBeverages = data.body.wineshop.foodBeverages;
+                        var drivingSupport = data.body.wineshop.drivingSupport;
+                        var payByCard = data.body.wineshop.payByCard;
+                        var introduction = data.body.wineshop.introduction;
+                        var timeInOut = data.body.wineshop.timeInOut;
+                        longitude = data.body.wineshop.longitude;
+                        latitude = data.body.wineshop.latitude;
+                        wineshopName = data.body.wineshop.name;
+                        var star = data.body.wineshop.star;
+                        var comments = data.body.wineshop.comments;
+                        var park = data.body.wineshop.park;
+
+                        $("#park").html(park);
+                        $('#timeInOut').html(timeInOut);
+                        $("#comments").html(comments);
+                        $("#phone").html(phone);
+                        $("#address").html(address);
+                        $("#box").html(howToGo);
+                        $("#park").html(park);
+                        $("#roomEquipment").html(roomEquipment);
+                        $("#roomFacilities").html(roomFacilities);
+                        $("#foodBeverages").html(foodBeverages);
+                        $("#drivingSupport").html(drivingSupport);
+                        $("#payByCard").html(payByCard);
+                        $("#introduction").html(introduction);
+                        $('#level').after(" <img  class='ub ub-f1'  src='images/angle" + star + ".png' style='height:1.2em;width:5.2em;margin-top: 0.2em;margin-bottom:0.3em' id='headerImg'/>")
+                        var photoUrl = ipVal + data.body.wineshop.photo.split("WEB-INF/")[1];
+                        $("#img").css("background-image", "url('" + photoUrl + "')");
+                        appcan.locStorage.setVal("backImagePath", photoUrl);
+                        $("#img0").html('<div style="width:7em;height:7em; background-image: url(' + photoUrl + ');background-size: 100% 100%;margin-right: 0.2em" onclick="changeImg(\'' + photoUrl + "\')\"></div>");
+                        showImg();
+                     
+                    }
+                },
+
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+        }
+
+        function showImg() {
+            var backImagePath = appcan.locStorage.getVal("backImagePath");
+            var url = ipVal + "/photos/json?type=1&typeid=" + hotel_id;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        var len = data.body.photos.length;
+                        var html = '';
+                        // html += "<td>" + '<div style="width:7em;height:7em; background-image: url(' + backImagePath + ');background-size: 100% 100%;margin-right: 0.2em" onclick="changeImg(\'' + backImagePath + '\')">' + "</div>" + "</td>";
+                        for (var k = 0; k < len; k++) {
+                            var imgUrl = ipVal + data.body.photos[k].url.split("WEB-INF/")[1];
+                            var straegyId = data.body.photos[k].id;
+                            html += "<td>" + '<div style="width:7em;height:7em; background-image: url(' + imgUrl + ');background-size: 100% 100%;margin-right: 0.2em" onclick="changeImg(\'' + imgUrl + '\')">' + "</div>" + "</td>";
+                            //onclick="changeGong('+ straegyId +' )"
+                        }
+
+                        $('#img0').after(html);
+                    }
+                },
+
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+        }
+
+        function closeMap() {
+            uexGaodeMap.close();
+        }
+
+
+        appcan.button("#down", "btn-act", function() {
+            //alert("aa");
+            $("#box").toggleClass("aa");
+        })
+        appcan.button("#callToOrder", "btn-act", function() {
+            //alert(phone);
+            uexCall.dial(phone);
+        })
+        function changeImg(url) {
+            $("#img").css("background-image", "url('" + url + "')");
+        }
+
+
+        appcan.button("#map", "btn-act", function() {
+            appcan.locStorage.setVal("mapFlag", "1");
+            var params = {
+                left : 0,
+                top : 0,
+                width : screen.availWidth,
+                height : screen.availHeight - 10,
+                isScrollWithWeb : false,
+                longitude : longitude,
+                latitude : latitude
+            };
+            var data = JSON.stringify(params);
+            var centerData = {
+                longitude : longitude,
+                latitude : latitude
+            }
+            var jsoncenterData = JSON.stringify(centerData);
+
+            uexGaodeMap.setCenter(jsoncenterData);
+            uexGaodeMap.open(data);
+
+            setTimeout("a()", 300);
+
+        })
+        function a() {
+            var param = [{
+                id : 10001,
+                longitude : longitude,
+                latitude : latitude,
+                // icon : "http://www.iconpng.com/png/mapmarkers/marker_inside_azure.png",
+                bubble : {
+                    title : wineshopName
+                }
+            }];
+            var dataStr = JSON.stringify(param);
+            uexGaodeMap.addMarkersOverlay(dataStr);
+            var params = {
+                type : 0
+            };
+            var data2 = JSON.stringify(params);
+            uexGaodeMap.setCompassEnable(data2);
+
+            var paramButton = {
+                id : "22",
+                bgImage : "res://aa.png",
+                title : "",
+                titleColor : "#FFF",
+                x : 20,
+                y : 20,
+                width : 50,
+                height : 50
+            }
+            var jsonStr = JSON.stringify(paramButton)
+            uexGaodeMap.setCustomButton(jsonStr);
+
+        }
+
+    </script>
+</html>

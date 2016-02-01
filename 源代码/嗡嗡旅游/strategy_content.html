@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart style="background-color:white ">
+    <div class="ub ub-ver">
+                   <ul id="imageList" style="">
+                       <!-- <li>
+                           <div class="ub ub-f1 ub-pj" style="color:#646363;">                                    
+                               <div class="ub ub-f1 ub-hor ub-ac " style="background-color: #E2EBF4;border-radius: 0.5em;margin-top: 1em;margin:0.7em;padding: 0.4em">
+                                   <div class="ub ub-ac ub-pc" style="background-color: white;width:4em;height:4em;box-shadow:  0 2px 4px #000;margin-left: 0.6em">
+                                       <img src="images/view1.png" style="width:3.6em;height:3.6em" class="ub ub-ac ub-pc"/ >
+                                   </div>
+                                   <div class="ub ub-ver ub-f1" style="margin-left: 0.6em;margin-top: 0.2em">
+                                       <div class="ub">我的巴东山水之旅</div>
+                                       <div class="ub ulev-1">2015-11-9</div>
+                                       <div class="ub ub-f1 ub-hor" style="margin-top: 0.8em">
+                                           <div class="ub ulev-1" style="margin-right: 0.4em"> 
+                                               <img src="images/noteHeart.png" style="width:1.3em"/>
+                                               <div class="">100</div>
+                                           </div>
+                                           <div class="ub ulev-1">
+                                               <img src="images/notecomment.png" style="width:1.3em;"/>
+                                               <div class="">100</div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="" style="margin-right: 0.5em">
+                                       <div class="fa fa-angle-right fa-2x"></div>
+                                   </div>
+                               </div> 
+                           </div>
+                       </li> -->
+                        
+                   </ul>
+               </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+    <script>
+    var j=1;    
+    var strategyId=appcan.locStorage.getVal("strategyId");  
+        appcan.ready(function() {
+             appcan.initBounce();
+            firstshow();
+            
+            appcan.window.setBounce({
+                bounceType : "1",
+                downEndCall : function(type) {
+                    show();
+                    setTimeout(function() {
+                        appcan.window.resetBounceView(1);
+                    }, 1500);
+                }
+            })
+            uexWindow.setPopHardwareEnable('content',1);
+             
+        });
+        function firstshow(){
+            var regUrl = ipVal + 'raiders/json?pageSize=5&pageNo='+j;
+                    appcan.request.ajax({
+                        url : regUrl,
+                        type : 'get',
+                        dataType : 'json',
+                        success : function(data) {
+                            if (200 == data.status) { 
+                                var len = data.body.raiders.length;
+                                var html = "";
+                                for (var j=0;j<len;j++){
+                                    var straegyId = data.body.raiders[j].id;
+                                    var title = data.body.raiders[j].title;
+                                    var time = data.body.raiders[j].cdate;
+                                    var date = new Date(time);
+                                    Y = date.getFullYear() + '-';
+                                    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                                    D = date.getDate() + ' ';
+                                    var Time = Y + M + D;                        
+                                     html +=" <li onclick=change('" + straegyId + "','"+title+"')>"
+                                    +'<div class="ub ub-f1 ub-pj" style="color:#646363">'    
+                                    
+                                    +'<div class="ub ub-f1 ub-hor ub-ac " style="background-color: #E2EBF4;border-radius: 0.5em;margin-top: 1em;margin:0.7em;padding: 0.4em">'
+                                    +'<div class="ub ub-ac ub-pc" style="background-color: white;width:4em;height:4em;box-shadow:  0 2px 4px #000;margin-left: 0.6em">'
+                                    +"<img src='images/failLandBig.jpg' style='width:3.7em;height:3.7em' class='ub ub-ac ub-pc' id='"+straegyId+"'/>"
+                                    +"</div>"
+                                    +'<div class="ub ub-ver ub-f1" style="margin-left: 0.6em;margin-top: 0.2em">'
+                                    +'<div class="ub">'+title
+                                    +'</div>'
+                                    +'<div class="ub ulev-1">'+Time
+                                    +'</div>'
+                                    +'<div class="ub ub-f1 ub-hor" style="margin-top: 0.8em">'
+                                    +'<div class="ub ulev-1" style="margin-right: 0.4em"> '
+                                    +'<img src="images/noteHeart.png" style="width:1.3em"/>'
+                                    +'<div class="">'+data.body.raiders[j].scTotal+'</div>'
+                                    +'</div>'
+                                    +'<div class="ub ulev-1">'
+                                    +'<img src="images/notecomment.png" style="width:1.3em;"/>'
+                                    +'<div class="">'+data.body.raiders[j].plTotal+'</div>'
+                                    +'</div>'
+                                    +'</div>'
+                                    +'</div>'
+                                    +'<div class="" style="margin-right: 0.5em">'
+                                    +'<div class="fa fa-angle-right fa-2x"></div>'
+                                    +'</div>'
+                                    +'</div>' 
+                                    +'</div>'
+                                    +'</li>' ;
+                            }                                
+                        
+                            $("#imageList").append(html);
+                            
+                             var option = {
+                            maxtask : 3,
+                            url : '',
+                            success : function(path, session) {
+                                var index = this.index;//游标
+                                var id = this.name; //img对应ID                                
+                               $("#" + id).attr("src", path);                              
+                                
+                            },
+                            fail : function(session) {
+                                // alert("图片加载失败：index" + this.index);               
+                                 }
+                        };
+                        var cache = appcan.icache(option);
+                        for (var i = 0; i < len; i++) {
+                            
+                             url_img = data.body.raiders[i].cover.split("WEB-INF/");                       
+                            option.url = ipVal + url_img[1];
+                            var id= data.body.raiders[i].id;                            
+                            option.name = id;
+                            option.index = i;
+                            cache.run(option);
+                        }
+                            } else {
+                                uexWindow.toast(0, 5, data.error, 1500);
+                            }
+                        },
+                        error : function(xhr, type) {
+                            uexWindow.toast(0, 5, "获取失败", 1500);
+                        }
+                    })
+        }
+        function show(){
+            j++;
+            var regUrl = ipVal + 'raiders/json?pageSize=5&pageNo='+j;
+                    appcan.request.ajax({
+                        url : regUrl,
+                        type : 'get',
+                        dataType : 'json',
+                        success : function(data) {
+                            if (200 == data.status) { 
+                                var len = data.body.raiders.length;
+                        if (len == 0) {
+                            appcan.window.openToast("没有更多数据", 5000, 5);
+                        }
+                        else{
+                           var html = "";
+                                for (var j=0;j<len;j++){
+                                    var straegyId = data.body.raiders[j].id;
+                                    var title = data.body.raiders[j].title;
+                                    var time = data.body.raiders[j].cdate;
+                                    var date = new Date(time);
+                                    Y = date.getFullYear() + '-';
+                                    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                                    D = date.getDate() + ' ';
+                                    var Time = Y + M + D;                        
+                                     html +=" <li onclick=change('" + straegyId + "','"+title+"')>"
+                                    +'<div class="ub ub-f1 ub-pj" style="color:#646363">'    
+                                    
+                                    +'<div class="ub ub-f1 ub-hor ub-ac " style="background-color: #E2EBF4;border-radius: 0.5em;margin-top: 1em;margin:0.7em;padding: 0.4em">'
+                                    +'<div class="ub ub-ac ub-pc" style="background-color: white;width:4em;height:4em;box-shadow:  0 2px 4px #000;margin-left: 0.6em">'
+                                    +"<img src='images/failLandBig.jpg' style='width:3.7em;height:3.7em' class='ub ub-ac ub-pc' id='"+straegyId+"'/>"
+                                    +"</div>"
+                                    +'<div class="ub ub-ver ub-f1" style="margin-left: 0.6em;margin-top: 0.2em">'
+                                    +'<div class="ub">'+title
+                                    +'</div>'
+                                    +'<div class="ub ulev-1">'+Time
+                                    +'</div>'
+                                    +'<div class="ub ub-f1 ub-hor" style="margin-top: 0.8em">'
+                                    +'<div class="ub ulev-1" style="margin-right: 0.4em"> '
+                                    +'<img src="images/noteHeart.png" style="width:1.3em"/>'
+                                    +'<div class="">'+data.body.raiders[j].scTotal+'</div>'
+                                    +'</div>'
+                                    +'<div class="ub ulev-1">'
+                                    +'<img src="images/notecomment.png" style="width:1.3em;"/>'
+                                    +'<div class="">'+data.body.raiders[j].plTotal+'</div>'
+                                    +'</div>'
+                                    +'</div>'
+                                    +'</div>'
+                                    +'<div class="" style="margin-right: 0.5em">'
+                                    +'<div class="fa fa-angle-right fa-2x"></div>'
+                                    +'</div>'
+                                    +'</div>' 
+                                    +'</div>'
+                                    +'</li>' ;
+                            }                                
+                        
+                            $("#imageList").append(html);
+                            
+                             var option = {
+                            maxtask : 3,
+                            url : '',
+                            success : function(path, session) {
+                                var index = this.index;//游标
+                                var id = this.name; //img对应ID                                
+                               $("#" + id).attr("src", path);                              
+                                
+                            },
+                            fail : function(session) {
+                            }
+                        };
+                        var cache = appcan.icache(option);
+                        for (var i = 0; i < len; i++) {
+                            
+                             url_img = data.body.raiders[i].cover.split("WEB-INF/");                       
+                            option.url = ipVal + url_img[1];
+                            var id= data.body.raiders[i].id;                            
+                            option.name = id;
+                            option.index = i;
+                            cache.run(option);
+                        } 
+                        }
+                                
+                            } else {
+                               uexWindow.toast(0, 5, data.error, 1500);
+                            }
+                        },
+                        error : function(xhr, type) {
+                            uexWindow.toast(0, 5, "获取失败", 1500);
+                        }
+                    })
+        }
+        function change(id,title){
+             appcan.locStorage.setVal("strategy_id", id);
+            appcan.locStorage.setVal("strategy_title", title);
+            appcan.window.open("strategyDetails", "strategyDetails.html", 10);
+        }
+
+    </script>
+</html>

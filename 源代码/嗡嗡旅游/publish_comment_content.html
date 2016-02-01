@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <style type="text/css">
+         .good {
+               background-image: url('images/comment_redstar.png');
+              background-size: 100% 100%;
+              height: 2em;
+                width:2em;
+            }
+            .bad {
+              background-image: url('images/comment_star.png');         
+                 -webkit-background-size: 100% 100%;
+                background-size: 100% 100%;
+                height: 2em;
+                width:2em;
+            }
+    </style>
+    <body class="um-vp bc-bg" ontouchstart style="background-color: #DDDDDE">
+<div class="ub ub-ac ub-pc" style="height:10em;color:#aaaaaa;">
+    <div class="ub ub-hor ub-ac ub-pc" style="height:5em;width:75%;margin-left: 2em;margin-right: 2em"  id="heart">
+        <div class="ub ub-f1 ub-ver ub-ac ub-pc" style="width:19%">
+            <div class="ub bad a"  id="0" name="image" style="" ></div>
+            <!-- <img class="ub bad" style="width:70%" onclick="changeColor(0)" id="tu_0" name="image"/> -->
+            <div class="ub ub-f1 " style="margin-top: 1em">差</div>
+        </div>
+         <div class="ub ub-f1 ub-ver ub-ac ub-pc" style="width:19%">
+            <div class="ub bad a"  id="1" name="image" style="" ></div>
+            <!-- <img class="ub bad" style="width:70%" onclick="changeColor(0)" id="tu_0" name="image"/> -->
+            <div class="ub ub-f1" style="margin-top: 1em">一般</div>
+        </div>
+         <div class="ub ub-f1 ub-ver ub-ac ub-pc" style="width:19%">
+            <div class="ub bad a"  id="2" name="image" style="" ></div>
+            <!-- <img class="ub bad" style="width:70%" onclick="changeColor(0)" id="tu_0" name="image"/> -->
+            <div class="ub ub-f1" style="margin-top: 1em">很好</div>
+        </div>
+         <div class="ub ub-f1 ub-ver ub-ac ub-pc" style="width:19%">
+            <div class="ub bad a"  id="3" name="image" style="" ></div>
+            <!-- <img class="ub bad" style="width:70%" onclick="changeColor(0)" id="tu_0" name="image"/> -->
+            <div class="ub ub-f1" style="margin-top: 1em">满意</div>
+        </div>
+         <div class="ub ub-f1 ub-ver ub-ac ub-pc" style="width:19%">
+            <div class="ub bad a"  id="4" name="image" style="" ></div>
+            <!-- <img class="ub bad" style="width:70%" onclick="changeColor(0)" id="tu_0" name="image"/> onclick="changeColor(4)"-->
+            <div class="ub ub-f1" style="margin-top: 1em">很满意</div>
+        </div>
+       
+    </div>  
+      
+</div>
+<div class="uba bc-border uinput ub ub-f1" style="background-color: white;height:10em">
+    <textarea placeholder="条件如何？服务周到吗？环境如何，是否满意？（评论不少于15字哦>0<) " type="text" class="ub-f1"></textarea>
+</div>
+<div class="ub ub-ac ub-pj" style="height:2.5em;background-color: white;border-bottom: 1px solid #DDDDDE;color:#aaaaaa;padding-left: 1em">
+    <div class="ub ub-f1">匿名评论</div>
+    <div class="ub ">
+        <div class="radiobox umar-r" name=""><input type="radio" class="uabs ub-con" name="lv_radio"></div>
+</div>
+</div> 
+<!-- <div class="btn ub ub-ac bc-text-head ub-pc bc-btn"  id="btn1">
+	无图片按钮
+</div> -->
+
+<!-- <div class="ub ub-hor">
+    <input id="choose01" type="checkbox" name="checkbox1" class="uhide" value="">
+                    <div onclick="changeColor(0)"  class="bad"  id="tu_0"></div>
+                    <input id="choose02" type="checkbox" name="checkbox1" class="uhide" value="">
+                    <div onclick="changeColor(1)"  class="bad"  id="tu_1"></div>
+                    <input id="choose03" type="checkbox" name="checkbox1" class="uhide" value="">
+                    <div onclick="changeColor(2)"  class="bad"  id="tu_2"></div>
+                    <input id="choose04" type="checkbox" name="checkbox1" class="uhide" value="">
+                    <div onclick="changeColor(3)"  class="bad"  id="tu_3"></div>
+                    <input id="choose05" type="checkbox" name="checkbox1" class="uhide" value="">
+                    <div onclick="changeColor(4)"  class="bad"  id="tu_4"></div>
+</div> -->
+ <!-- <input id="choose01" type="checkbox" name="checkbox1" class="uhide" value="">
+                    <div onclick="changeColor(0)"  class="bad"  id="tu_0"></div>
+                    <input id="choose02" type="checkbox" name="checkbox1" class="uhide" value="">
+                    <div onclick="changeColor(1)"  class="bad"  id="tu_1"></div>
+                    <input id="choose03" type="checkbox" name="checkbox1" class="uhide" value="">
+                    <div onclick="changeColor(2)"  class="bad"  id="tu_2"></div>
+                    <input id="choose04" type="checkbox" name="checkbox1" class="uhide" value="">
+                    <div onclick="changeColor(3)"  class="bad"  id="tu_3"></div>
+                    <input id="choose05" type="checkbox" name="checkbox1" class="uhide" value="">
+                    <div onclick="changeColor(4)"  class="bad"  id="tu_4"></div> -->
+<!-- <div class="uba bc-border uinput ub ub-f1" style="background-color: white;height:10em">
+    <textarea placeholder="条件如何？服务周到吗？环境如何，是否满意？（评论不少于15字哦>0<) " type="text" class="ub-f1"></textarea>
+</div>
+<div class="ub ub-ac " style="height:2.5em;background-color: white;border-bottom: 1px solid #DDDDDE;color:#aaaaaa;padding-left: 1em">匿名评价</div> -->
+
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+     <script src="js/main.js"></script>
+    </body>
+    <script>
+    var a=0;
+         var b=0;
+        appcan.ready(function() {
+        });
+        
+        
+$('#heart').on('click','.a',function(){
+        a= $(this).attr("id");
+        b=parseInt(a)+1;
+        for(i=0;i<=a;i++){
+            $("#"+i).removeClass('bad').addClass('good');
+            //alert(i);
+        }
+        for(j=b;j<=4;j++){
+            $("#"+j).removeClass('good').addClass('bad'); 
+        }
+        //alert(b);
+      })
+       
+
+ </script>
+</html>

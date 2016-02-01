@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/myorder.css">
+        <link rel="stylesheet" href="css/ui-yang.css">
+    </head>
+    <style type="text/css">
+        .ubb-blue{
+    /*border-bottom: 0.3em  olid white;*/
+    border-bottom:solid rgba(255,255,255,0.3) 0.3em;
+}
+    </style>
+    <body class="um-vp " ontouchstart style="background-color: rgba(0,0,0,0)">
+        <!-- <div class="ub" style="height:2.5em;"></div> -->
+        <!-- <div id="toptab" class="ub  ub-pc ubb-grey" style="background-color: #0093DD;color:white;height:2.5em;">
+               <div class="ub-f1 tx-c ulev ubb-blue marl1 " id="recommend" style="margin-top: 0.7em" >推荐</div>
+               <div class="ub-f1 tx-c ulev marl1 " id="eat" style="margin-top: 0.7em">必吃</div>
+               <div class="ub-f1 tx-c ulev marl1 " id="play" style="margin-top: 0.7em">必玩</div>
+              
+               <div class="ub-f1 tx-c ulev marl1 marr1 " id="live" style="margin-top: 0.7em">必住</div>
+           </div> -->
+           
+          
+      <div class="ub ub-ver judge" id="content">
+          <ul id="imageList" style="width:100%;">
+             
+          </ul>
+          
+              
+       </div>
+       <div class="ub ub-ac ub-pc ub-ver" style="margin-top: 30%" id="load">
+           <div class="ub">
+                <img src="images/u=3698289450,3299496463&fm=21&gp=0.jpg.gif" style="width:100%"/>
+           </div>
+          <div class="ub">正在加载中~~</div>
+       </div>
+     
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/appcan.listview.js"></script>
+     <script src="js/main.js"></script>
+ </body>
+    <script>
+    
+       var j=1;
+        var pageSize=5;
+        var flag;
+        var pm = 48;
+       
+        appcan.ready(function() {
+             firstRecommend();
+             appcan.initBounce();
+             uexWindow.setPopHardwareEnable("a",0);
+        });
+        function firstRecommend(){
+            var url=ipVal+'get_recommends?pageSize=40&pageNo='+j ;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        var arr=[];
+                        var cont=0;
+                        if(data.body.landscape.length){
+                            for(var i=0;i<data.body.landscape.length;i++){
+                                newarr  =
+                                 {    "id" :data.body.landscape[i].id,
+                                     "name" : data.body.landscape[i].name,
+                                     "photo" : data.body.landscape[i].photo,
+                                     "loveNum" : data.body.landscape[i].loveNum,
+                                     "ordered" : data.body.landscape[i].ordered,
+                                     "type" :3
+                                 }                                 
+                               arr.push(newarr);
+                            }
+                        }
+                        if(data.body.wineshop.length){
+                            for(var j=0;j<data.body.wineshop.length;j++){
+                                newarr  =
+                                 {    "id" :data.body.wineshop[j].id,
+                                     "name" : data.body.wineshop[j].name,
+                                     "photo" : data.body.wineshop[j].photo,
+                                     "loveNum" : data.body.wineshop[j].loveNum,
+                                     "ordered" : data.body.wineshop[j].ordered,
+                                     "type" : 1
+                                 }
+                               arr.push(newarr);
+                            }
+                        }
+                        if(data.body.food.length){
+                            for(var k=0;k<data.body.food.length;k++){
+                                newarr  =
+                                 {    "id" :data.body.food[k].id,
+                                     "name" : data.body.food[k].foodName,
+                                     "photo" : data.body.food[k].photos,
+                                     "loveNum" : data.body.food[k].loveNum,
+                                     "ordered" : data.body.food[k].ordered,
+                                     "type" : 4
+                                 }
+                               arr.push(newarr);
+                            }
+                        }
+                       len=arr.length;
+                     //alert(len);
+                         var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                   // alert("下载中");
+                                    break;
+                                case 1:
+                                    alert("下载完成");
+                                    break;
+                                case 2:
+                                    alert("下载失败");
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {
+                                var html = "";                                
+                                var img_id_recommend=arr[cont].id; 
+                                var type=arr[cont].type;
+                               $("#load").addClass("uhide");
+                                 html+="<li style='width:100%;display: inline-block;'>"     
+                                        +"<div class='ub ub-f1 ub-hor' >"
+                                        +'<div class="ub ub-f1 ub-ver" style="margin: 0.3em 0.3em 0 0.3em" onclick="change_recommend(\'' + img_id_recommend + '\', \'' + type + '\')">'
+                                       +" <div class='ub ub-f1 ub-ver'>"
+                                         +"<img src='"+path+"' style='width:100%;height:12em; border-radius:  0.3em 0.3em 0em 0em'>"                                      
+                                        +"<div class='ub ' style='position: absolute;height:1.5em;background-color:rgba(60,60,60,0.7) ;color:white;bottom:0.3em;width:100%;'>"
+                                        +"<div class='ub' style='margin-left:0.5em'>" +arr[cont].name
+                                        +"</div>"
+                                        +"</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-hor ub-f1' style='background-color:white;height:2em;top:-0.2em;color:#aaaaaa; border-radius: 0 0 0.3em 0.3em '>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-heart-o ulev-1'>"+arr[cont].loveNum+"</div>"
+                                        +"</div>"
+                                       +" <div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-comment-o ulev-1' >评论</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-external-link ulev-1'>分享</div>"
+                                        +"</div>"
+                                       +" </div>"
+                                        +"</div>"
+                                        +"</li>" 
+                                $("#imageList").append(html);
+                                cont++;
+
+                            },
+                            fail : function(session) {
+                                //alert("session:" + JSON.stringify(session));
+                                var html = "";                                
+                                var img_id_recommend=arr[cont].id; 
+                                var type=arr[cont].type;
+                                 html+="<li style='width:100%;display: inline-block;'>"     
+                                        +"<div class='ub ub-f1 ub-hor' >"
+                                        +'<div class="ub ub-f1 ub-ver" style="margin: 0.3em 0.3em 0 0.3em" onclick="change_recommend(\'' + img_id_recommend + '\', \'' + type + '\')">'
+                                       +" <div class='ub ub-f1 ub-ver'>"
+                                         +"<img src='images/fail.png' style='width:100%;height:12em;border-radius: 0.3em 0.3em 0em 0em '>"                                      
+                                        +"<div class='ub ' style='position: absolute;height:1.5em;background-color:rgba(60,60,60,0.7) ;color:white;bottom:0.3em;width:100%; '>"
+                                        +"<div class='ub' style='margin-left:0.5em'>" +arr[cont].name
+                                        +"</div>"
+                                        +"</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-hor ub-f1' style='background-color:white;height:2em;top:-0.2em;color:#aaaaaa;border-radius: 0 0 0.3em 0.3em'>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-heart-o ulev-1'>"+arr[cont].loveNum+"</div>"
+                                        +"</div>"
+                                       +" <div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-comment-o ulev-1' >评论</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-external-link ulev-1'>分享</div>"
+                                        +"</div>"
+                                       +" </div>"
+                                        +"</div>"
+                                        +"</li>" 
+                                $("#imageList").append(html);
+                                cont++;
+                            }
+                        }
+                        cache = appcan.icache(option);                      
+                        for (var i = 0; i < len; i++) { 
+                            url_img = arr[i].photo.split("WEB-INF/");                    
+                            option.url = ipVal + url_img[1];                      
+                            cache.run(option);
+                        }
+                    }
+                },
+
+               error:function(){
+               uexWindow.toast(0, 5, "获取失败", 1500);
+            }
+            })           
+        }
+        function recommend(){
+         j++;
+           var url=ipVal+'get_recommends?pageSize=6&pageNo=' +j;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        var arr=[];
+                        var cont=0;
+                        if(data.body.landscape.length){
+                            for(var i=0;i<data.body.landscape.length;i++){
+                                newarr  =
+                                 {    "id" :data.body.landscape[i].id,
+                                     "name" : data.body.landscape[i].name,
+                                     "photo" : data.body.landscape[i].photo,
+                                     "loveNum" : data.body.landscape[i].loveNum,
+                                     "ordered" : data.body.landscape[i].ordered,
+                                     "type" :3
+                                 }
+                               arr.push(newarr);
+                            }
+                        }
+                        if(data.body.wineshop.length){
+                            for(var j=0;j<data.body.wineshop.length;j++){
+                                newarr  =
+                                 {    "id" :data.body.wineshop[j].id,
+                                     "name" : data.body.wineshop[j].name,
+                                     "photo" : data.body.wineshop[j].photo,
+                                     "loveNum" : data.body.wineshop[j].loveNum,
+                                     "ordered" : data.body.wineshop[j].ordered,
+                                     "type" : 1
+                                 }
+                               arr.push(newarr);
+                            }
+                        }
+                        if(data.body.food.length){
+                            for(var k=0;k<data.body.food.length;k++){
+                                newarr  =
+                                 {    "id" :data.body.food[k].id,
+                                     "name" : data.body.food[k].name,
+                                     "photo" : data.body.food[k].photos,
+                                     "loveNum" : data.body.food[k].loveNum,
+                                     "ordered" : data.body.food[k].ordered,
+                                     "type" : 4
+                                 }
+                               arr.push(newarr);
+                            }
+                        }
+                       len=arr.length;
+                         var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                   // alert("下载中");
+                                    break;
+                                case 1:
+                                    alert("下载完成");
+                                    break;
+                                case 2:
+                                    alert("下载失败");
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {
+                                var html = "";                                
+                                var img_id_recommend=arr[cont].id; 
+                                var type=arr[cont].type;
+                               
+                                 html+="<li style='width:100%;display: inline-block;'>"     
+                                        +"<div class='ub ub-f1 ub-hor' >"
+                                        +'<div class="ub ub-f1 ub-ver" style="margin: 0.5em" onclick="change_recommend(\'' + img_id_recommend + '\', \'' + type + '\')">'
+                                       +" <div class='ub ub-f1 ub-ver'>"
+                                        // +"<div class='ub ' style='height:10em;background-size: 100% 100%;background-image: url('"+path+"')'>"  onclick="change(\'' + curr2[1] + '\', \'' + curr2[0] + '\')+ 
+                                         +"<img src='"+path+"' style='width:100%;border-radius: 0.3em 0.3em 0em 0em '>"                                      
+                                        // +"</div>"
+                                        +"<div class='ub ' style='position: absolute;height:1.5em;background-color:rgba(60,60,60,0.5) ;color:white;bottom:0.3em;width:100%;';>"
+                                        +"<div class='ub' style='margin-left:0.5em'>" +arr[cont].name
+                                        +"</div>"
+                                        +"</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-hor  ub-f1' style='background-color:white;height:2em;top:-0.2em;color:#aaaaaa;border-radius: 0 0 0.3em 0.3em'>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-heart-o ulev-1'>"+arr[cont].loveNum+"</div>"
+                                        +"</div>"
+                                       +" <div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-comment-o ulev-1' >评论</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-external-link ulev-1'>分享</div>"
+                                        +"</div>"
+                                       +" </div>"
+                                        +"</div>"
+                                        +"</li>" 
+                                $("#imageList").append(html);
+                                cont++;
+                            },
+                            fail : function(session) {
+                               var html = "";                                
+                                var img_id_recommend=arr[cont].id; 
+                                var type=arr[cont].type;
+                               
+                                 html+="<li style='width:100%;display: inline-block;'>"     
+                                        +"<div class='ub ub-f1 ub-hor' >"
+                                        +'<div class="ub ub-f1 ub-ver" style="margin: 0.5em" onclick="change_recommend(\'' + img_id_recommend + '\', \'' + type + '\')">'
+                                       +" <div class='ub ub-f1 ub-ver'>"
+                                        // +"<div class='ub ' style='height:10em;background-size: 100% 100%;background-image: url('"+path+"')'>"  onclick="change(\'' + curr2[1] + '\', \'' + curr2[0] + '\')+ 
+                                         +"<img src='images/fail.png' style='width:100%;border-radius: 0.3em 0.3em 0em 0em '>"                                      
+                                        // +"</div>"
+                                        +"<div class='ub ' style='position: absolute;height:1.5em;background-color:rgba(60,60,60,0.5) ;color:white;bottom:0.3em;width:100%; '>"
+                                        +arr[cont].name
+                                        +"</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-hor  ub-f1' style='background-color:white;height:2em;top:-0.2em;color:#aaaaaa;border-radius: 0 0 0.3em 0.3em'>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-heart-o ulev-1'>"+arr[cont].loveNum+"</div>"
+                                        +"</div>"
+                                       +" <div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-comment-o ulev-1' >评论</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-external-link ulev-1'>分享</div>"
+                                        +"</div>"
+                                       +" </div>"
+                                        +"</div>"
+                                        +"</li>" 
+                                $("#imageList").append(html);
+                                cont++;
+                            }
+                        }
+                        cache = appcan.icache(option);                      
+                        for (var i = 0; i < len; i++) { 
+                           //alert(data.body.landscaps[i].id);
+                            // appcan.locStorage.setVal("img_id",data.body.landscaps[i].id); .landscaps                    
+                            url_img = arr[i].photo.split("WEB-INF/");                    
+                            option.url = ipVal + url_img[1];                      
+                            cache.run(option);
+                        }
+                    }
+                },
+
+               error:function(){
+               uexWindow.toast(0, 5, "获取失败", 1500);
+            }
+            })           
+      
+        }
+       function firstGetEat(){
+            appcan.locStorage.setVal('flag',2);
+             $("#imageList").html('');
+             var url=ipVal+'food_must?pageSize=6&pageNo=1';
+             appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                         temp = 0;
+                        var len=data.body.must.length;
+                        var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                   //alert("下载中");
+                                    break;
+                                case 1:
+                                    alert("下载完成");
+                                    break;
+                                case 2:
+                                    alert("下载失败");
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {                              
+                              
+                                var html = "";
+                                var img_id_eat=data.body.must[temp].id;  
+                                var loveNum= data.body.must[temp].loveNum;
+                                html+="<li style='width:49%;display: inline-block;'>"
+                                        +"<div class='ub ub-f1 ub-hor' >"
+                                        +"<div class='ub ub-f1 ub-ver' style='margin: 0.5em' onclick='change_eat(" + img_id_eat+ ")'>"
+                                       +" <div class='ub ub-f1 ub-ver'>"
+                                         +"<img src='"+path+"' style='width:100%;border-radius: 0.3em 0.3em 0em 0em '>"                                      
+                                        +"<div class='ub ' style='position: absolute;height:1.5em;background-color:rgba(60,60,60,0.7) ;color:white;bottom:0.3em;width:100%;'>"
+                                       +"<div class='ub' style='margin-left:0.5em'>"  +data.body.must[temp].foodName
+                                        +"</div>"
+                                        +"</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-hor  ub-f1 ub-pc' style='background-color:white;height:2em;top:-0.2em;color:#aaaaaa;border-radius: 0 0 0.3em 0.3em'>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-heart-o ulev-1'>"+data.body.must[temp].loveNum+"</div>"
+                                        +"</div>"
+                                       +" <div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-comment-o ulev-1' >评论</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-external-link ulev-1'>分享</div>"
+                                        +"</div>"
+                                       +" </div>"
+                                        +"</div>"
+                                        +"</li>"
+                                temp++;
+                                $("#imageList").append(html);
+                        },
+                            fail : function(session) {
+                                 var html = "";
+                                var img_id_eat=data.body.must[temp].id;  
+                                var loveNum= data.body.must[temp].loveNum;
+                                html+="<li style='width:49%;display: inline-block;'>"
+                                        +"<div class='ub ub-f1 ub-hor' >"
+                                        +"<div class='ub ub-f1 ub-ver' style='margin: 0.5em' onclick='change_eat(" + img_id_eat+ ")'>"
+                                       +" <div class='ub ub-f1 ub-ver'>"
+                                         +"<img src='images/food.jpg' style='width:100%;border-radius: 0.3em 0.3em 0em 0em'>"                                      
+                                        +"<div class='ub ' style='position: absolute;height:1.5em;background-color:rgba(60,60,60,0.7) ;color:white;bottom:0.3em;width:100%; '>"
+                                       +"<div class='ub' style='margin-left:0.5em'>"  +data.body.must[temp].foodName
+                                        +"</div>"
+                                        +"</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-hor  ub-f1 ub-pc' style='background-color:white;height:2em;top:-0.2em;color:#aaaaaa;border-radius: 0 0 0.3em 0.3em'>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-heart-o ulev-1'>"+data.body.must[temp].loveNum+"</div>"
+                                        +"</div>"
+                                       +" <div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-comment-o ulev-1' >评论</div>"
+                                        +"</div>"
+                                        +"<div class='ub ub-f1 ub-ac ub-pc'>"
+                                        +"<div class='fa fa-external-link ulev-1'>分享</div>"
+                                        +"</div>"
+                                       +" </div>"
+                                        +"</div>"
+                                        +"</li>"
+                                temp++;
+                                $("#imageList").append(html);
+                            }
+                        }
+                        cache = appcan.icache(option);                      
+                        for (var i = 0; i < len; i++) { 
+                            url_img = data.body.must[i].photos.split("WEB-INF/"); 
+                            option.url = ipVal+ url_img[1];                      
+                            cache.run(option);
+                        }
+                        
+                    }
+                },
+              
+              error:function(){
+               uexWindow.toast(0, 5, "获取失败", 1500);
+            }
+        })
+       }
+       
+     
+         
+        function clear(){
+             $("#imageList").html('');
+        }
+         appcan.button(".ulev", "btn-act", function() {
+           $("#toptab").children().removeClass("ubb-blue");
+           $(this).addClass("ubb-blue");
+        })
+           $("#recommend").click(function(){
+            clear();
+            page4=1;
+            appcan.locStorage.setVal('flag',1);
+           firstRecommend();
+            
+         }) 
+          $("#eat").click(function(){
+             clear();
+             page0=1;
+              appcan.locStorage.setVal('flag',2);
+             firstGetEat();         
+         
+         }) 
+          $("#play").click(function(){
+             clear();
+             page1=1;
+             appcan.locStorage.setVal('flag',3);
+             firstGetPlay();
+           
+         })
+
+         $("#live").click(function(){
+             clear();
+             page3=1
+              appcan.locStorage.setVal('flag',4);
+             firstGetLive();
+         })        
+      
+           function change_recommend(id,type){
+               var my_mytype=type;
+               var id=id;
+               if(type==1){
+                  appcan.locStorage.setVal("lhotel_id",id); 
+                  appcan.window.open("hotel_detail", "hotel_detail.html",10);
+               }
+               else if(type==3){
+                   appcan.locStorage.setVal("lview_id",id); 
+                   appcan.window.open("lvdetail.html", "lvdetail.html",10);  
+               }
+               if(type==4){
+                   appcan.locStorage.setVal("lfood_id",id);   
+                   appcan.window.open("food_details", "food_details.html",10);
+               }
+               
+               
+           }
+         
+ </script>
+</html>

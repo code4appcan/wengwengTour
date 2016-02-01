@@ -1,0 +1,93 @@
+.bc-l1 {
+    background-color: #15C7CB;
+}
+
+.bc-l2 {
+    background-color: #FF916A;
+}
+
+.bc-l3 {
+    background-color: #FFFBDB;
+}
+
+.bc-l4 {
+    background-color: #E3FFFF;
+}
+
+.bc-l5 {
+    background-color: #E7EFF0;
+}
+
+.bc-w {
+    background-color:#FFFFFF ;
+}
+
+.lm1{
+    margin-left: 2em;
+    margin-right: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    }
+
+.lm2{
+    margin-left: 1em;
+    margin-right: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.umh8 {
+    min-height: 5em;
+}
+
+.bc-t {
+    color: red;
+}  
+
+.btn-l {
+    padding: .2em 0.9em;
+    min-height: 2.2em;
+    font-size: 1em;
+    
+}
+.ulev-5 {
+    font-size: 2em !important;
+}
+
+
+
+
+.bc-tm{background-color:rgba(0,0,0,0.3)};
+
+.uinput1 input, .uinput textarea {
+    margin: 0px;
+    
+    width: 20%;
+    height: 100%;
+    -webkit-appearance: none;
+    padding: .4em 0;
+    line-height: 1.2em;
+    
+    text-decoration: none;
+    font-size: 1em;
+    display: block;
+}
+
+
+.uinput2 input, .uinput textarea {
+    margin: 0px;
+    
+    width: 20%;
+    height: 100%;
+    -webkit-appearance: none;
+    padding: .4em 0;
+    line-height: 1.2em;
+    
+    text-decoration: none;
+    font-size: 1em;
+    display: block;
+}
+
+.umar2{
+    margin: 3em 2em 3em 2em;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart style="background-color: white">
+      <div id="listview1" class=" bc-border ubb c-wh umar-at1" style="">
+                    <ul>
+                        <li class="ubb ub bc-border bc-text ub-ac lis"  id="order" >
+                           
+                            <div class="lv_title ub-f1 ulev" style="margin-left: 3em;color:#00A1EA">门票问题</div>
+                            <div class="tx-r sc-text ulev-1 umar-r lv_subTitle"></div>
+                            <div class="fa fa-angle-right ulev2 sc-text" style="margin-right: 1em;color:#00A1EA"></div>
+                        </li>
+                        <li class="ubb ub bc-border bc-text ub-ac lis" data-index="1" id="hotel">
+                            
+                            <div class="lv_title ub-f1  ulev" style="margin-left: 3em;color:#00A1EA">酒店问题</div>
+                            <div class="tx-r sc-text ulev-1 umar-r lv_subTitle"></div>
+                            <div class="fa fa-angle-right ulev2 sc-text" style="margin-right: 1em;color:#00A1EA"></div>
+                        </li>
+                        <li class=" ubb ub bc-text ub-ac lis bc-border" data-index="1" id="hotline">
+                            
+                            <div class="lv_title ub-f1  ulev" style="margin-left: 3em;color:#00A1EA">服务热线</div>
+                            <div class="tx-r sc-text ulev-1 umar-r lv_subTitle"></div>
+                            <div class="fa fa-angle-right ulev2 sc-text" style="margin-right: 1em;color:#00A1EA"> </div>
+                        </li>
+                        <li class="ub bc-text ub-ac lis" data-index="1" id="other">
+                            
+                            <div class="lv_title ub-f1  ulev" style="margin-left: 3em;color:#00A1EA">其他问题</div>
+                            <div class="tx-r sc-text ulev-1 umar-r lv_subTitle"></div>
+                            <div class="fa fa-angle-right ulev2 sc-text" style="margin-right: 1em;color:#00A1EA"> </div>
+                        </li>
+                        
+                    </ul>
+                </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+     <script src="js/main.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+        });
+        appcan.button("#order","btn-act",function(){
+           appcan.window.open("order_question","order_question.html",10);
+        });
+         appcan.button("#hotel","btn-act",function(){
+           appcan.window.open("hotel_question","hotel_question.html",10);
+        });
+         appcan.button("#hotline","btn-act",function(){
+           appcan.window.open("hotline","hotline.html",10);
+        });
+    </script>
+</html>

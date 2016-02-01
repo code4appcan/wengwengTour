@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <style type="text/css">
+        .good {
+            background-image: url('images/comment_redstar.png');
+            background-size: 100% 100%;
+            height: 2em;
+            width: 2em;
+        }
+        .bad {
+            background-image: url('images/comment_star.png');
+            -webkit-background-size: 100% 100%;
+            background-size: 100% 100%;
+            height: 2em;
+            width: 2em;
+        }
+    </style>
+    <body class="um-vp " ontouchstart style="background-color: #DDDDDE;" >
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head" style="height: 2.8em">
+                <div class="nav-btn" id="nav-left">
+                    <div class="fa fa-angle-left fa-2x"></div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0" id="headerName"></h1>
+                <div class="nav-btn nav-bt ulev-3" id="publish">
+                    发布
+                </div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l">
+                <div class="ub ub-ac ub-pc" style="height:10em;color:#aaaaaa;">
+                    <div class="ub ub-hor ub-ac ub-pc" style="height:5em;width:75%;margin-left: 2em;margin-right: 2em"  id="heart">
+                        <div class="ub ub-f1 ub-ver ub-ac ub-pc" style="width:19%">
+                            <div class="ub bad a"  id="0" name="image" style="" ></div>
+                            <!-- <img class="ub bad" style="width:70%" onclick="changeColor(0)" id="tu_0" name="image"/> -->
+                            <div class="ub ub-f1 " style="margin-top: 1em">
+                                差
+                            </div>
+                        </div>
+                        <div class="ub ub-f1 ub-ver ub-ac ub-pc" style="width:19%">
+                            <div class="ub bad a"  id="1" name="image" style="" ></div>
+                            <!-- <img class="ub bad" style="width:70%" onclick="changeColor(0)" id="tu_0" name="image"/> -->
+                            <div class="ub ub-f1" style="margin-top: 1em">
+                                一般
+                            </div>
+                        </div>
+                        <div class="ub ub-f1 ub-ver ub-ac ub-pc" style="width:19%">
+                            <div class="ub bad a"  id="2" name="image" style="" ></div>
+                            <!-- <img class="ub bad" style="width:70%" onclick="changeColor(0)" id="tu_0" name="image"/> -->
+                            <div class="ub ub-f1" style="margin-top: 1em">
+                                很好
+                            </div>
+                        </div>
+                        <div class="ub ub-f1 ub-ver ub-ac ub-pc" style="width:19%">
+                            <div class="ub bad a"  id="3" name="image" style="" ></div>
+                            <!-- <img class="ub bad" style="width:70%" onclick="changeColor(0)" id="tu_0" name="image"/> -->
+                            <div class="ub ub-f1" style="margin-top: 1em">
+                                满意
+                            </div>
+                        </div>
+                        <div class="ub ub-f1 ub-ver ub-ac ub-pc" style="width:19%">
+                            <div class="ub bad a"  id="4" name="image" style="" ></div>
+                            <!-- <img class="ub bad" style="width:70%" onclick="changeColor(0)" id="tu_0" name="image"/> onclick="changeColor(4)"-->
+                            <div class="ub ub-f1" style="margin-top: 1em">
+                                很满意
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="uba bc-border uinput ub ub-f1" style="background-color: white;height:10em">
+                    <textarea placeholder="条件如何？服务周到吗？环境如何，是否满意？（评论不少于15字哦>0<) " type="text" class="ub-f1" id="content"></textarea>
+                </div>
+                <div class="ub ub-ac ub-pj" style="height:2.5em;background-color: white;border-bottom: 1px solid #DDDDDE;color:#aaaaaa;padding-left: 1em">
+                    <div class="ub ub-f1">
+                        匿名评论
+                    </div>
+                    <div class="ub ">
+                        <div class="checkbox umar-r">
+                            <input type="checkbox" class="uabs ub-con" id="isUserName" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--content结束-->
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    <script>
+        var user_id = appcan.locStorage.getVal("user_id");
+        var type = appcan.locStorage.getVal("type");
+        var typeid = appcan.locStorage.getVal("typeid");
+        var redHeartNum = 0;
+        var headerName = appcan.locStorage.getVal("headerName");
+        var commentFlag = appcan.locStorage.getVal("commentFlag");
+        var userName;
+        $("#headerName").html(headerName);
+        appcan.ready(function() {
+            var titHeight = $('#header').offset().height;
+            //appcan.frame.open("content", "publish_comment_content.html", 0, titHeight);
+            window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+            }
+            var regUrl = ipVal + 'get_user?id=' + user_id;
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'POST',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        userName = data.body.account.userName;
+                    } else {
+                        uexWindow.toast(0, 5, data.error, 1500);
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+        });
+        appcan.button("#nav-left", "btn-act", function() {
+            appcan.window.close(-1);
+        })
+        appcan.button("#publish", "btn-act", function() {
+            var comment = $("textarea").val();
+            //alert(comment);
+            if ($("#isUserName").attr("checked") == true) {
+
+                var url = ipVal + 'save_comments?';
+            } else {
+                var url = ipVal + 'save_comments?userName=' + userName;
+            }
+            appcan.request.ajax({
+                url : url,
+                type : 'post',
+                dataType : 'json',
+                data : {
+                    userid : user_id,
+                    typeid : typeid,
+                    type : type,
+                    comment : comment,
+                    score : redHeartNum
+                    // typeName : 'yushulinfeng'
+                },
+                success : function(data) {
+                    if (200 == data.status) {
+                        //alert(data.status);
+                        if (commentFlag == 1) {
+                            appcan.locStorage.remove("commentFlag");
+                            appcan.window.openToast("发表成功", 5000, 5);
+                            uexWindow.evaluatePopoverScript('comment_List', 'content', 'firstShow()');
+                        } else {
+                            appcan.window.openToast("发表成功", 5000, 5);
+                            uexWindow.evaluatePopoverScript('food_details', 'content', 'firstShow()');
+                        }
+
+                        appcan.window.close(-1);
+                    } else {
+                        alert("发表失败！");
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+
+        })
+
+        $('#heart').on('click', '.a', function() {
+            a = $(this).attr("id");
+            redHeartNum = parseInt(a) + 1;
+            for ( i = 0; i <= a; i++) {
+                $("#" + i).removeClass('bad').addClass('good');
+                //alert(i);
+            }
+            for ( j = redHeartNum; j <= 4; j++) {
+                $("#" + j).removeClass('good').addClass('bad');
+            }
+            //alert(b);
+        })
+
+    </script>
+</html>

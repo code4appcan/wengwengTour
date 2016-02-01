@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="uba bc-border uinput ub ub-f1" style="background-color: white;height:15em">
+            <textarea placeholder="随时记录巴东旅游所见所感。。。" type="text" class="ub-f1" id="contents"></textarea>
+        </div>
+        <div class="ub">
+        <div class="ub ub-f1"></div>
+        <div class="ub ub-ac ub-pc" id="dataControl" style="width:5.8em;height:2em;background-color: #00A1EA;color:white;border-radius: 0.6em;margin-top: 1em">
+            选择日期
+        </div>
+        </div>
+
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            uexControl.cbOpenDatePicker = function(opId, dataType, data) {                              
+                var obj = eval('(' + data + ')');                
+                var date = obj.year + "-" + obj.month+"-"+obj.day;
+                $("#dataControl").html(date); 
+                var tourContents= $("#contents").val(); 
+                appcan.locStorage.setVal("Data",date);                 
+               appcan.locStorage.setVal("TourContents",tourContents);
+              // alert(tourContents);            
+            }
+        });
+        appcan.button("#dataControl", "btn-act", function() {
+            uexControl.openDatePicker();
+        })
+
+
+    </script>
+</html>

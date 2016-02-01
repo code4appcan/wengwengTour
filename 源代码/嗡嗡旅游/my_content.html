@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+         <link rel="stylesheet" href="css/gstyle.css">
+         <style type="text/css">
+             li{
+                 
+             }
+         </style>
+    </head>
+    <body class="um-vp bc-bg" style="background-color: white" ontouchstart>
+       <div class="ub ub-ver" >
+           <div class="">
+               <div id="listview1" class="ubt bc-border ubb c-wh umar-at1" style="top: 2.8em">
+                    <ul>
+                        <li class="ubb ub bc-border bc-text ub-ac lis"  id="order">
+                            <div class="lis-icon-s ub ub-ac ub-pc" >
+                                <img src="images/dingdan.png" class="" style="width: 1.3em"/>
+                            </div>
+                            <div class="lv_title ub-f1 ulev">我的订单</div>
+                            <div class="tx-r sc-text ulev-1 umar-r lv_subTitle"></div>
+                            <div class="fa fa-angle-right ulev2 sc-text"></div>
+                        </li>
+                        <li class="ub bc-text ub-ac lis" data-index="1" id="collect">
+                            <div class="lis-icon-s   ub ub-ac ub-pc" >
+                                <img src="images/shoucang.png" class="" style="width: 1.3em"/>
+                            </div>
+                            <div class="lv_title ub-f1  ulev">我的收藏</div>
+                            <div class="tx-r sc-text ulev-1 umar-r lv_subTitle"></div>
+                            <div class="fa fa-angle-right ulev2 sc-text"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="listview2" class="ubt bc-border ubb c-wh umar-at1" style="margin-top: 4.5em">
+                    <ul>
+                        <li class="ubb ub bc-border bc-text ub-ac lis"  id="help">
+                            <div class="lis-icon-s ub ub-ac ub-pc" >
+                                <img src="images/phone.png" class="" style="width: 1.3em"/>
+                            </div>
+                            <div class="lv_title ub-f1 ulev">帮助中心</div>
+                            <div class="tx-r sc-text ulev-1 umar-r lv_subTitle"></div>
+                            <div class="fa fa-angle-right ulev2 sc-text"></div>
+                        </li>
+                        <li class="ub bc-text ub-ac lis"  id="view">
+                            <div class="lis-icon-s   ub ub-ac ub-pc" >
+                                <img src="images/shezhi.png" class="" style="width: 1.3em"/>
+                            </div>
+                            <div class="lv_title ub-f1  ulev">意见反馈</div>
+                            <div class="tx-r sc-text ulev-1 umar-r lv_subTitle"></div>
+                            <div class="fa fa-angle-right ulev2 sc-text"></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>   
+           
+       </div>
+
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.initBounce();
+        })
+      
+        appcan.button("#order","btn-act",function(){
+            alert("我的订单");
+        });
+         appcan.button("#collect","btn-act",function(){
+            alert("我的收藏");
+        });
+        appcan.button("#help","btn-act",function(){
+            alert("帮助中心");
+        });
+        appcan.button("#view","btn-act",function(){
+            alert("意见反馈");
+        });
+        
+    </script>
+</html>

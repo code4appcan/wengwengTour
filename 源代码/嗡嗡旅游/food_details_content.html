@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+
+    </head>
+    <style type="text/css">
+        .aa {
+            -webkit-line-clamp: 2;
+        }
+        .pinglun_1 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+        .a {
+            -webkit-line-clamp: 4;
+        }
+        #introduction {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+       
+        .ulev1 {
+            font-size: 0.9em !important;
+        }
+        .ulev1+ div {
+            font-size: 0.8em;
+        }
+
+
+    </style>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div class="ub ub-ver" >
+            <div class="ub ub-f1 ub-ver" style="background-color: white;padding: 0.5em">
+                <div class="ub ub-f1 " style="background-size: 100% 100%;background-repeat: no-repeat;height:22em;width:100%" id="img">
+
+                </div>
+
+                <div class="ub ub-f1 ulev-1  ub-ver" style="margin-top: 2em;line-height: 1.5em" >
+                    <div class="ub a" id="introduction">
+                        <!-- 美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介美食简介 -->
+                    </div>
+                    <div class="ub ub-f1 ub-ac ub-pc uhide" id="introductionImg">
+                        <img src="images/xiangxia.png" style="width: 1em;margin-top: 0.8em" onclick='firstDown()'/>
+                    </div>
+                </div>
+            </div>
+            <div class="ub ub-ver ulev-1" style="background-color: white;margin-top: 0.4em;" id="address">
+
+            </div>
+            <div class="ub ub-ac" style="height:2em;margin-left: 0.4em">
+                共<span id="commentNo" style="color:red"></span>条评论
+            </div>
+            <ul style="" id="commentList">
+
+            </ul>
+        </div>
+
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    <script>
+        var food_id = appcan.locStorage.getVal("lfood_id");
+        var j = 1;
+        var len1;
+        var len2;
+        //var type=appcan.locStorage.getVal("type");appcan.locStorage.getVal("lfood_id");
+        //var typeid=appcan.locStorage.getVal("typeid");
+        //user_id = appcan.locStorage.getVal("user_id");
+
+        appcan.ready(function() {
+            appcan.initBounce();
+            firstShow();
+            appcan.window.setBounce({
+                bounceType : "1",
+                downEndCall : function(type) {
+                    show();
+                    setTimeout(function() {
+                        appcan.window.resetBounceView(1);
+                    }, 1000);
+                }
+            })
+
+        });
+        function firstShow() {
+            var url = ipVal + 'get_food?type=4&pageSize=10&typeid=' + food_id + "&pageNo=" + j;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        appcan.locStorage.setVal("type", 4);
+                        appcan.locStorage.setVal("typeid", food_id);
+                        var introduction = data.body.food.introduction;
+                        //alert(data.body.food.diningName);
+                        $("#introduction").html(introduction);
+                        $("#introductionImg").removeClass("uhide");
+                        
+                        var diningName=data.body.food.diningName;
+                        if(diningName==null){
+                            diningName="暂无";
+                        }
+                        var html = "<div class='ub' style='margin:1em'>推荐商家：" + diningName + "</div>";
+                        if(diningName!="暂无"){
+                            var PHONE=data.body.food.phone;
+                            var address=data.body.food.address;
+                            if(PHONE==null){PHONE="暂无";}
+                            if(address==null){address="暂无";}
+                            html += "<div class='ub' style='margin:0 1em 1em 1em '>电话：" + PHONE + "</div>"
+                                +"<div class='ub' style='margin:0 1em 1em 1em'>地址："+address+"</div>";
+                        }
+                        $("#address").html(html);
+                        var IpUrl = ipVal + 'get_comments?type=4&pageSize=5&pageNo=1&typeid=' + food_id;
+                        appcan.request.ajax({
+                            url : IpUrl,
+                            type : 'get',
+                            dataType : 'json',
+                            success : function(data) {
+                                if (200 == data.status) {
+                                    /*diningName推荐商家   phone商家电话    address商家地址 */
+                                    $("#commentList").html('');
+                                    var len1 = data.body.comments.length;
+                                    $("#commentNo").html(len1);
+                                    for (var j = 0; j < len1; j++) {
+                                        var name = data.body.comments[j].userName;
+                                        if (name == null) {
+                                            name = "匿名";
+                                        }
+                                        var star = data.body.comments[j].score;
+                                        var comment = data.body.comments[j].comment;
+                                        var time = data.body.comments[j].cTime;
+                                        var date = new Date(time);
+                                        Y = date.getFullYear() + '-';
+                                        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                                        D = date.getDate() + ' ';
+                                        var Time = Y + M + D;
+                                        var html = '';
+                                        html += '<li class="ub ub-f1 ub-ver" style="background-color: white;border-bottom: 1px solid #B5B6B6">' + '<div class="ub ub-hor " style="margin: 0.5em">' 
+                                        + "<div class='ub ub-ac ub-pc' style=\"background-image: url('images/user1.png');width: 1.2em;background-size: 100% 100%;height:1em\">" 
+                                        + '</div>' + '<div class="ub ub-f1" style="margin-left: 0.8em">' + name + '</div>' + '<div class="ub ub-f1">' + Time + '</div>' + '<div style="background-color:#00A1EA;width:4em;height:1.5em;color:white;border-radius: 0.5em" class=" ub ub-ac ub-pc ulev-1 ">第' + (j + 1) + '楼' + '</div>' + '</div>' + '<div class="ub ub-f1 ulev-1 aa pinglun_1" id="pinglun_' + j + '" style="margin-top: 0.5em;line-height: 1.5em;margin: 0.5em"> ' + comment + '</div>' + '<div class="ub ub-f1 ub-ac ub-pc" >' + "<img src='images/xiangxia.png' style='width: 1em;margin-top: 0.8em'  onclick='down(" + j + ")' />" + '</div>'
+                                        $("#commentList").append(html);
+                                    }
+                                }
+                            },
+                            error : function(xhr, type) {
+                                //alert('连接失败!')id='down"+j+"'
+                            }
+                        })
+
+                        var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                    break;
+                                case 1:
+                                    break;
+                                case 2:
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {
+                                //alert(path);
+
+                                $("#img").css("background-image", "url('" + path + "')");
+                            },
+                            fail : function(session) {
+                                //alert("session:" + JSON.stringify(session));
+                                //alert("Download Fail");
+                            }
+                        }
+                        cache = appcan.icache(option);
+                        var url_img = data.body.food.photos.split("WEB-INF/");
+                        //document.write(url_img);
+                        option.url = ipVal + url_img[1];
+                        //document.write(option.url);
+                        cache.run(option);
+
+                    }
+                },
+
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+        }
+
+        function show() {
+            j++;
+            var IpUrl = ipVal + 'get_comments?type=4&pageSize=5&typeid=' + food_id + "&pageNo=" + j;
+            appcan.request.ajax({
+                url : IpUrl,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        var len = data.body.comments.length;
+                        var len1 = parseInt($("#commentNo").html());
+                        len2 = parseInt($("#commentNo").html()) + len;
+                        $("#commentNo").html(len2);
+                        if (len == 0) {
+                            appcan.window.openToast("没有更多数据", 5000, 5);
+                        } else {
+                            if (200 == data.status) {
+                        appcan.locStorage.setVal("type", 4);
+                        appcan.locStorage.setVal("typeid", food_id);
+                        var introduction = data.body.food.introduction;
+                        //alert(data.body.food.diningName);
+                        $("#introduction").html(introduction);
+                        $("#introductionImg").removeClass("uhide");
+                        
+                        var diningName=data.body.food.diningName;
+                        if(diningName==null){
+                            diningName="暂无";
+                        }
+                        var html = "<div class='ub' style='margin:1em'>推荐商家：" + diningName + "</div>";
+                        if(diningName!="暂无"){
+                            var PHONE=data.body.food.phone;
+                            var address=data.body.food.address;
+                            if(PHONE){PHONE="暂无";}
+                            if(address){address="暂无";}
+                            html += "<div class='ub' style='margin:0 1em 1em 1em '>电话：" + PHONE + "</div>"
+                                +"<div class='ub' style='margin:0 1em 1em 1em'>地址:"+address+"</div>";
+                        }
+                        $("#address").html(html);
+                        var IpUrl = ipVal + 'get_comments?type=4&pageSize=5&pageNo=1&typeid=' + food_id;
+                        appcan.request.ajax({
+                            url : IpUrl,
+                            type : 'get',
+                            dataType : 'json',
+                            success : function(data) {
+                                if (200 == data.status) {
+                                    /*diningName推荐商家   phone商家电话    address商家地址 */
+                                    $("#commentList").html('');
+                                    var len1 = data.body.comments.length;
+                                    $("#commentNo").html(len1);
+                                    for (var j = 0; j < len1; j++) {
+                                        var name = data.body.comments[j].userName;
+                                        if (name == null) {
+                                            name = "匿名";
+                                        }
+                                        var star = data.body.comments[j].score;
+                                        var comment = data.body.comments[j].comment;
+                                        var time = data.body.comments[j].cTime;
+                                        var date = new Date(time);
+                                        Y = date.getFullYear() + '-';
+                                        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                                        D = date.getDate() + ' ';
+                                        var Time = Y + M + D;
+                                        var html = '';
+                                        html += '<li class="ub ub-f1 ub-ver" style="background-color: white;border-bottom: 1px solid #B5B6B6">' + '<div class="ub ub-hor " style="margin: 0.5em">' + "<div class='ub ub-ac ub-pc' style=\"background-image: url('images/user1.png');width: 1.2em;background-size: 100% 100%;height:1em\">" + '</div>' + '<div class="ub ub-f1" style="margin-left: 0.8em">' + name + '</div>' + '<div class="ub ub-f1">' + Time + '</div>' + '<div style="background-color:#00A1EA;width:4em;height:1.5em;color:white;border-radius: 0.5em" class=" ub ub-ac ub-pc ulev-1 ">第' + (j + 1) + '楼' + '</div>' + '</div>' + '<div class="ub ub-f1 ulev-1 aa pinglun_1" id="pinglun_' + j + '" style="margin-top: 0.5em;line-height: 1.5em;margin: 0.5em"> ' + comment + '</div>' + '<div class="ub ub-f1 ub-ac ub-pc" >' + "<img src='images/xiangxia.png' style='width: 1em;margin-top: 0.8em'  onclick='down(" + j + ")' />" + '</div>'
+                                        $("#commentList").append(html);
+                                    }
+                                }
+                            },
+                            error : function(xhr, type) {
+                                //alert('连接失败!')id='down"+j+"'
+                            }
+                        })
+
+                        var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                    break;
+                                case 1:
+                                    break;
+                                case 2:
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {
+                                //alert(path);
+
+                                $("#img").css("background-image", "url('" + path + "')");
+                            },
+                            fail : function(session) {
+                                //alert("session:" + JSON.stringify(session));
+                                //alert("Download Fail");
+                            }
+                        }
+                        cache = appcan.icache(option);
+                        var url_img = data.body.food.photos.split("WEB-INF/");
+                        //document.write(url_img);
+                        option.url = ipVal + url_img[1];
+                        //document.write(option.url);
+                        cache.run(option);
+
+                    }
+                        }
+
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')id='down"+j+"'
+                }
+            })
+        }
+
+        function down(num) {
+            $("#pinglun_" + num).toggleClass("aa");
+            // alert(num);
+        }
+
+        function firstDown() {
+            $("#introduction").toggleClass("a");
+        }
+
+
+        appcan.button("#more", "ani-act", function() {
+            alert("更多评论");
+        });
+
+    </script>
+</html>

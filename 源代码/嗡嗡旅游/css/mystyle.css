@@ -1,0 +1,77 @@
+.icon1_act {
+    height: 1em;
+    width: 1em;
+    background-image: url('../images/index_2.png');
+    background-size: cover;
+}
+.icon2_act {
+    height: 1em;
+    width: 1em;
+    background-image: url('../images/map_2.png');
+    background-size: cover;
+}
+.icon3_act {
+    height: 1em;
+    width: 1em;
+    background-image: url('../images/find_2.png');
+    background-size: cover;
+}
+.icon4_act {
+    height: 1em;
+    width: 1em;
+    background-image: url('../images/my.png');
+    background-size: cover;
+}
+
+.icon1 {
+    height: 1em;
+    width: 1em;
+    background-image: url('../images/index.png');
+    background-size: cover;
+}
+.icon2 {
+    height: 1em;
+    width: 1em;
+    background-image: url('../images/map_1.png');
+    background-size: cover;
+}
+.icon3 {
+    height: 1em;
+    width: 1em;
+    background-image: url('../images/find.png');
+    background-size: cover;
+}
+.icon4 {
+    height: 1em;
+    width: 1em;
+    background-image: url('../images/my_2.png');
+    background-size: cover;
+}
+.footercolor {
+    color: #373737;
+}
+
+.tp-map {
+    background-image: url('../images/index_2.png');
+}
+.lhome-act{
+  background-image: url('../images/index.png');  
+}
+.tp-talk {
+    background-image: url('../images/map_1.png');
+}
+.map-act{
+   background-image: url('../images/map_2.png'); 
+}
+.tp-set{
+    background-image: url('../images/find.png');
+}
+.set-act{
+    background-image: url('../images/find_2.png');
+}
+.tp-my{
+   background-image: url('../images/my_2.png'); 
+}
+.my-act{
+    background-image: url('../images/my.png'); 
+}

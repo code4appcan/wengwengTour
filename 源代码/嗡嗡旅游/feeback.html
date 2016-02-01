@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+    </head>
+    <style type="text/css">
+        .item {
+
+            background-color: white;
+            border: 1px solid #00A1EA;
+            color: #00A1EA
+        }
+        .change {
+            color: white;
+            background-color: #00A1EA;
+        }
+
+    </style>
+    <body class="um-vp " ontouchstart>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head">
+                <div class="nav-btn" id="left">
+                    <div class="fa fa-angle-left fa-2x"></div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">意见反馈</h1>
+                <div class="nav-btn nav-bt" id="right">发表</div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l">
+                <div class="ub ub-ver">
+                    <div class="ub ub-f1 ub-ac " style="height:3em; ">
+                        <div class="ub ulev-1" style="margin-left: 1.5em;">
+                            您是在哪里遇到的问题？
+                        </div>
+                    </div>
+                    <div class="ub ub-f1 ub-ac ub-pc" style="height:3em; ">
+                        <div class="ub ub-ac ub-pc item"  id="ticket" style=" height:1.8em;width:19%; margin: 2.6%;">
+                            门票
+                        </div>
+                        <div class="ub item ub-ac ub-pc"  id="hotel" style=" height:1.8em;width:19%; margin: 2.6%;">
+                            酒店
+                        </div>
+                        <div class="ub item ub-ac ub-pc"  id="move" style=" height:1.8em;width:19%; margin: 2.6%;">
+                            客户端
+                        </div>
+                        <div class="ub item ub-ac ub-pc"  id="other" style=" height:1.8em;width:19%; margin: 2.6%;">
+                            其他
+                        </div>
+                    </div>
+                </div>
+                <div class="uba bc-border uinput ub ub-f1" style="background-color: white;height:12em;margin: 0.2em" > 
+                    <textarea placeholder="请输入您要反馈的问题！如果反馈的问题与订单有关系，请提供订单号" type="text" class="ub-f1"  id="feedback"></textarea>
+                </div>
+            </div>
+            <!--content结束-->
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+         <script src="js/main.js"></script>
+    </body>
+    <script>
+    var count;
+    var flag;
+    var userId = appcan.locStorage.getVal("user_id");
+        appcan.ready(function() {
+            var titHeight = $('#header').offset().height;
+            //appcan.frame.open("content", "feeback_content.html", 0, titHeight);
+            window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+            }
+        });
+        
+        appcan.button("#left", "btn-act", function() {
+             appcan.window.close(-1);
+        })
+         appcan.button("#right", "btn-act", function() {
+            // var content=$("#content").val();
+            // if(userId==''||userId==null){
+                // appcan.window.openToast("请先登录或注册", 5000, 5);
+                // return;
+           // }
+           if(userId==null){
+               userId='';
+           }
+            if(count==1){
+                flag="门票";
+            } 
+            else if(count==2){
+                flag="酒店";
+            }
+            else if(count==3){
+                flag="客户端";
+            }
+            else if(count==4){
+                flag="其他";
+            }
+            else{
+                alert("请选择意见类型！");
+               return;
+            }
+            var contents=$("#feedback").val();
+           var regUrl = ipVal+'save_feedback?&flag='+flag+'&contents='+contents+'&userid='+userId;
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'POST',
+                dataType : 'json',               
+                success : function(data) {
+                    if (200 == data.status) {
+                        appcan.window.openToast("发表成功", 5000, 5);
+                       setTimeout(function() {
+                          appcan.window.close(-1);
+                      }, 2000);
+                    }
+                    else{
+                        uexWindow.toast(0, 5, data.error, 1500);
+                    }
+                },
+                error : function(xhr, type) {
+                    appcan.window.openToast("发表成功", 5000, 5);
+                       setTimeout(function() {
+                          appcan.window.close(-1);
+                      }, 2000);  
+                }
+            })   
+            //alert("right");
+        })
+        appcan.button(".item", "btn-act", function() {
+            switch(this.id) {
+            case "ticket":
+                $("#ticket").toggleClass("change");
+                $("#hotel").removeClass("change");
+                $("#move").removeClass("change");
+                $("#other").removeClass("change");
+                count=1;
+                break;
+            case "hotel":
+                $("#hotel").toggleClass("change");
+                $("#ticket").removeClass("change");
+                $("#move").removeClass("change");
+                $("#other").removeClass("change");
+                count=2;
+                break;
+            case "move":
+                $("#move").toggleClass("change");
+                $("#hotel").removeClass("change");
+                $("#ticket").removeClass("change");
+                $("#other").removeClass("change");
+                count=3;
+                break;
+            case "other":
+                $("#other").toggleClass("change");
+                $("#move").removeClass("change");
+                $("#hotel").removeClass("change");
+                $("#ticket").removeClass("change");
+                count=4;
+                break;
+            }
+
+        });
+
+    </script>
+</html>

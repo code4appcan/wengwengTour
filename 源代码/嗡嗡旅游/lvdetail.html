@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/lyw.css">
+    </head>
+    <style type="text/css">
+        .image {
+            background-image: url('images/heart-o.png');
+            background-size: 100% 100%;
+            width: 1em;
+            height: 1em;
+        }
+
+    </style>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="page_0" class="up ub ub-ver " tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head" style="height: 2.8em">
+                <div class="nav-btn" id="nav-left">
+                    <div class="fa fa-angle-left fa-2x" id="aa"></div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0" id="bar"></h1>
+                <div class="nav-btn nav-bt ub" style="margin-right: 0.7em">
+                    <div class="ub ub-f1 fa fa-comment-o " style="margin-right: 0.8em" id="comment"></div>
+                    <div class="ub ub-f1 fa fa-heart-o" style="margin-right: 0.8em;" id="conlect" ></div>
+                    <div class="ub ub-f1 image uhide " style="margin-right: 0.8em;" id="delete" ></div>
+                    <div class="ub ub-f1 fa fa-external-link " id="share"></div>
+
+                </div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l">
+
+            </div>
+            <!--content结束-->
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    <script>
+        // var appID = "wx7ebf14802f7fe20e";
+        var collection_img;
+        var landscapeId_1 = appcan.locStorage.getVal("lview_id");
+        var user_id = appcan.locStorage.getVal("user_id");
+        flag = "";
+        var name;
+        var price;
+        var mapFlag = appcan.locStorage.getVal("mapFlag");
+        appcan.ready(function() {
+            var titHeight = $('#header').offset().height;
+            appcan.locStorage.setVal("header_height", titHeight);
+            uexWindow.openPopover("content", 0, "lvdetail_content.html", '', 0, titHeight, '', document.body.offsetHeight - titHeight, "", 0, 0, '{"hardware":"1"}');
+            window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+            }
+            uexWindow.setReportKey(0, 1);
+            uexWindow.onKeyPressed = function(data) {
+                if (data == 0) {
+                    // if(mapFlag==1){
+                    uexWindow.evaluatePopoverScript('', 'content', 'closeMap()');
+                    appcan.locStorage.remove("mapFlag");
+                    // }
+                    // else{
+                    // appcan.window.close(-1);
+                    // }
+
+                }
+            }
+            // http://114.215.145.215:8080/Tour/get_landscape?userid=1&typeid=1&type=3
+            if (user_id == null) {
+                var landscape_url = ipVal + 'get_landscape?type=3&typeid=' + landscapeId_1;
+            } else {
+                var landscape_url = ipVal + 'get_landscape?type=3&typeid=' + landscapeId_1 + "&userid=" + user_id;
+            }
+
+            appcan.request.ajax({
+                url : landscape_url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        // alert(data.body.landscape.name);
+                        name = data.body.landscape.name;
+                        price = data.body.landscape.price;
+                        appcan.locStorage.setVal("headerName", name);
+
+                        $("#bar").html(data.body.landscape.name);
+                        var flag = data.body.isCollection;
+                        collection_img = data.body.landscape.photo;
+                        appcan.locStorage.setVal("shareImg", collection_img);
+                        //alert(flag);
+                        if (flag != "") {
+                            // $("#conlect").removeClass("fa-heart-o").addClass("image");
+                            conlect_id = data.body.isCollection[0].id;
+                            $("#conlect").addClass("uhide");
+                            $("#delete").removeClass("uhide");
+                        }
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+
+        });
+
+        appcan.button("#delete", "btn-act", function() {
+            var remove_url = ipVal + "delete_collection?id=" + conlect_id + "&type=3&typeid=" + landscapeId_1;
+            appcan.request.ajax({
+                url : remove_url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        alert("取消收藏成功！");
+                        $("#conlect").removeClass("uhide");
+                        $("#delete").addClass("uhide");
+                    }
+                },
+                error : function(xhr, type) {
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                    ;
+                }
+            })
+        })
+
+        appcan.button("#conlect", "btn-act", function() {
+            if (user_id == "" || user_id == null) {
+                appcan.window.alert({
+                    title : "提示",
+                    content : "抱歉，您还没有登录或注册，暂不能使用此功能，请先登录^_^",
+                    buttons : ['确定', '取消'],
+                    callback : function(err, data, dataType, optId) {
+                        if (['确定', '取消'][data] == "确定") {
+                            appcan.window.close(-1);
+                            appcan.window.open("login", "login.html", 10);
+                        }
+                    }
+                });
+                return;
+            } else {
+                //alert(name);
+                var regurl = ipVal + "save_collection?";
+                appcan.request.ajax({
+                    url : regurl,
+                    type : 'POST',
+                    dataType : 'json',
+                    data : {
+                        userid : user_id,
+                        typeid : landscapeId_1,
+                        type : 3,
+                        photo : collection_img,
+                        name : name,
+                        price : price
+                    },
+                    success : function(data) {
+                        if (200 == data.status) {
+                            alert("收藏成功");
+                            $("#conlect").addClass("uhide");
+                            $("#delete").removeClass("uhide");
+                            hotel_url_2 = ipVal + 'is_collection?type=3&typeid=' + landscapeId_1 + "&userid=" + user_id;
+                            appcan.request.ajax({
+                                url : hotel_url_2,
+                                type : 'get',
+                                dataType : 'json',
+                                success : function(data) {
+                                    if (200 == data.status) {
+                                        conlect_id = data.body.isCollection[0].id;
+                                    }
+                                },
+                                error : function(xhr, type) {
+                                    //alert('连接失败!')
+                                }
+                            })
+
+                        }
+                    },
+                    error : function(xhr, type) {
+                        uexWindow.toast(0, 5, "获取失败", 1500);
+                    }
+                })
+            }
+        })
+
+        appcan.button("#nav-left", "btn-act", function() {
+            appcan.locStorage.remove("backImagePath");
+            appcan.window.close(-1);
+        });
+        appcan.button("#comment", "btn-act", function() {
+            //alert("comment");
+            appcan.window.open("comment_List", "comment_List.html", 10);
+        });
+
+        appcan.button("#share", "btn-act", function() {
+            if (user_id == null) {
+                //alert("抱歉，您还没有登录或注册，暂不能使用此功能，请先登录^_^");
+                appcan.frame.open('share_content', 'share_content.html', 0);
+            } else {
+                appcan.frame.open('share_content', 'share_content.html', 0);
+            }
+
+        })
+
+    </script>
+</html>

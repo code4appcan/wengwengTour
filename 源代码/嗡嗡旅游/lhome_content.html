@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <style type="text/css">
+            .text {
+                font-size: 0.8em;
+                margin-top: 0.4em;
+            }
+
+            .uinput2 input, .uinput textarea {
+                margin: 0px;
+                width: 70%;
+                height: 100%;
+                -webkit-appearance: none;
+                padding: .4em 0;
+                line-height: 1.2em;
+                text-decoration: none;
+                font-size: 1em;
+                display: block;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-lw" ontouchstart  style='background-color: white'>
+        <!-- <div class="ub" style="height:2.5em;background-color: rgba(0,0,0,0)" id="headerHeight" ></div> -->
+        <div class="ub ub-ver">
+            <div id="slider" class="slider" style="height:14em;z-index:-999">
+
+            </div>
+            <div class="ub ub-f1 ub-ver" style="background-image: url('images/background.png');background-size: 100% 100%;width:100%;margin-top: 0.5em">
+                <div class="ub " style="margin-bottom: 0.3em;margin-top: 0.7em;">
+                    <div class="ub ub-f1 ub-ver">
+                        <div id="view" class="ub ub-ac ub-pc"><img src="images/004.png" style="height:3.5em" >
+                        </div>
+                        <div class="ub ub-ac ub-pc text">
+                            景点
+                        </div>
+                    </div>
+                    <div class="ub ub-f1 ub-ver">
+                        <div id="hotel" class="ub ub-ac ub-pc"><img src="images/005.png" style="height:3.5em" >
+                        </div>
+                        <div class="ub ub-ac ub-pc text">
+                            酒店
+                        </div>
+                    </div>
+                    <div class="ub ub-f1 ub-ver ub-ac ub-pc">
+                        <div id="food" class="ub ub-ac ub-pc"><img src="images/006.png" style="height:3.5em" >
+                        </div>
+                        <div class="ub ub-ac ub-pc text">
+                            美食
+                        </div>
+                        <!-- <div class="ub ub-ac ub-pc uhide ulev-2" style="background-color: rgba(231,120,23,0.5);width:5em;height:1em;color:white" id="youhui">敬请期待！</div> -->
+                    </div>
+                    <div class="ub  ub-f1 ub-ver">
+                        <div id="discount" class="ub ub-ac ub-pc"><img src="images/007.png" style="height:3.5em" >
+                        </div>
+                        <div class="ub ub-ac ub-pc text">
+                            优惠
+                        </div>
+                    </div>
+                    
+
+                </div>
+                <div class="ub" style="margin-bottom: 0.3em;margin-top: 0.3em;">
+                    <div class="ub ub-f1 ub-ver">
+                        <div id="note" class="ub ub-ac ub-pc"><img src="images/008.png" style="height:3.5em" >
+                        </div>
+                        <div class="ub ub-ac ub-pc text">
+                            游记
+                        </div>
+                    </div>
+                    <div class="ub ub-f1 ub-ver">
+                        <div id="strategy" class="ub ub-ac ub-pc"><img src="images/011.png" style="height:3.5em" >
+                        </div>
+                        <div class="ub ub-ac ub-pc text">
+                            攻略
+                        </div>
+                    </div>
+                    <div class="ub ub-f1 ub-ver ub-ac ub-pc">
+                        <div id="traffic" class="ub ub-ac ub-pc"><img src="images/009.png" style="height:3.5em" >
+                        </div>
+                        <div class="ub ub-ac ub-pc text">
+                            交通
+                        </div>
+                        <!-- <div class="ub ub-ac ub-pc uhide ulev-2" style="background-color: rgba(231,120,23,0.5);width:5em;height:1em;color:white" id="youhui">敬请期待！</div> -->
+                    </div>
+                    <div class="ub  ub-f1 ub-ver">
+                        <div id="travelAgency" class="ub ub-ac ub-pc"><img src="images/010.png" style="height:3.5em" >
+                        </div>
+                        <div class="ub ub-ac ub-pc text">
+                            旅行社
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="ub ub-ac ub-pc " style="margin-top: 0.4em" >
+            【 醉美 ● 巴东 】
+        </div>
+        <div class="ub ub-ac ub-pc ulev-1 " style="margin-top: 0.5em" >
+            游秘境巴东，开启您的发现之旅
+        </div>
+        <div class="ub ub-ver ub-ac ub-pc" style="margin: 0.3em 0.3em 0.3em 0.3em;" >
+            <ul id="imgList" style="width:100%">
+                <!-- <li style='width:49.2%;display: inline-block; ' onclick="change(\'' + img_id + '\', \'' + type + '\')">
+                <div class='ub ub-f1 ' style='margin: 0.1em;' id='hotel_1'>
+                <img src='images/view1.png' style='width:100%;border-radius: 0.3em;height:7em' id='" + img_id + "'/>
+                <div class="ub ub-f1 ulev ub-ac ub-pc" style="position: absolute;bottom: 0.25em;color:white;background-color:rgba(0,0,0,0.5);width:100%;border-radius: 0 0 0.3em 0.3em;padding: 0.1em 0;">
+                dsds
+                </div>
+                </div>
+
+                </li>
+                <li style='width:49.2%;display: inline-block; ' onclick="change(\'' + img_id + '\', \'' + type + '\')">
+                <div class='ub ub-f1 ' style='margin: 0.1em;' id='hotel_1'>
+                <img src='images/view1.png' style='width:100%;border-radius: 0.3em;height:7em' id='" + img_id + "'/>
+                <div class="ub ub-f1 ulev ub-ac ub-pc" style="position: absolute;bottom: 0.25em;color:white;background-color:rgba(0,0,0,0.5);width:100%;border-radius: 0 0 0.3em 0.3em;padding: 0.1em 0">
+                dsds
+                </div>
+                </div>
+
+                </li> -->
+            </ul>
+        </div>
+        <div class="ub ub-ac ub-pc uhide" style="margin-top: 1em" id="name1">
+            【 精选 ● 攻略 】
+        </div>
+        <div class="ub ub-ac ub-pc ulev-1 uhide" style="margin-top: 0.3em" id="name2">
+            漫步在秘境的旅途，发现不一样世界
+        </div>
+        <div class="ub ub-ver ub-ac ub-pc" style="margin: 0.5em 0.5em 0.5em 0.5em;" >
+            <ul  style="width:100%" id="gonglve">
+                <!-- <li style="width:100%;display: inline-block;">
+                <div class="ub ub-ver" style="height:12em;background-size:100% 100%;background-repeat: no-repeat;background-image:url('images/BadongChu.jpg');border-radius:0.3em 0.3em 0 0" onclick="changeGong(\'' + straegyId + '\', \'' + title + '\')">
+                <div class="ulev ub ub-ac ub-pc " style="position: absolute;bottom: 0;color:white;width:100%;border-radius: 0 0 0.3em 0.3em;background-color: rgba(0,0,0,0.5);height: 2em">
+                dada
+                </div>
+                </div>
+                </li>
+
+                <li style="width:100%;display: inline-block;">
+                <div class="ub ub-ver" style="height:12em;background-size:100% 100%;background-repeat: no-repeat;background-image:url('images/BadongChu.jpg');border-radius:0.3em 0.3em 0 0" onclick="changeGong(\'' + straegyId + '\', \'' + title + '\')">
+                <div class="ulev ub ub-ac ub-pc " style="position: absolute;bottom: 0;color:white;width:100%;border-radius: 0 0 0.3em 0.3em;background-color: rgba(0,0,0,0.5);height: 2em">
+                dada
+                </div>
+                </div>
+                </li> -->
+
+            </ul>
+        </div>
+
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/appcan.slider.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+    <script>
+        var arr = ['', '', '',''];
+        var arr_id = [0, 1, 2, 3];
+        var flag = 0;
+        var j = 1;
+        var slider;
+        var sliderH;
+        var w;
+        appcan.ready(function() {
+            //uexWindow.setWindowScrollbarVisible(false);//禁止滚动条
+
+            //var headerHeight = $("#headerHeight").offset().height;
+            //appcan.locStorage.setVal("headerHeight", headerHeight);
+            // uexWindow.setPopHardwareEnable('content',1);
+            appcan.initBounce();
+            w = screen.availWidth;
+            sliderH = parseInt(w / 1.72);
+            $('#slider').attr("height",sliderH+150);
+            showContent();
+            firstShow();
+            firstShowYJ();
+            
+            /*scrollpicture点击事件*/
+            uexScrollPicture.onPicItemClick = function(data) {
+                var str = JSON.parse(data);
+                if (str.index == 0) {
+                   appcan.window.open("outLink", "outLink.html",10);
+                   //appcan.window.open("", "http://u.eqxiu.com/s/7WHAfX3K",10);
+                } else{
+                    appcan.locStorage.setVal("lview_id", arr_id[str.index]);
+                    appcan.window.open("lvdetail", "lvdetail.html",10);
+                }
+               
+            }
+            /*上拉加载图片，刷新页面*/
+            // appcan.window.setBounce({
+            // bounceType : "1",
+            // downEndCall : function(type) {
+            // Secondshow();
+            // setTimeout(function() {
+            // appcan.window.resetBounceView(1);
+            // }, 1500);
+            // }
+            // })
+        });
+
+        function showContent() {
+             // showSlider();
+            //显示slider
+            var ImgUrl = ipVal + 'recommend/json?level=1&pageSize=4';
+            appcan.request.ajax({
+                url : ImgUrl,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        var len = data.body.recommends.length;
+                        for (var i = 0; i < len; i++) {
+                            var imgStr = data.body.recommends[i].photo;
+                            var img = imgStr.split("WEB-INF/")[1];
+                            var img_url = ipVal + img;
+                            arr[i] = img_url;
+                            arr_id[i] = data.body.recommends[i].typeid;
+                        }
+                       /*删除第一次的轮播，重新建轮播，刷新图片*/
+                        // var param = {
+                            // viewId :"1" //轮播图id
+                        // };
+                        // var JsonData= JSON.stringify(param);
+                        // uexScrollPicture.removeView(JsonData);
+                        // showSlider2();
+                        showSlider();
+
+                    }
+                },
+                error : function(xhr, type) {
+                    uexWindow.toast(0, 5, "获取失败", 1500);
+                }
+            })
+        }
+
+        function firstShow() {
+            var ImgUrl2 = ipVal + 'recommend/json?level=2&pageSize=6';
+            appcan.request.ajax({
+                url : ImgUrl2,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        var len2 = data.body.recommends.length;
+                        var html = "";
+                        for (var j = 0; j < len2; j++) {
+                            var type = data.body.recommends[j].type;
+                            var img_id = data.body.recommends[j].typeid;
+                            html += '<li style="width:49.4%;display: inline-block;" onclick="change(\'' + img_id + '\', \'' + type + '\')">' + "<div class='ub ub-f1 ' style='margin: 0.2em;'> " + "<img src='images/failLandBig.jpg' style='width:100%;border-radius: 0.3em;height:7em' id='" + img_id + "'/>  " + '<div class="ub ub-f1 ulev ub-ac ub-pc" style="position: absolute;bottom: 0.25em;color:white;background-color:rgba(0,0,0,0.5);width:100%;border-radius: 0 0 0.3em 0.3em;padding: 0.1em 0">' + data.body.recommends[j].name + '</div>' + " </div>" + "</li>"
+                        }
+                        $("#imgList").append(html);
+                        $('#name1').removeClass("uhide");
+                        $('#name2').removeClass("uhide");
+                        var option = {
+                            maxtask : 3,
+                            url : '',
+                            success : function(path, session) {
+                                var id = this.name;
+                                $("#" + id).attr("src", path);
+                            },
+                            fail : function(session) {
+                                alert("图片加载失败：index" + this.index);
+                            }
+                        };
+                        var cache = appcan.icache(option);
+                        for (var i = 0; i < len2; i++) {
+                            var url_img = data.body.recommends[i].photo.split("WEB-INF/");
+                           
+                            option.url = ipVal + url_img[1];
+                            var id = data.body.recommends[i].typeid;
+                            option.name = id;
+                            cache.run(option);
+                        }
+                    } else {
+                    }
+                }
+            })
+        }
+
+        function firstShowYJ() {
+
+            var ImgUrl2 = ipVal + 'raiders/json?tag=1&pageSize=4';
+            appcan.request.ajax({
+                url : ImgUrl2,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        var len2 = data.body.raiders.length;
+                        var html = "";
+
+                        for (var j = 0; j < len2; j++) {
+                            var straegyId = data.body.raiders[j].id;
+                            var title = data.body.raiders[j].title;
+                            var strategyImg = ipVal + data.body.raiders[j].cover.split("WEB-INF/")[1];
+                            html += '<li style="width:100%;display: inline-block;">' + ' <div class="ub ub-ver" style="background-size:100% 100%;height:12em;background-repeat: no-repeat;background-image:url(' + strategyImg + ');border-radius:0.3em" onclick="changeGong(\'' + straegyId + '\', \'' + title + '\')">' + '<div class="ulev ub ub-ac ub-pc " style="position: absolute;bottom: 0;color:white;width:100%;border-radius: 0 0 0.3em 0.3em;background-color: rgba(0,0,0,0.5);height: 2em">' + title + '</div>' + '</div>' + '</li>'
+                        }
+                        $("#gonglve").append(html);
+
+                    } else {
+
+                    }
+
+                }
+            })
+        }
+
+        function Secondshow() {
+            j++;
+            var url = ipVal + 'recommend/json?level=2&pageSize=10&pageNo=' + j;
+            appcan.request.ajax({
+                url : url,
+                type : 'get',
+                dataType : 'json',
+                success : function(data) {
+                    if (200 == data.status) {
+                        if (data.body.recommends.length == 0) {
+                            appcan.window.openToast("没有更多数据", 2000, 5);
+                        } else {
+                            temp = 0;
+                            var len = data.body.recommends.length;
+                            /*缓存广告和推荐图片*/
+                            var option = {
+                                maxtask : 3,
+                                url : '',
+                                progress : function(data, session) {
+                                    var sdata = JSON.parse(JSON.stringify(data));
+                                    var statu = sdata['status'];
+                                    var percent = sdata['percent'];
+                                    switch (statu) {
+                                    case 0:
+                                        //alert("下载中");
+                                        break;
+                                    case 1:
+                                        alert("下载完成");
+                                        break;
+                                    case 2:
+                                        alert("下载失败");
+                                        break;
+                                    default:
+                                        break;
+                                    }
+                                },
+                                success : function(path, session) {
+
+                                    var type = data.body.recommends[j].type;
+                                    var html = "";
+                                    img_id = data.body.recommends[temp].typeid;
+                                    html += '<li style="width:49.4%;display: inline-block;" onclick="change(\'' + img_id + '\', \'' + type + '\')">' + "<div class='ub ub-f1 ' style='margin: 0.2em;'> " + "<img src='images/failLandBig.jpg' style='width:100%;border-radius: 0.3em;height:7em' id='" + img_id + "'/>  " + '<div class="ub ub-f1 ulev ub-ac ub-pc" style="position: absolute;bottom: 0.25em;color:white;background-color:rgba(0,0,0,0.5);width:100%;border-radius: 0 0 0.3em 0.3em;padding: 0.1em 0">' + data.body.recommends[j].name + '</div>' + " </div>" + "</li>"
+                                    $("#imgList").append(html);
+                                    temp++;
+                                },
+                                fail : function(session) {
+                                }
+                            }
+                            cache = appcan.icache(option);
+                            for (var i = 0; i < len; i++) {
+                                url_img = data.body.recommends[i].photo.split("WEB-INF/");
+                                //alert(url_img);
+                                option.url = ipVal + url_img[1];
+                                cache.run(option);
+                            }
+                        }
+                    }
+                },
+                error : function(xhr, type) {
+                    //alert('连接失败!')
+                }
+            })
+
+        }
+
+
+        appcan.button("#view", "btn-act", function() {
+             
+           appcan.window.open("lview", "lview.html", 10);            
+           //uexWindow.open("lview",0,"lview.html",10,'','',0,'','{"hardware":"1"}' );
+        });
+        appcan.button("#food", "btn-act", function() {
+            appcan.window.open("lfood", "lfood.html", 10);
+        });
+        appcan.button("#discount", "btn-act", function() {
+            appcan.window.open("discount", "discount.html", 10);
+           // uexWindow.toast("0", "5", "敬请期待!", 2000);
+        });
+        appcan.button("#hotel", "btn-act", function() {
+
+            appcan.window.open("lhotel", "lhotel.html", 10);
+        });
+        appcan.button("#note", "btn-act", function() {
+            appcan.window.open("lnote", "lnote.html", 10);
+        });
+        appcan.button("#traffic", "btn-act", function() {
+            appcan.window.open("traffic", "traffic.html", 10);
+        });
+        appcan.button("#strategy", "btn-act", function() {
+            appcan.window.open("strategy", "strategy.html", 10);
+        });
+        appcan.button("#travelAgency", "btn-act", function() {
+            appcan.window.open("travelAgency", "travelAgency.html", 10);
+        });
+        /*点击景点图片进入到相应的景点详情页*/
+        function change(id, type) {
+            var my_mytype = type;
+            var id = id;
+            if (my_mytype == 1) {
+                appcan.locStorage.setVal("lhotel_id", id);
+                appcan.window.open("hotel_detail", "hotel_detail.html", 10);
+            } else if (my_mytype == 3) {
+                appcan.locStorage.setVal("lview_id", id);
+                appcan.window.open("lvdetail.html", "lvdetail.html", 10);
+            }
+            if (my_mytype == 4) {
+                appcan.locStorage.setVal("lfood_id", id);
+                appcan.window.open("food_details", "food_details.html", 10);
+            }
+        }
+
+        function changeGong(id, title) {
+            appcan.locStorage.setVal("strategy_id", id);
+            appcan.locStorage.setVal("strategy_title", title);
+            appcan.window.open("strategyDetails", "strategyDetails.html", 10);
+        }
+
+        /*显示slider*/
+        function showSlider() {             
+             var param={
+                "interval":"4000",//自动滚动的间隔时间，单位为毫秒，默认3000
+                "anchor":["0","0"],//float数对[X,Y] 轮播图的左上角锚点的坐标
+                "height": sliderH,//轮播图高度
+                "width": w ,//轮播图宽度
+                "urls":[ arr[0] ,arr[1] ,arr[2],arr[3]],//List<String> 的json字符串
+                "viewId":"1"//轮播图id
+            };
+            var JsonData= JSON.stringify(param);
+            uexScrollPicture.createNewScrollPicture(JsonData);
+            uexScrollPicture.startAutoScroll('{"viewId":"1"}');
+        }
+
+
+    </script>
+</html>

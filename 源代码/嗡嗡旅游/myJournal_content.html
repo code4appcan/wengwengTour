@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/myorder.css">
+        <link rel="stylesheet" href="css/ui-yang.css">
+    </head>
+    <style type="text/css">
+    .black{
+       color:#757778; 
+    }
+    .blue{
+        color:#0093DD;
+    }
+        
+    </style>
+    <body class="um-vp bc-bg" ontouchstart>
+   
+
+        <!-- <div id="toptab" class="ub  ub-pc ubb-grey " style="background-color: white;;height:2.5em;font-weight: bold">
+               <div class="ub-f1 tx-c ulev ubb-blue  blue " id="publish" style="margin-top: 0.7em;" >已发表</div>
+               <div class="ub-f1 tx-c ulev  black" id="draft" style="margin-top: 0.7em;">本地草稿</div>               
+           </div> -->
+      <div class="ub ub-ver judge" id="content">
+          <ul id="imageList" style="width:100%;">
+             
+              </ul> 
+       </div>
+       <div class="ub ub-ac ub-pc ub-ver uhide" style="margin-top: 50%" id="noon">
+           <img src="images/noon.png" style="" class="ub ub-ac ub-pc"/>
+        <div class="ub ub-ac ub-pc">暂时还没有~~</div>
+       </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/main.js"></script>
+   <script src="js/appcan.tab.js"></script>
+ </body>
+    <script>
+     var user_id = appcan.locStorage.getVal("user_id");
+    //var user_id=120;
+    var j=1;
+    var k=1;
+        appcan.ready(function() {
+            if(user_id==''||user_id==null){
+               appcan.window.openToast("请先登录或注册", 3000, 5);
+                return; 
+            }
+            firstShowpublish();
+            appcan.initBounce();
+            appcan.window.setBounce({
+                bounceType : "1",
+                downEndCall : function(type) {                  
+                      var temp=appcan.locStorage.getVal('flag');   
+                      if(temp==1){
+                         Showpublish(); 
+                      } 
+                      else if(temp==2){
+                          ShowDraft();
+                      }
+                            
+                    setTimeout(function() {
+                        appcan.window.resetBounceView(1);                      
+                    }, 1500);
+                }
+            })
+        });  
+        function firstShowpublish(){
+            var regUrl = ipVal+'travelset/list_head?pageSize=10&status=1&userid='+user_id+'&pageNo='+j;
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'get',
+                dataType : 'json',                
+                success : function(data) {
+                    if (200 == data.status) { 
+                        var len=data.body.travel.length;
+                        
+                        if(len==0){
+                            $("#noon").removeClass("uhide");
+                        }
+                        else{
+                             $("#noon").addClass("uhide");
+                        }
+                       
+                        var html = "";   
+                        for(var i=0;i<len;i++){
+                            var img_id=data.body.travel[i].id;
+                                var titleName= data.body.travel[i].name;
+                                var time = data.body.travel[i].cdate;
+                                var date = new Date(time);
+                                Y = date.getFullYear() + '-';
+                                M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                                D = date.getDate() + ' ';
+                                var Time = Y + M + D;
+                                html+="<li class='' style='background-color: white;height:5.5em;border-bottom: 0.5px solid black;margin-bottom: 1.1em'  onclick=change('"+img_id+"')>"
+                                +"<div class='ub ub-pj ' style='padding:.6em 1em 1em 2em'>"
+                                +"<img src='images/failLandBig.jpg' style='width:4.2em;height:4.2em;margin-right: 1.5em' class='ub ub-ac ub-pc' id='"+img_id+"'/>"
+                                +"<div class='ub ub-ver ub-f2' style='color:black'>"
+                                +"<div class='ub'>"+titleName+"</div>"
+                                +"<div class='ub ulev-1' style='margin-top: 0.2em'>"+Time+"</div>"
+                                +"</div>"
+                                +"<div class='ub fa fa-2x fa-angle-right ub-ac ub-pc' style='color:#CDCDCD;'></div>"
+                                +"</div>"
+                                +"</li>"   
+                        }
+                        
+                         $("#imageList").append(html); 
+                                      
+                        /*缓存图片*/                       
+                        
+                         var option = {
+                            maxtask : 3,
+                            url : '',
+                            success : function(path, session) {
+                                var index = this.index;//游标
+                                var id = this.name; //img对应ID                                
+                               $("#" + id).attr("src", path);
+                                
+                            },
+                            fail : function(session) {
+                                alert("图片加载失败：index" + this.index);
+                            }
+                        };
+                        var cache = appcan.icache(option);
+                        for (var j = 0; j < len; j++) {
+                              url_img = data.body.travel[j].coverurl.split("WEB-INF/");                    
+                            option.url = ipVal + url_img[1];
+                            var id= data.body.travel[j].id;                            
+                            option.name = id;
+                            option.index = j;
+                            cache.run(option);
+                        }
+                        
+                    }
+                }
+                
+                
+            });
+        }  
+        function Showpublish(){
+            j++;          
+            var regUrl = ipVal+'travelset/list_head?pageSize=10&status=1&userid='+user_id+'&pageNo='+j;
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'get',
+                dataType : 'json',                
+                success : function(data) {
+                    if (200 == data.status) {                       
+                        var temp = 0;
+                        var len=data.body.travel.length;
+                        if (len== 0) {
+                            appcan.window.openToast("没有更多数据", 5000, 5);
+                        }   
+                        else{
+                           var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                    //alert("下载中");
+                                    break;
+                                case 1:
+                                    alert("下载完成");
+                                    break;
+                                case 2:
+                                    alert("下载失败");
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {
+                                var html = "";                               
+                                var img_id=data.body.travel[temp].id;
+                                var titleName= data.body.travel[temp].name;
+                                var time = data.body.travel[temp].cdate;
+                                var date = new Date(time);
+                                Y = date.getFullYear() + '-';
+                                M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                                D = date.getDate() + ' ';
+                                var Time = Y + M + D;
+                                html+="<li class='' style='background-color: white;height:5.5em;border-bottom: 0.5px solid black;margin-bottom: 1.1em'  onclick=change('"+img_id+"')>"
+                                +"<div class='ub ub-pj ' style='padding:.6em 1em 1em 2em'>"
+                                +"<img src='"+path+"' style='width:4.2em;height:4.2em;margin-right: 1.5em' class='ub ub-ac ub-pc'/>"
+                                +"<div class='ub ub-ver ub-f2' style='color:black'>"
+                                +"<div class='ub'>"+titleName+"</div>"
+                                +"<div class='ub ulev-1' style='margin-top: 0.2em'>"+Time+"</div>"
+                                +"</div>"
+                                +"<div class='ub fa fa-2x fa-angle-right ub-ac ub-pc' style='color:#CDCDCD;'></div>"
+                                +"</div>"
+                                +"</li>"
+                                $("#imageList").append(html); 
+                                temp++;                            
+
+                            },
+                            fail : function(session) {
+                               //alert("session:" + JSON.stringify(session));
+                               // alert("Download Fail");
+                                var html = "";                               
+                                var img_id=data.body.travel[temp].id;
+                                var titleName= data.body.travel[temp].name;
+                                var time = data.body.travel[temp].cdate;
+                                var date = new Date(time);
+                                Y = date.getFullYear() + '-';
+                                M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                                D = date.getDate() + ' ';
+                                var Time = Y + M + D;
+                                html+="<li class='' style='background-color: white;height:5.5em;border-bottom: 0.5px solid black;margin-bottom: 1.1em'  onclick=change('"+img_id+"')>"
+                                +"<div class='ub ub-pj ' style='padding:.6em 1em 1em 2em'>"
+                                +"<img src='' style='width:4.2em;height:4.2em;margin-right: 1.5em' class='ub ub-ac ub-pc'/>"
+                                +"<div class='ub ub-ver ub-f2' style='color:black'>"
+                                +"<div class='ub'>"+titleName+"</div>"
+                                +"<div class='ub ulev-1' style='margin-top: 0.2em'>"+Time+"</div>"
+                                +"</div>"
+                                +"<div class='ub fa fa-2x fa-angle-right ub-ac ub-pc' style='color:#CDCDCD;'></div>"
+                                +"</div>"
+                                +"</li>"
+                                $("#imageList").append(html);
+                                temp++;
+                            }
+                        }
+                        cache = appcan.icache(option);                      
+                        for (var i = 0; i < len; i++) {                                             
+                            url_img = data.body.travel[i].coverurl.split("WEB-INF/");
+                            //alert(url_img);                    
+                            option.url = ipVal + url_img[1];                      
+                            cache.run(option);
+                        }  
+                        }                    
+                        /*缓存图片*/
+                       
+                    }
+                }
+                
+                
+            });
+        }
+        
+        
+        function firstShowDraft(){
+            var regUrl = ipVal+'travelset/list_head?pageSize=10&status=-1&userid='+user_id+'&pageNo='+k;
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'get',
+                dataType : 'json',                
+                success : function(data) {
+                    if (200 == data.status) {      
+                        var len=data.body.travel.length;                        
+                        if(len==0){
+                            $("#noon").removeClass("uhide");
+                        }
+                        else{
+                             $("#noon").addClass("uhide");
+                        }
+                       
+                        var html = "";   
+                        for(var i=0;i<len;i++){
+                            var img_id=data.body.travel[i].id;
+                                var titleName= data.body.travel[i].name;
+                                var time = data.body.travel[i].cdate;
+                                var date = new Date(time);
+                                Y = date.getFullYear() + '-';
+                                M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                                D = date.getDate() + ' ';
+                                var Time = Y + M + D;
+                               html+="<li class='' style='background-color: white;height:5.5em;border-bottom: 0.5px solid black;margin-bottom: 1.1em' onclick=goEdit('"+img_id+"')>"
+                                +"<div class='ub ub-pj ' style='padding:.6em 1em 1em 2em'>"
+                                +"<img src='images/failLandBig.jpg' style='width:4.2em;height:4.2em;margin-right: 1.5em' class='ub ub-ac ub-pc' id='"+img_id+"'/>"
+                                +"<div class='ub ub-ver ub-f2' style='color:#CDCDCD'>"
+                                +"<div class='ub'>"+titleName+"</div>"
+                                +"<div class='ub ulev-1' style='margin-top: 0.2em'>"+Time+"</div>"
+                                +"</div>"
+                                +"<div class='ub fa fa-2x fa-angle-right ub-ac ub-pc' style='color:#CDCDCD;'></div>"
+                                +"</div>"
+                                +"</li>"  
+                        }
+                        
+                         $("#imageList").append(html); 
+                                      
+                        /*缓存图片*/                       
+                        
+                         var option = {
+                            maxtask : 3,
+                            url : '',
+                            success : function(path, session) {
+                                var index = this.index;//游标
+                                var id = this.name; //img对应ID                                
+                               $("#" + id).attr("src", path);
+                                
+                            },
+                            fail : function(session) {
+                                alert("图片加载失败：index" + this.index);
+                            }
+                        };
+                        var cache = appcan.icache(option);
+                        for (var j = 0; j < len; j++) {
+                              url_img = data.body.travel[j].coverurl.split("WEB-INF/");                    
+                            option.url = ipVal + url_img[1];
+                            var id= data.body.travel[j].id;                            
+                            option.name = id;
+                            option.index = j;
+                            cache.run(option);
+                        }
+                        
+                        
+                    }
+                }
+                
+                
+            });
+        }
+        
+        function ShowDraft(){
+            k++;
+             var regUrl = ipVal+'travelset/list_head?pageSize=10&status=-1&userid='+user_id='&pageNo='+k;
+            appcan.request.ajax({
+                url : regUrl,
+                type : 'get',
+                dataType : 'json',                
+                success : function(data) {
+                    if (200 == data.status) {                       
+                        var temp = 0;
+                        var len=data.body.travel.length; 
+                        if (len== 0) {
+                            appcan.window.openToast("没有更多数据", 5000, 5);
+                        }
+                        else{
+                           /*缓存图片*/
+                        var option = {
+                            maxtask : 3,
+                            url : '',
+                            progress : function(data, session) {
+                                var sdata = JSON.parse(JSON.stringify(data));
+                                var statu = sdata['status'];
+                                var percent = sdata['percent'];
+                                switch (statu) {
+                                case 0:
+                                    //alert("下载中");
+                                    break;
+                                case 1:
+                                    alert("下载完成");
+                                    break;
+                                case 2:
+                                    alert("下载失败");
+                                    break;
+                                default:
+                                    break;
+                                }
+                            },
+                            success : function(path, session) {
+                                var html = "";                               
+                                var img_id=data.body.travel[temp].id;
+                                var titleName= data.body.travel[temp].name;
+                                var time = data.body.travel[temp].cdate;
+                                var date = new Date(time);
+                                Y = date.getFullYear() + '-';
+                                M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                                D = date.getDate() + ' ';
+                                var Time = Y + M + D;
+                                html+="<li class='' style='background-color: white;height:5.5em;border-bottom: 0.5px solid black;margin-bottom: 1.1em' onclick=goEdit('"+img_id+"')>"
+                                +"<div class='ub ub-pj ' style='padding:.6em 1em 1em 2em'>"
+                                +"<img src='"+path+"' style='width:4.2em;height:4.2em;margin-right: 1.5em' class='ub ub-ac ub-pc'/>"
+                                +"<div class='ub ub-ver ub-f2' style='color:#CDCDCD'>"
+                                +"<div class='ub'>"+titleName+"</div>"
+                                +"<div class='ub ulev-1' style='margin-top: 0.2em'>"+Time+"</div>"
+                                +"</div>"
+                                +"<div class='ub fa fa-2x fa-angle-right ub-ac ub-pc' style='color:#CDCDCD;'></div>"
+                                +"</div>"
+                                +"</li>"
+                                $("#imageList").append(html);
+                                temp++;                             
+
+                            },
+                            fail : function(session) {
+                               //alert("session:" + JSON.stringify(session));
+                               // alert("Download Fail");
+                                var html = "";                               
+                                var img_id=data.body.travel[temp].id;
+                                var titleName= data.body.travel[temp].name;
+                                var time = data.body.travel[temp].cdate;
+                                var date = new Date(time);
+                                Y = date.getFullYear() + '-';
+                                M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                                D = date.getDate() + ' ';
+                                var Time = Y + M + D;
+                                html+="<li class='' style='background-color: white;height:5.5em;border-bottom: 0.5px solid black;margin-bottom: 1.1em' onclick=goEdit('"+img_id+"')>"
+                                +"<div class='ub ub-pj ' style='padding:.6em 1em 1em 2em'>"
+                                +"<img src='' style='width:4.2em;height:4.2em;margin-right: 1.5em' class='ub ub-ac ub-pc'/>"
+                                +"<div class='ub ub-ver ub-f2' style='color:#CDCDCD'>"
+                                +"<div class='ub'>"+titleName+"</div>"
+                                +"<div class='ub ulev-1' style='margin-top: 0.2em'>"+Time+"</div>"
+                                +"</div>"
+                                +"<div class='ub fa fa-2x fa-angle-right ub-ac ub-pc' style='color:#CDCDCD;'></div>"
+                                +"</div>"
+                                +"</li>"
+                                $("#imageList").append(html);
+                                temp++;
+                            }
+                        }
+                        cache = appcan.icache(option);                      
+                        for (var i = 0; i < len; i++) {                                             
+                            url_img = data.body.travel[i].coverurl.split("WEB-INF/");
+                            //alert(url_img);                    
+                            option.url = ipVal + url_img[1];                      
+                            cache.run(option);
+                        } 
+                        }                  
+                        
+                    }
+                }
+                
+                
+            });
+        }
+        
+         function change(id){
+            appcan.locStorage.setVal("headId",id);
+            appcan.window.open("previewJournal","previewJournal.html",10);
+        }
+        function goEdit(id){
+           appcan.locStorage.setVal("headId",id);
+           appcan.locStorage.setVal("listenFlag",1);
+            appcan.window.open("write_traval","write_traval.html",10); 
+        }
+        function clear(){
+           $("#imageList").html(''); 
+        }  
+        // $(".ulev").click(function() {
+            // alert(11);
+                    // $("#toptab").children().removeClass("ubb-blue").removeClass("blue").addClass("black");
+                    // $(this).addClass("ubb-blue ").addClass("ubb-color").addClass("blue");
+                // })
+     // $('.ulev').on('.','click',function(){
+         // alert(11);
+         // $("#toptab").children().removeClass("ubb-blue").removeClass("blue").addClass("black");
+         // $(this).addClass("ubb-blue ").addClass("ubb-color").addClass("blue");
+     // })
+     $('#toptab').on('click','.ulev',function(){
+         alert(1);
+         $("#toptab").children().removeClass("ubb-blue").removeClass("blue").addClass("black");
+         $(this).addClass("ubb-blue ").addClass("ubb-color").addClass("blue");
+     })
+     appcan.button('#draft','ani-act',function(){
+        alert(2);
+             clear();
+            k=1;
+             appcan.locStorage.setVal('flag',2);
+             firstShowDraft();
+       })
+       
+       
+      appcan.button('#publish','ani-act',function(){
+        alert(3);
+             clear();
+             j=1;
+             appcan.locStorage.setVal('flag',1);
+             firstShowpublish();
+       })
+     
+// 
+        // $("#draft").click(function(){
+            // alert(2);
+             // clear();
+            // k=1;
+             // appcan.locStorage.setVal('flag',2);
+             // firstShowDraft();
+         // })
+          // $("#publish").click(function(){
+              // alert(3);
+             // clear();
+             // j=1;
+             // appcan.locStorage.setVal('flag',1);
+             // firstShowpublish();
+         // })
+        
+   
+ </script>
+</html>
