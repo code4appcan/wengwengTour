@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.travelset.dao.TravelItemDao">
+	<resultMap id="TravelItemMap" type="com.tour.travelset.entity.TravelItem">
+		<id column="id" property="id" />
+		<result column="head_id" property="headId" />
+		<result column="item_type" property="itemType" />
+		<result column="img_url" property="imgUrl" />
+		<result column="content" property="content" />
+		<result column="link_siteid" property="linkSiteid" />
+		<result column="link_site" property="linkSite" />
+		<result column="link_date" property="linkDate" />
+		<result column="cdate" property="cdate" />
+		<result column="udate" property="udate" />
+	</resultMap>
+
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.travelset.entity.TravelItem"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into travel_item
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="headId != null">head_id,</if>
+			<if test="itemType != null">item_type,</if>
+			<if test="imgUrl != null">img_url,</if>
+			<if test="content != null">content,</if>
+			<if test="linkSiteid != null">link_siteid,</if>
+			<if test="linkSite != null">link_site,</if>
+			<if test="linkDate != null">link_date,</if>
+			cdate
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="headId != null">#{headId},</if>
+			<if test="itemType != null">#{itemType},</if>
+			<if test="imgUrl != null">#{imgUrl},</if>
+			<if test="content != null">#{content},</if>
+			<if test="linkSiteid != null">#{linkSiteid},</if>
+			<if test="linkSite != null">#{linkSite},</if>
+			<if test="linkDate != null">#{linkDate},</if>
+			now()
+		</trim>
+	</insert>
+
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.travelset.entity.TravelItem">
+		update travel_item
+		<set>
+			<if test="headId != null">head_id=#{headId},</if>
+			<if test="itemType != null">item_type=#{itemType},</if>
+			<if test="imgUrl != null">img_url=#{imgUrl},</if>
+			<if test="content != null">content=#{content},</if>
+			<if test="linkSiteid != null">link_siteid=#{linkSiteid},</if>
+			<if test="linkSite != null">link_site=#{linkSite},</if>
+			<if test="linkDate != null">link_date=#{linkDate},</if>
+			udate=now()
+		</set>
+		where
+		id=#{ id }
+	</update>
+
+	<!--通过抬头删除 -->
+	<delete id="deleteByHeadId" parameterType="java.lang.Long">
+		delete
+		from travel_item
+		where
+		head_id=#{ headId }
+	</delete>
+
+	<!--删除 -->
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete
+		from travel_item
+		where
+		id=#{ id }
+	</delete>
+	
+	<select id="findListBy" resultMap="TravelItemMap"
+		parameterType="com.tour.travelset.entity.TravelItem">
+		select * from travel_item where 1=1
+		<if test="headId != null and headId !='' ">
+			and head_id=#{ headId }
+		</if>
+		order by item_type desc
+	</select>
+</mapper>

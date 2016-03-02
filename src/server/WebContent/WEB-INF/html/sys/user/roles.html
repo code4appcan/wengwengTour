@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head> <@h.head />
+<link href="${path }/static/plugins/zTree/css/zTreeStyle/zTreeStyle.css"
+	rel="stylesheet" type="text/css" />
+<script type="text/javascript"
+	src="${path}/static/plugins/zTree/js/jquery.ztree.core-3.5.min.js"></script>
+<script type="text/javascript"
+	src="${path}/static/plugins/zTree/js/jquery.ztree.excheck-3.5.min.js"></script>
+	
+</head>
+<body>
+	<ul id="roleTree" class="ztree"></ul>
+	<script type="text/javascript">
+		var api = frameElement.api, W = api.opener;
+		api.button({
+		    id:'valueOk',
+		    name:'确定',
+		    callback: saveRight
+		});
+		
+		var setting = {
+			check: {enable: true},
+			data: {
+				simpleData: {enable: true}
+			}
+		};
+		$(function() {
+			var url = "${path}/sysuser/getRole/" + ${(userId)!''};
+			$.get(url, function(data) {
+				var data = eval('(' + data + ')');
+				$.fn.zTree.init($("#roleTree"), setting, data.data);
+				
+				var treeObj = $.fn.zTree.getZTreeObj("roleTree"); 
+				treeObj.expandAll(true); 
+			});
+		});
+		
+		function saveRight(){
+			var treeObj = $.fn.zTree.getZTreeObj("roleTree");
+			var sNodes = treeObj.getCheckedNodes();
+			var len = sNodes.length;
+			if (len > 0) {
+				var sNodeIds = "";
+				var sNodeNames = "";
+				for(var i = 0; i < len; i++){
+					sNodeIds = sNodeIds + sNodes[i].id + ",";
+					sNodeNames = sNodeNames + sNodes[i].name + ",";
+				}
+				W.document.getElementById('roleArr').value = sNodeIds;
+				W.document.getElementById('roleNameArr').value = sNodeNames;
+			}else{
+				alert('至少选择一个角色');
+				return false;
+			}
+		}
+	</script>
+	
+</body>
+</html>

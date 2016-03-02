@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.WineshopDao">
+	<resultMap id="wineshopMap" type="com.tour.account.entity.Wineshop">
+		<id column="id" property="id" />
+		<result column="numbers" property="numbers" />
+		<result column="name" property="name" />
+		<result column="address" property="address" />
+		<result column="area" property="area" />
+		<result column="hot" property="hot" />
+		<result column="star" property="star" />
+		<result column="longitude" property="longitude" />
+		<result column="latitude" property="latitude" />
+		<result column="w_type" property="type" />
+		<result column="photo" property="photo" />
+		<result column="comments" property="comments" />
+		<result column="c_time" property="cTime" />
+		<result column="c_by" property="cBy" />
+		<result column="pointid" property="pointid" />
+		<result column="phone" property="phone" />
+		<result column="roomPrice" property="roomPrice" />
+		<result column="howToGo" property="howToGo" />
+		<result column="park" property="park" />
+		<result column="roomEquipment" property="roomEquipment" />
+		<result column="roomFacilities" property="roomFacilities" />
+		<result column="foodBeverages" property="foodBeverages" />
+		<result column="drivingSupport" property="drivingSupport" />
+		<result column="payByCard" property="payByCard" />
+		<result column="introduction" property="introduction" />
+		<result column="feature" property="feature" />
+		<result column="love_num" property="loveNum" />
+		<result column="timeInOut" property="timeInOut" />
+		<result column="ordered" property="ordered" />
+		<result column="recommend" property="recommend" />
+		<result column="type" property="type" />
+	</resultMap>
+	
+	<resultMap id="roomMap" type="com.tour.account.entity.WineshopRoom">
+		<id column="id" property="id" />
+		<result column="hotel_id" property="hotelId" />
+		<result column="hotel_name" property="hotelName" />
+		<result column="room_title" property="roomTitle" />
+		<result column="room_desc" property="roomDesc" />
+		<result column="price" property="price" />
+		<result column="status" property="status" />
+		<result column="room_number" property="roomNumber" />
+		<result column="cdate" property="cdate" />
+		<result column="cuserid" property="cuserid" />
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Wineshop"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into wineshop
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="numbers != null">numbers,</if>
+			<if test="name != null">name,</if>
+			<if test="address != null">address,</if>
+			<if test="area != null">area,</if>
+			<if test="hot != null">hot,</if>
+			<if test="star != null">star,</if>
+			<if test="longitude != null">longitude,</if>
+			<if test="latitude != null">latitude,</if>
+			<if test="type != null">w_type,</if>
+			<if test="comments != null">comments,</if>
+			<if test="cBy != null">c_by,</if>
+			<if test="phone != null">phone,</if>
+			<if test="pointid != null">pointid,</if>
+			<if test="roomPrice != null">roomPrice,</if>
+			<if test="howToGo != null">howToGo,</if>
+			<if test="park != null">park,</if>
+			<if test="roomEquipment != null">roomEquipment,</if>
+			<if test="roomFacilities != null">roomFacilities,</if>
+			<if test="foodBeverages != null">foodBeverages,</if>
+			<if test="drivingSupport != null">drivingSupport,</if>
+			<if test="payByCard != null">payByCard,</if>
+			<if test="introduction != null">introduction,</if>
+			<if test="feature != null">feature,</if>
+			<if test="loveNum != null">love_num,</if>
+			<if test="photo != null">photo,</if>
+			<if test="timeInOut != null">timeInOut,</if>
+			c_time
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="numbers != null">#{numbers},</if>
+			<if test="name != null">#{name},</if>
+			<if test="address != null">#{address},</if>
+			<if test="area != null">#{area},</if>
+			<if test="hot != null">#{hot},</if>
+			<if test="star != null">#{star},</if>
+			<if test="longitude != null">#{longitude},</if>
+			<if test="latitude != null">#{latitude},</if>
+			<if test="type != null">#{type},</if>
+			<if test="comments != null">#{comments},</if>
+			<if test="cBy != null">#{cBy},</if>
+			<if test="phone != null">#{phone},</if>
+			<if test="pointid != null">#{pointid},</if>
+			<if test="roomPrice != null">#{roomPrice},</if>
+			<if test="howToGo != null">#{howToGo},</if>
+			<if test="park != null">#{park},</if>
+			<if test="roomEquipment != null">#{roomEquipment},</if>
+			<if test="roomFacilities != null">#{roomFacilities},</if>
+			<if test="foodBeverages != null">#{foodBeverages},</if>
+			<if test="drivingSupport != null">#{drivingSupport},</if>
+			<if test="payByCard != null">#{payByCard},</if>
+			<if test="introduction != null">#{introduction},</if>
+			<if test="feature != null">#{feature},</if>
+			<if test="loveNum != null">#{loveNum},</if>
+			<if test="photo != null">#{photo},</if>
+			<if test="timeInOut != null">#{timeInOut},</if>
+			<if test="recommend != null">recommend=#{ recommend },
+			</if>
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.account.entity.Wineshop">
+		update wineshop
+		<set>
+			<if test="numbers != null">
+				numbers=#{ numbers },
+			</if>
+			<if test="name != null">
+				name=#{ name },
+			</if>
+			<if test="area != null">
+				area=#{ area },
+			</if>
+			<if test="address != null">
+				address=#{ address },
+			</if>
+			<if test="hot != null">
+				hot=#{ hot },
+			</if>
+			<if test="star != null">
+				star=#{ star },
+			</if>
+			<if test="longitude != null">
+				longitude=#{ longitude },
+			</if>
+			<if test="latitude != null">
+				latitude=#{ latitude },
+			</if>
+			<if test="type != null">
+				w_type=#{ type },
+			</if>
+			<if test="comments != null">
+				comments=#{ comments },
+			</if>
+			<if test="cBy != null">
+				c_by=#{ cBy },
+			</if>
+			<if test="pointid != null">
+				pointid=#{ pointid },
+			</if>
+			<if test="phone != null">
+				phone=#{ phone },
+			</if>
+			<if test="roomPrice != null">
+				roomPrice=#{ roomPrice },
+			</if>
+			<if test="howToGo != null">
+				howToGo=#{ howToGo },
+			</if>
+			<if test="park != null">
+				park=#{ park },
+			</if>
+			<if test="roomEquipment != null">
+				roomEquipment=#{ roomEquipment },
+			</if>
+			<if test="roomFacilities != null">
+				roomFacilities=#{ roomFacilities },
+			</if>
+			<if test="foodBeverages != null">
+				foodBeverages=#{ foodBeverages },
+			</if>
+			<if test="drivingSupport != null">
+				drivingSupport=#{ drivingSupport },
+			</if>
+			<if test="payByCard != null">
+				payByCard=#{ payByCard },
+			</if>
+			<if test="feature != null">
+				feature=#{ feature },
+			</if>
+			<if test="introduction != null">
+				introduction=#{ introduction },
+			</if>
+			<if test="loveNum != null">
+				love_num=#{ loveNum },
+			</if>
+			<if test="photo != null">
+				photo=#{ photo },
+			</if>
+			<if test="timeInOut != null">
+				timeInOut=#{ timeInOut },
+			</if>
+				u_time=now()
+		</set>
+		where
+		id=#{ id }
+	</update>
+	<!--修改Hot-->
+	<update id="updateHot" parameterType="com.tour.account.entity.Wineshop">
+		update wineshop
+		set hot=#{hot}
+		where
+		id=#{ id }
+	</update>
+	<!--修改Recommend-->
+	<update id="updateRecommend" parameterType="com.tour.account.entity.Wineshop">
+		update wineshop
+		set recommend=#{recommend}
+		where
+		id=#{ id }
+	</update>
+	<!--修改love_num -->
+	<update id="loveNumAdd" parameterType="com.tour.account.entity.Wineshop">
+		update wineshop
+		<set>
+				love_num= love_num + 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	<!--修改love_num -->
+	<update id="loveNumSubtract" parameterType="com.tour.account.entity.Wineshop">
+		update wineshop
+		<set>
+				love_num= love_num - 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	<!--修改ordered -->
+	<update id="orderAdd" parameterType="com.tour.account.entity.Wineshop">
+		update wineshop
+		<set>
+				ordered= ordered + 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	<!--修改ordered -->
+	<update id="orderSubtract" parameterType="com.tour.account.entity.Wineshop">
+		update wineshop
+		<set>
+				ordered= ordered - 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.account.entity.Wineshop">
+		delete
+		from wineshop
+		where
+		id=#{ id }
+	</delete>
+	
+	<!--查询 -->
+	<select id="findById" resultMap="wineshopMap" parameterType="java.lang.Long">
+		select *
+		from wineshop
+		where
+		id=#{ id }
+	</select>
+	<!--查询 -->
+	<select id="findBy" resultMap="wineshopMap" parameterType="java.lang.Long">
+		select *
+		from wineshop
+		where
+		id=#{ id }
+	</select>
+	
+	<!--recommends查询 -->
+	<select id="findByRecommends" resultMap="wineshopMap" parameterType="java.lang.Long">
+		select *
+		from wineshop
+		where
+		recommend=1
+	</select>
+	<!--Hot查询 -->
+	<select id="findByHot" resultMap="wineshopMap" parameterType="java.lang.Long">
+		select *
+		from wineshop
+		where
+		hot=1
+		order by numbers asc
+	</select>
+	
+	
+	<select id="listPage" resultMap="wineshopMap"
+		parameterType="com.tour.account.entity.Wineshop">
+		select * from wineshop where 1=1
+		<if test="wineshop.name != null and wineshop.name !='' ">
+			and name=#{ wineshop.name }
+		</if>
+		<if test="wineshop.area != null and wineshop.area !=''">
+			and area=#{ wineshop.area }
+		</if>
+		<if test="wineshop.hot == 1">
+			and hot=1
+		</if>
+		<if test="wineshop.recommend == 1">
+			and recommend=1
+		</if>
+		order by numbers asc
+	</select>
+	
+	
+	<!-- 房型维护 begin -->
+	
+	<select id="roomlistPage" resultMap="roomMap" parameterType="com.tour.account.entity.WineshopRoom">
+		select r.*, w.name as hotel_name
+		from wineshop_room as r 
+		left join wineshop as w 
+		on r.hotel_id = w.id 
+		where r.hotel_id=#{ room.hotelId }
+	</select>
+	
+	<!--删除房型 -->
+	<delete id="deleteRoomById" parameterType="java.lang.Long">
+		delete
+		from wineshop_room
+		where
+		id=#{ id }
+	</delete>
+	
+	<!--保存 -->
+	<insert id="saveRoom" parameterType="com.tour.account.entity.WineshopRoom"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into wineshop_room
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="hotelId != null">hotel_id,</if>
+			<if test="roomTitle != null">room_title,</if>
+			<if test="roomDesc != null">room_desc,</if>
+			<if test="price != null">price,</if>
+			<if test="roomNumber != null">room_number,</if>
+			status,
+			cdate
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="hotelId != null">#{hotelId},</if>
+			<if test="roomTitle != null">#{roomTitle},</if>
+			<if test="roomDesc != null">#{roomDesc},</if>
+			<if test="price != null">#{price},</if>
+			<if test="roomNumber != null">#{roomNumber},</if>
+			'Y',
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="updateRoom" parameterType="com.tour.account.entity.WineshopRoom">
+		update wineshop_room
+		<set>
+			<if test="hotelId != null">
+				hotel_id=#{ hotelId },
+			</if>
+			<if test="roomTitle != null">
+				room_title=#{ roomTitle },
+			</if>
+			<if test="roomDesc != null">
+				room_desc=#{ roomDesc },
+			</if>
+			<if test="price != null">
+				price=#{ price },
+			</if>
+			<if test="roomNumber != null">
+				room_number=#{ roomNumber },
+			</if>
+			<if test="status != null">
+				status=#{ status },
+			</if>
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	<select id="findRoomByid" resultMap="roomMap" parameterType="java.lang.Long">
+		select r.*, w.name as hotel_name
+		from wineshop_room as r 
+		left join wineshop as w 
+		on r.hotel_id = w.id 
+		where r.id=#{ room.id }
+	</select>
+	
+	<!-- 房型维护 end -->
+	
+</mapper> 

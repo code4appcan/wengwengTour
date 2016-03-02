@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.travelset.dao.TravelHeadDao">
+	<resultMap id="TravelHeadMap" type="com.tour.travelset.entity.TravelHead">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="coverurl" property="coverurl" />
+		<result column="userid" property="userid" />
+		<result column="username" property="username" />
+		<result column="status" property="status" />
+		<result column="tag" property="tag" />
+		<result column="cdate" property="cdate" />
+		<result column="udate" property="udate" />
+		<result column="pl_total" property="plTotal" />
+		<result column="sc_total" property="scTotal" />
+	</resultMap>
+
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.travelset.entity.TravelHead"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into travel_head
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="coverurl != null">coverurl,</if>
+			<if test="userid != null">userid,</if>
+			<if test="username != null">username,</if>
+			<if test="tag != null">tag,</if>
+			status,
+			cdate
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="coverurl != null">#{coverurl},</if>
+			<if test="userid != null">#{userid},</if>
+			<if test="username != null">#{username},</if>
+			<if test="tag != null">#{tag},</if>
+			-1,
+			now()
+		</trim>
+	</insert>
+
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.travelset.entity.TravelHead">
+		update travel_head
+		<set>
+			<if test="name != null">name=#{name},</if>
+			<if test="coverurl != null">coverurl=#{coverurl},</if>
+			<if test="userid != null">userid=#{userid},</if>
+			<if test="username != null">username=#{username},</if>
+			<if test="tag != null">tag=#{tag},</if>
+			<if test="status != null">status=#{status},</if>
+			udate=now()
+		</set>
+		where
+		id=#{ id }
+	</update>
+
+	<!--删除 -->
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete
+		from travel_head
+		where
+		id=#{ id }
+	</delete>
+
+	<select id="listPage" resultMap="TravelHeadMap"
+		parameterType="com.tour.travelset.entity.TravelHead">
+		select t.*, 
+		(select count(1) from comments c where c.type=5 and c.typeid=t.id) pl_total ,
+		(select count(1) from collection s where s.type=5 and s.typeid=t.id) sc_total 
+		from travel_head t 
+		where 1=1
+		<if test="travel.status != null and travel.status !='' ">
+			and status=#{ travel.status }
+		</if>
+		<if test="travel.userid != null and travel.userid !='' ">
+			and userid=#{ travel.userid }
+		</if>
+		order by tag desc, cdate desc, id asc 
+	</select>
+	
+	<select id="selectTravelHeadByEntity" resultMap="TravelHeadMap"
+		parameterType="com.tour.travelset.entity.TravelHead">
+		select * from travel_head where 1=1
+		<if test="travel.id != null and travel.id !='' ">
+			and id=#{ travel.id }
+		</if>
+	</select>
+
+</mapper>

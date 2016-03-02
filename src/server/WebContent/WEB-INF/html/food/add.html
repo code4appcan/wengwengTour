@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title> <@h.head />
+<style type="text/css">
+body {
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+</head>
+<body>
+	<form action="${path}/save_food" id="fm" method="post"
+		class="definewidth m20">
+		<input type="hidden" id="id" value="${id!0}" name="id">
+		<input type="hidden" id="photoid" value="" name="photos">
+		<div style="text-align: center;" id="errorMsg"></div>
+		<table class="table table-bordered table-hover definewidth m10">
+			<tr>
+				<td width="10%" class="tableleft">美食 <span class="required">*</span></td>
+				<td><input type="text" name="foodName"  /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">推荐商家<span class="required">*</span></td>
+				<td><input cols="20" name="diningName" /></input></td>
+			</tr>
+			<tr>
+				<td class="tableleft">具体地址<span class="required">*</span></td>
+				<td><input type="text" name="address"  /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">联系电话<span class="required">*</span></td>
+				<td><input type="text" name="phone" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">介绍<span class="required">*</span></td>
+				<td><textarea cols="40" name="introduction" style="width: 500px;height: 250px;"></textarea></td>
+			</tr>
+			<!-- <tr>
+				<td class="tableleft">区域 <span class="required">*</span></td>
+				<td><select class="span6 m-wrap" name="area">
+						<option value="信陵镇">信陵镇</option>
+						<option value="东瀼口镇">东瀼口镇</option>
+						<option value="官渡河镇">官渡河镇</option>
+						<option value="茶店子镇">茶店子镇</option>
+						<option value="绿葱坡镇">绿葱坡镇</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td class="tableleft">价格<span class="required">*</span></td>
+				<td><input type="text" name="avgPrice"  /></td>
+			</tr>
+			
+			
+			<tr>
+				<td class="tableleft">longitude<span class="required">*</span></td>
+				<td><input cols="20" name="longitude" /></input></td>
+			</tr>
+			<tr>
+				<td class="tableleft">latitude<span class="required">*</span></td>
+				<td><input cols="20" name="latitude" /></input></td>
+			</tr>
+			<tr>
+				<td class="tableleft">标签<span class="required">*</span></td>
+				<td><textarea cols="20" name="tags" ></textarea></td>
+			</tr>
+			
+ -->
+			<tr>
+				<td class="tableleft"></td>
+				<td>
+					<button type="submit" class="btn btn-primary" type="button">保存</button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-success" name="backid"
+						id="backid">返回列表</button>
+				</td>
+			</tr>
+			<tr>
+				<td class="tableleft"></td>
+				<td>
+					<img id="img" src="" width="400px"/>
+				</td>
+			</tr>			
+		</table>
+
+		</form>图片<span class="required">*</span>
+		<input id="fileToUploadFood" type="file" size="20" name="fileToUploadFood" class="input">
+		<button id="buttonUpload">upload</button>
+	<@h.foot />
+<script type="text/javascript">
+	$(function() {
+		if ($("#id").val() != 0) {
+			$.get("${path}/get_food?id=" + $("#id").val(), function(data) {
+				var data = eval('(' + data + ')');
+				$("#fm").jsonData(data.data);
+				$(".disabled").attr("readOnly", "readOnly");
+			})
+		};
+		$('#backid').click(function() {
+			window.location.href = "${path}/food/list";
+		});
+	});
+	var callback = function(data) {
+		if (data.status == "200") {
+			window.location.href = "${path}/food/list";
+		} else {
+			$("#errorMsg").html(data.msg).show();
+		}
+	}
+	$("#fm").validFrom(callback);
+	
+	$("#buttonUpload").click(function(){     
+
+	   $.ajaxFileUpload({
+		   url:"${path}/uploadPhotoFood",//处理图片脚本
+		   contentType:"application/json",
+	       secureuri :false,
+	       fileElementId :['fileToUploadFood'],//file控件id
+	       dataType : 'json',
+	       success: function(data, status){
+	    	   var url = data.substring(7);
+				$("#img").attr("src", "${path}" + url);
+				$("#photoid").val(data);
+	       },
+	   
+	       error: function(data, status)
+	       {
+	    	  // alert(status);
+	       }
+		});
+	 }) ;
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title> <@h.head />
+<style type="text/css">
+body {
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+</head>
+<body>
+	<form action="${path}/wineshop/room/save" id="fm" method="post" class="definewidth m20">
+	
+		<input type="hidden" id="hotelId" value="${hotelId!''}" name="hotelId">
+		<div style="text-align: center;" id="errorMsg"></div>
+		<table class="table table-bordered table-hover definewidth m10">
+			<tr>
+				<td width="10%" class="tableleft">房型名称 <span class="required">*</span></td>
+				<td><input type="text" name="roomTitle" datatype="*" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">价格<span class="required">*</span></td>
+				<td><input type="text" name="price" datatype="n1-5"/></td>
+			</tr>
+			<tr>
+				<td class="tableleft">房间数量<span class="required">*</span></td>
+				<td><input type="text" name="roomNumber" datatype="n1-5" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">房型描述<span class="required">*</span></td>
+				<td><textarea cols="20" name="roomDesc" style="width: 300px; height: 50px;"></textarea></td>
+			</tr>
+			<tr>
+				<td class="tableleft"></td>
+				<td>
+					<button type="submit" class="btn btn-primary" type="button">保存</button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-success" name="backid"
+						id="backid">返回列表</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<@h.foot />
+	<script type="text/javascript">
+		var listquery = "${path}/wineshop/room/list?hotelId=" + $("#hotelId").val();
+		$('#backid').click(function() {
+							window.location.href = listquery;
+						});
+		
+		var callback = function(data) {
+			if (data.status == "200") {
+				window.location.href = listquery;
+			} else {
+				$("#errorMsg").html(data.msg).show();
+			}
+		}
+		$("#fm").validFrom(callback);
+	</script>
+</body>
+</html>

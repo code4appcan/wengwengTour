@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.resources.dao.SysUserDao">
+	<resultMap id="SysUserMap" type="com.tour.resources.entity.SysUser">
+		<id column="id" property="id" />
+		<result column="username" property="username" />
+		<result column="password" property="password" />
+		<result column="name" property="name" />
+		<result column="status" property="status" />
+		<result column="departmentId" property="departmentId" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+	<resultMap id="SysRightMap" type="com.tour.resources.entity.SysRight">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="pid" property="pid" />
+		<result column="checked" property="checked" />
+	</resultMap>
+
+	<!--保存 -->
+	<insert id="saveSysUser" parameterType="com.tour.resources.entity.SysUser"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into sys_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="username != null">
+				username,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="departmentId != null">
+				departmentId,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="username != null">
+				#{username},
+			</if>
+			<if test="password != null">
+				#{password},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="departmentId != null">
+				#{departmentId},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+		</trim>
+	</insert>
+
+	<!--修改 -->
+	<update id="updateSysUserById" parameterType="com.tour.resources.entity.SysUser">
+		update sys_user
+		<set>
+			<if test="id != null">
+				id=#{ id },
+			</if>
+			<if test="username != null">
+				username=#{ username },
+			</if>
+			<if test="password != null">
+				password=#{ password },
+			</if>
+			<if test="name != null">
+				name=#{ name },
+			</if>
+			<if test="status != null">
+				status=#{ status },
+			</if>
+			<if test="departmentId != null">
+				departmentId=#{ departmentId },
+			</if>
+			<if test="remark != null">
+				remark=#{ remark },
+			</if>
+		</set>
+		where
+		id=#{ id }
+	</update>
+
+	<!--删除 -->
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete
+		from sys_user
+		where
+		id=#{ id }
+	</delete>
+
+	<!--查询 -->
+	<select id="selectSysUserById" resultMap="SysUserMap"
+		parameterType="java.lang.Long">
+		select *
+		from sys_user
+		where
+		id=#{ id }
+	</select>
+
+	<!--查询 -->
+	<select id="selectSysUserByEntity" resultMap="SysUserMap"
+		parameterType="com.tour.resources.entity.SysUser">
+		select *
+		from sys_user
+		where 1=1
+		<if test="sysUser.username != null">
+			and username=#{ sysUser.username }
+		</if>
+	</select>
+
+	<select id="selectUserByRole" resultMap="SysUserMap"
+		parameterType="com.tour.resources.entity.SysRole">
+		select u.*
+		from sys_user_role r
+		left join sys_user u
+		on r.user_id = u.id
+		where 1=1
+		<if test="role.id != null">
+			and r.role_id=#{ role.id }
+		</if>
+	</select>
+
+	<select id="list" resultMap="SysUserMap" parameterType="com.tour.resources.entity.SysUser">
+		select * from sys_user where 1=1
+		<if test="sysUser.id != null">
+			and id=#{ sysUser.id }
+		</if>
+		<if test="sysUser.name != null">
+			and name=#{ sysUser.name }
+		</if>
+		<if test="sysUser.username != null">
+			and username=#{ sysUser.username }
+		</if>
+		<if test="sysUser.status != null">
+			and status=#{ sysUser.status }
+		</if>
+	</select>
+
+	<!--用户角色列表 -->
+	<select id="selectRoleByUserId" resultMap="SysRightMap"
+		parameterType="java.lang.Long">
+		select r.id, '0' as pid, r.name, IF(rr.user_id, 'true',
+		'false') as checked
+		from sys_role r
+		left join sys_user_role rr
+		on r.id = rr.role_id and rr.user_id=#{ userId }
+	</select>
+
+	<!--删除用户角色 -->
+	<delete id="deleteRoleByUserId" parameterType="java.lang.Long">
+		delete
+		from
+		sys_user_role
+		where
+		user_id=#{ userId }
+	</delete>
+
+	<!--保存用户角色 -->
+	<insert id="saveUserRole" parameterType="java.util.List">
+		insert into sys_user_role(user_id, role_id) values
+		<foreach collection="roleList" item="item" index="index"
+			separator=",">
+			(#{item.user_id}, #{item.role_id})
+		</foreach>
+	</insert>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.resources.dao.SysRoleDao">
+	<resultMap id="SysRoleMap" type="com.tour.resources.entity.SysRole">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="status" property="status" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	
+	<resultMap id="SysRightMap" type="com.tour.resources.entity.SysRight">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="pid" property="pid" />
+		<result column="checked" property="checked" />
+	</resultMap>
+
+	<!--保存 -->
+	<insert id="saveSysRole" parameterType="com.tour.resources.entity.SysRole"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into sys_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">
+				name,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+		</trim>
+	</insert>
+
+	<!--修改 -->
+	<update id="updateSysRoleById" parameterType="java.util.List">
+		update sys_role
+		<set>
+			<if test="id != null">
+				id=#{ id },
+			</if>
+			<if test="name != null">
+				name=#{ name },
+			</if>
+			<if test="status != null">
+				status=#{ status },
+			</if>
+			<if test="remark != null">
+				remark=#{ remark },
+			</if>
+		</set>
+		where
+		id=#{ id }
+	</update>
+
+	<!--查询 -->
+	<select id="selectSysRoleById" resultMap="SysRoleMap"
+		parameterType="java.lang.Long">
+		select *
+		from sys_role
+		where
+		id=#{ id }
+	</select>
+
+	<!--权限列表 -->
+	<select id="getRightByRoleId" resultMap="SysRightMap"
+		parameterType="java.lang.Long">
+		select r.id, r.pid, r.name, IF(rr.resources_id, 'true', 'false') as checked
+		from sys_resources r
+		left join sys_role_resources rr 
+		on r.id = rr.resources_id and rr.role_id=#{ roleId }
+		where r.type=0 and r.disabled=0
+		order by r.sort
+	</select>
+	
+	<select id="list" resultMap="SysRoleMap" parameterType="com.tour.resources.entity.SysRole">
+		select * from sys_role where 1=1
+		<if test="sysRole.id != null">
+			and id=#{ sysRole.id }
+		</if>
+		<if test="sysRole.name != null">
+			and name=#{ sysRole.name }
+		</if>
+		<if test="sysRole.status != null">
+			and status=#{ sysRole.status }
+		</if>
+	</select>
+	
+	<select id="getUserRoleByUser" resultMap="SysRoleMap" parameterType="java.lang.Long">
+		select r.* 
+		from sys_role r 
+		left join sys_user_role ur on r.id = ur.role_id 
+		where ur.user_id = #{ userId }
+	</select>
+	
+	<!--删除 -->
+	<delete id="deleteById" parameterType="java.lang.Long">
+		delete
+		from sys_role
+		where
+		id=#{ id }
+	</delete>
+	
+	<!--删除角色权限 -->
+	<delete id="deleteRightByRoleId" parameterType="java.lang.Long">
+		delete
+		from sys_role_resources
+		where
+		role_id=#{ roleId }
+	</delete>
+	
+	<!--保存角色权限 -->
+	<insert id="saveRoleRight" parameterType="java.util.List">
+		insert into sys_role_resources(role_id, resources_id) values 
+		<foreach collection="rightList" item="item" index="index" separator="," >  
+	        (#{item.role_id}, #{item.resources_id})
+	    </foreach>
+	</insert>
+</mapper>

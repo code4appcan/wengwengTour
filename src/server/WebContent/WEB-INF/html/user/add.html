@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title> <@h.head />
+<style type="text/css">
+body {
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+</head>
+<body>
+	<form action="${path}/save_user" id="fm" method="post"
+		class="definewidth m20">
+		<input type="hidden" id="userId" value="${id!0}" name="id">
+		<input type="hidden" id="photoid" value="" name="photoURL">
+		<div style="text-align: center;" id="errorMsg"></div>
+		<table class="table table-bordered table-hover definewidth m10">
+			<tr>
+				<td width="10%" class="tableleft">登录名 <span class="required">*</span></td>
+				<td><input type="text" name="userName" datatype="s4-18" calss="disabled"
+					nullmsg="请输入用户名！" errormsg="用户名至少4个字符,最多18个字符！" /> <span
+					class="Validform_checktip">用户名为4~18个字符</span></td>
+			</tr>
+			<tr id="password">
+				<td class="tableleft">密码 <span class="required">*</span></td>
+				<td><input type="text" name="password" value="123456"
+					datatype="s6-18" nullmsg="请输入密码！" errormsg="密码至少6个字符,最多18个字符！" />
+					<span class="Validform_checktip">密码为6~18个字符</span></td>
+			</tr>
+			<tr>
+				<td class="tableleft">昵称<span class="required">*</span></td>
+				<td><input type="text" name="nickName" datatype="s4-18"
+					nullmsg="请输入昵称！" errormsg="昵称至少4个字符,最多18个字符！" /> <span
+					class="Validform_checktip">昵称为4~18个字符</span></td>
+			</tr>
+			<tr>
+				<td class="tableleft">手机号<span class="required">*</span></td>
+				<td><input type="text" name="mobile" datatype="m" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">邮箱<span class="required">*</span></td>
+				<td><input type="text" name="email" datatype="e" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft"></td>
+				<td>
+					<button type="submit" class="btn btn-primary" type="button">保存</button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-success" name="backid"
+						id="backid">返回列表</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+				图片<span class="required">*</span>
+				<input id="fileToUploadAccount" type="file" size="20" name="fileToUploadAccount" class="input">
+				<button id="buttonUpload">upload</button>
+	<@h.foot />
+<script type="text/javascript">
+	$(function() {
+		if ($("#userId").val() != 0) {
+			$.get("${path}/user/get/" + $("#userId").val(), function(data) {
+				var data = eval('(' + data + ')');
+				$("#fm").jsonData(data.data);
+				$(".disabled").attr("readOnly", "readOnly");
+				$("#password").remove();
+			})
+		};
+		$('#backid').click(function() {
+			window.location.href = "${path}/account/list";
+		});
+	});
+	var callback = function(data) {
+		if (data.status == "200") {
+			window.location.href = "${path}/account/list";
+		} else {
+			$("#errorMsg").html(data.msg).show();
+		}
+	}
+	$("#fm").validFrom(callback);
+	$("#buttonUpload").click(function(){     
+
+		   $.ajaxFileUpload({
+			   url:"${path}/uploadPhotoAccount",//处理图片脚本
+			   contentType:"application/json",
+		       secureuri :false,
+		       fileElementId :['fileToUploadAccount'],//file控件id
+		       dataType : 'json',
+		       success: function(data, status){
+		    	   $("#img").attr("src", data);
+		    	   $("#photoid").val(data);
+		    	   alert(data);
+		       },
+		   
+		       error: function(data, status)
+		       {
+		    	  // alert(status);
+		       }
+			});
+		 }) ;
+</script>
+</body>
+</html>

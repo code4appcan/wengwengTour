@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.AccountDao">
+	<resultMap id="AccountMap" type="com.tour.account.entity.Account">
+		<id column="id" property="id" />
+		<result column="userName" property="userName" />
+		<result column="nick_name" property="nickName" />
+		<result column="password" property="password" />
+		<result column="mobile" property="mobile" />
+		<result column="email" property="email" />
+		<result column="user_type" property="userType" />
+		<result column="token" property="token" />
+		<result column="login_time" property="loginTime" />
+		<result column="disabled" property="disabled" />
+		<result column="photoURL" property="photoURL" />
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Account"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into account
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userName != null">userName,</if>
+			<if test="nickName != null">nick_name,</if>
+			<if test="password != null">password,</if>
+			<if test="mobile != null">mobile,</if>
+			<if test="email != null">email,</if>
+			<if test="userType != null">user_type,</if>
+			<if test="loginTime != null">login_time,</if>
+			<if test="disabled != null">disabled,</if>
+			<if test="birthday != null">birthday,</if>
+			<if test="sex != null">sex,</if>
+			<if test="signature != null">signature,</if>
+			<if test="city != null">city,</if>
+			<if test="photoURL != null">photoURL,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userName != null">#{userName},</if>
+			<if test="nickName != null">#{nickName},</if>
+			<if test="password != null">#{password},</if>
+			<if test="mobile != null">#{mobile},</if>
+			<if test="email != null">#{email},</if>
+			<if test="userType != null">#{userType},</if>
+			<if test="loginTime != null">#{loginTime},</if>
+			<if test="disabled != null">#{disabled},</if>
+			<if test="birthday != null">#{birthday},</if>
+			<if test="sex != null">#{sex},</if>
+			<if test="signature != null">#{signature},</if>
+			<if test="city != null">#{city},</if>
+			<if test="photoURL != null">#{photoURL},</if>
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.account.entity.Account">
+		update account
+		<set>
+			<if test="userName != null">
+				userName=#{ userName },
+			</if>
+			<if test="nickName != null">
+				nick_name=#{ nickName },
+			</if>
+			<if test="password != null">
+				password=#{ password },
+			</if>
+			<if test="mobile != null">
+				mobile=#{ mobile },
+			</if>
+			<if test="email != null">
+				email=#{ email },
+			</if>
+			<if test="userType != null">
+				user_type=#{ userType },
+			</if>
+			<if test="loginTime != null">
+				login_time=#{ loginTime },
+			</if>
+			<if test="disabled != null">
+				disabled=#{ disabled },
+			</if>
+			<if test="token != null">
+				token=#{ token },
+			</if>
+			<if test="photoURL != null">
+				photoURL=#{ photoURL },
+			</if>
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.account.entity.Account">
+		delete
+		from account
+		where
+		id=#{ id }
+	</delete>
+
+	<!--查询 -->
+	<select id="findById" resultMap="AccountMap" parameterType="java.lang.Long">
+		select *
+		from account
+		where
+		id=#{ id }
+	</select><!--查询 -->
+	<select id="findBy" resultMap="AccountMap" parameterType="java.lang.Long">
+		select *
+		from account
+		where
+		id=#{ id }
+	</select>
+	
+	<select id="selectByUsername" resultMap="AccountMap">
+		select *
+		from account
+		where 1=1 and email=#{userName} and disabled=0
+	</select>
+	
+	<!--查询 -->
+	<select id="findByPhone" resultMap="AccountMap" parameterType="java.lang.String">
+		select *
+		from account
+		where
+		mobile = #{ mobile }
+	</select>
+	
+	<select id="selectByLoginProof" resultMap="AccountMap">
+		select *
+		from account
+		where (userName=#{loginProof} or email=#{loginProof} or mobile=#{loginProof} )  and disabled=0
+	</select>
+	
+	<select id="checkSameEmail" resultType="java.lang.Integer">
+		select count(1) from account where email =#{email} and disabled=0
+	</select>
+	
+	<select id="checkSameUserName" resultType="java.lang.Integer">
+		select count(1) from account where username =#{userName} and disabled=0
+	</select>
+	
+	<select id="checkSameMoblie" resultType="java.lang.Integer">
+		select count(1) from account where mobile =#{mobile} and disabled=0
+	</select>
+	
+	<select id="getuserNameByID" resultType="java.lang.String">
+		select userName from account where id =#{userID}
+	</select>
+	
+	<select id="getFriends" resultMap="AccountMap" parameterType="java.lang.Long">
+		select * from account where id in (select userId from friends where userId= #{userID} and status = 0)
+	</select>
+	
+	<select id="getAllMemberbyGroup" resultMap="AccountMap" parameterType="java.lang.Long">
+		select * from account where id in (select userId from group_members where userId= #{userID} and status = 0)
+	</select>
+	
+	<select id="getIdbyEmail" resultType="java.lang.Long">
+		select id from account where email = #{email} limit 1
+	</select>
+	
+	<select id="listPage" resultMap="AccountMap"
+		parameterType="com.tour.account.entity.Account">
+		select * from account where 1=1
+		<if test="user.userName != null and user.userName !='' ">
+			and userName=#{ user.userName }
+		</if>
+		<if test="user.nickName != null and user.nickName !=''">
+			and nick_name=#{ user.nickName }
+		</if>
+		<if test="user.mobile != null and user.mobile != ''">
+			and mobile=#{ user.mobile }
+		</if>
+
+	</select>
+</mapper> 

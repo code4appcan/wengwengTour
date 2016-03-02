@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.FoodDao">
+	<resultMap id="FoodMap" type="com.tour.account.entity.Food">
+		<id column="id" property="id" />
+		<result column="dining_name" property="diningName" />
+		<result column="food_name" property="foodName" />
+		<result column="address" property="address" />
+		<result column="avg_price" property="avgPrice" />
+		<result column="tags" property="tags" />
+		<result column="longitude" property="longitude" />
+		<result column="latitude" property="latitude" />
+		<result column="area" property="area" />
+		<result column="photos" property="photos" />
+		<result column="c_by" property="cBy" />
+		<result column="pointid" property="pointid" />
+		<result column="love_num" property="loveNum" />			
+		<result column="introduction" property="introduction" />	
+		<result column="ordered" property="ordered" />		
+		<result column="hot" property="hot" />	
+		<result column="recommend" property="recommend" />
+		<result column="type" property="type" />
+		<result column="stroll" property="stroll" />
+		<result column="is_food" property="isFood" />
+		<result column="pl_total" property="plTotal" />
+		<result column="sc_total" property="scTotal" />
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Food"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into food
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="phone != null">phone,</if>
+			<if test="foodName != null">food_name,</if>
+			<if test="diningName != null">dining_name,</if>
+			<if test="address != null">address,</if>
+			<if test="area != null">area,</if>
+			<if test="avgPrice != null">avg_price,</if>
+			<if test="tags != null">tags,</if>
+			<if test="longitude != null">longitude,</if>
+			<if test="latitude != null">latitude,</if>
+			<if test="cBy != null">c_by,</if>
+			<if test="photos != null">photos,</if>			
+			<if test="pointid != null">pointid,</if>	
+			<if test="loveNum != null">love_num,</if>
+			<if test="introduction != null">introduction,</if>
+			c_time
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="phone != null">#{phone},</if>
+			<if test="foodName != null">#{foodName},</if>
+			<if test="diningName != null">#{diningName},</if>
+			<if test="address != null">#{address},</if>
+			<if test="area != null">#{area},</if>
+			<if test="avgPrice != null">#{avgPrice},</if>
+			<if test="tags != null">#{tags},</if>
+			<if test="longitude != null">#{longitude},</if>
+			<if test="latitude != null">#{latitude},</if>
+			<if test="cBy != null">#{cBy},</if>
+			<if test="photos != null">#{photos},</if>			
+			<if test="pointid != null">#{pointid},</if>		
+			<if test="loveNum != null">#{loveNum},</if>	
+			<if test="introduction != null">#{introduction},</if>
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.account.entity.Food">
+		update food
+		<set>
+			<if test="phone != null">
+				phone=#{ phone },
+			</if>
+			<if test="foodName != null">
+				food_name=#{ foodName },
+			</if>
+			<if test="diningName != null">
+				dining_name=#{ diningName },
+			</if>
+			<if test="address != null">
+				address=#{ address },
+			</if>
+			<if test="tags != null">
+				tags=#{ tags },
+			</if>
+			<if test="area != null">
+				area=#{ area },
+			</if>
+			<if test="photos != null">
+				photos=#{ photos },
+			</if>
+			<if test="longitude != null">
+				longitude=#{ longitude },
+			</if>
+			<if test="latitude != null">
+				latitude=#{ latitude },
+			</if>
+			<if test="avgPrice != null">
+				avg_price=#{ avgPrice },
+			</if>
+			<if test="cBy != null">
+				c_by=#{ cBy },
+			</if>
+			<if test="pointid != null">
+				pointid=#{ pointid },
+			</if>
+			<if test="loveNum != null">
+				love_num=#{ loveNum },
+			</if>
+			<if test="introduction != null">
+				introduction=#{ introduction },
+			</if>
+			<if test="recommend != null">
+				recommend=#{ recommend },
+			</if>
+			u_time=now()
+		</set>
+		where
+		id=#{ id }
+	</update>
+	<!--修改Hot-->
+	<update id="updateHot" parameterType="com.tour.account.entity.Food">
+		update food
+		set hot=#{hot}
+		where
+		id=#{ id }
+	</update>
+	<!--修改Recommend-->
+	<update id="updateRecommend" parameterType="com.tour.account.entity.Food">
+		update food
+		set recommend=#{recommend}
+		where
+		id=#{ id }
+	</update>
+	<!--修改必逛-->
+	<update id="updateStroll" parameterType="com.tour.account.entity.Food">
+		update food
+		set stroll=#{stroll}
+		where
+		id=#{ id }
+	</update>
+	<!--修改love_num -->
+	<update id="loveNumAdd" parameterType="com.tour.account.entity.Food">
+		update food
+		<set>
+				love_num= love_num + 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	<!--修改love_num -->
+	<update id="loveNumSubtract" parameterType="com.tour.account.entity.Food">
+		update food
+		<set>
+				love_num= love_num + 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	<!--修改ordered -->
+	<update id="orderAdd" parameterType="com.tour.account.entity.Food">
+		update food
+		<set>
+				ordered= ordered + 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	<!--修改ordered -->
+	<update id="orderSubtract" parameterType="com.tour.account.entity.Food">
+		update food
+		<set>
+				ordered= ordered - 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.account.entity.Food">
+		delete
+		from food
+		where
+		id=#{ id }
+	</delete>
+	
+	
+	<!--recommends查询 -->
+	<select id="findByRecommends" resultMap="FoodMap" parameterType="java.lang.Long">
+		select *
+		from food
+		where
+		recommend=1
+	</select>
+	
+	<!--Hot查询 -->
+	<select id="findByHot" resultMap="FoodMap" parameterType="java.lang.Long">
+		select *
+		from food
+		where
+		hot=1
+	</select>
+
+	<!--查询 -->
+	<select id="findById" resultMap="FoodMap" parameterType="java.lang.Long">
+		select *
+		from food
+		where
+		id=#{ id }
+	</select><!--查询 -->
+	<select id="findBy" resultMap="FoodMap" parameterType="java.lang.Long">
+		select *
+		from food
+		where
+		id=#{ id }
+	</select>
+	
+	<select id="listPage" resultMap="FoodMap"
+		parameterType="com.tour.account.entity.Food">
+		select t.*,
+		(select count(1) from comments c where c.type=4 and c.typeid=t.id) pl_total ,
+		(select count(1) from collection s where s.type=4 and s.typeid=t.id) sc_total
+		from food t where 1=1
+		<if test="food.foodName != null and food.foodName !='' ">
+			and food_name=#{ food.foodName }
+		</if>
+		<if test="food.diningName != null and food.diningName !='' ">
+			and dining_name=#{ food.diningName }
+		</if>
+		<if test="food.area != null and food.area !=''">
+			and area=#{ food.area }
+		</if>
+		<if test="food.hot == 1">
+			and hot=1
+		</if>
+		<if test="food.stroll == 1">
+			and stroll=1
+		</if>
+		<if test="food.recommend == 1">
+			and recommend=1
+		</if>
+		<if test="food.isFood != null and food.isFood !='' ">
+			and is_food=#{ food.isFood }
+		</if>
+	</select>
+</mapper> 

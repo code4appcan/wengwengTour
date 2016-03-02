@@ -1,0 +1,1329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache" content="no-cache">
+<meta charset="UTF-8">
+<title>Test REST service</title>
+<style>
+#debug_info{
+	border:2px solid red;
+	height:400px;
+}
+</style>
+<script type="text/javascript"
+	src="http://localhost:8080/tour/static/js/jquery/jquery-1.8.1.min.js"></script>
+<script type="text/javascript"
+	src="http://localhost:8080/tour/static/js/bootstrap/bootstrap.min.js"></script>
+<script src="http://localhost:8080/tour/static/js/ajaxfileupload.js"></script>
+<!--[if lte IE 8]>
+<script src="//rawgithub.com/douglascrockford/JSON-js/master/json2.js"></script>
+<![endif]-->
+</head>
+<body>
+<div id="debug_info" style="height:250px; overflow:auto; border:1px solid #000000;"></div>
+<fieldset>
+<legend>Event Vote Resource Test</legend>
+<button id="getAllEvent">Get all events for the user</button>
+<input type="text" id="user_id" size="5"  placeholder="user_id" />
+<input type="text" id="event_id" size="10"  placeholder="event_id" />
+<button id="vote_like">Event Like</button>
+<button id="vote_dislike">Event Dislike</button>
+<!-- <button id="vote_results">Show vote results</button> -->
+<button id="getEventById">Get Event By Id</button>
+</fieldset>
+
+<fieldset>
+<legend>Message Resource Test</legend>
+<input type="text" id="msg_get_user_id" size="5"  placeholder="user_id" /><button id="msg_get">Get All Messages</button>
+<input type="text" id="id_to_del" size="5"  placeholder="msg id" /><button id="msg_del">Delete Message</button>
+<button id="msg_add">Add Message</button>
+<input type="text" id="id_to_mark" size="5"  placeholder="msg id" /><button id="msg_mark">Mark Message as Read</button>
+</fieldset>
+
+<fieldset>
+<legend>User Resource Test</legend>
+<input type="text" id="mail" size="5"  placeholder="mail" />
+<input type="password" id="password" size="5"  placeholder="password" />
+
+<button id="user_register">Register User</button>
+<button id="user_perfect">perfect User info</button>
+<button id="build_group">build group</button>
+
+<button id="user_makefriend">make friend</button>
+<button id="user_agreemakefriend">agree make friend</button>
+<input type="text" id="userId" size="5"  placeholder="userId" />
+上传头像：<input id="fileToUpload1" type="file" size="20" name="fileToUpload1" class="input">
+<button id="buttonUpload">Register User upload imag</button>
+
+<button id="user_login">Login</button>
+<button id="user_logout">Logout</button>
+<button id="user_getUsers">Get Users</button>
+<button id="user_checkin">Check in</button>
+<button id="user_getPrizeNum">Get prize num</button>
+<input type="text" id="id_luckyDraw" size="5"  placeholder="userId" />
+<button id="user_luckyDraw">LuckyDraw</button>
+<button id="user_luckylist">Print Lucky List</button>
+<button id="user_luckystatus">Get User's Lucky status</button>
+<button id="user_manList">Get Managers List</button>
+<button id="user_feedback">Feedback</button>
+<input type="text" id="feedback" size='10' placeholder="feedback"/>
+</fieldset>
+<fieldset>
+<legend>Comment Test</legend>
+<input type="text" id="event_id_forcomment" size="10"  placeholder="event id" />
+<input type="text" id="user_id_forcomment" size="10"  placeholder="user id" />
+<input type="text" id="comment_forcomment"  placeholder="comment" />
+<button id="add_comment">Add comment</button>
+
+<input type="text" id="page_forcomment" size="10"  placeholder="current page" />
+<input type="text" id="ps_forcomment" size="10"  placeholder="page size" />
+<input type="text" id="userId_forcomment" size="10"  placeholder="userId" />
+<input type="text" id="eventId_forcomment" size="10"  placeholder="eventId" />
+<input type="text" id="since_forcomment" size="20"  placeholder="since" />
+<button id="get_comment">get comment</button>
+<span>Tip: 'since' is unix_timestamp.Example:1421033941000 </span>
+</fieldset>
+
+<fieldset>
+<legend>Activity Test</legend>
+<input type="text" id="page_foractivity" size="10"  placeholder="current page" />
+<input type="text" id="ps_foractivity" size="10"  placeholder="page size" />
+<input type="text" id="userId_foractivity" size="10"  placeholder="userId" />
+<input type="text" id="year_foractivity" size="15"  placeholder="year(optional)" />
+<button id="get_activity">get ActivityList</button>
+
+<input type="text" id="activityId_foractivity" size="10"  placeholder="activityId" />
+<button id="get_activityById">get ActivityById</button>
+<button id="likeActivity">Like activity</button>
+<button id="dislikeActivity">Dislike activity</button>
+</fieldset>
+
+<fieldset>
+<legend>Config Resource Test</legend>
+<input type="text" id="configName_forconfig" size="10"  placeholder="confName" />
+<button id="config_get">Get ConfigValue</button>
+</fieldset>
+
+<fieldset>
+<legend>Wish Resource Test</legend>
+<button id="wish_get">Get Wish</button>
+<input type="text" id="userId_forwish" size="10"  placeholder="userId" />
+<input type="text" id="content_forwish" size="30"  placeholder="wish content" />
+<input type="text" id="wishId_forwish" size="10"  placeholder="wishId" />
+<button id="wish_make">Make wish</button>
+<button id="wish_draft">Draft wish</button>
+<button id="wish_submmitdraft">Confirm wish</button>
+<button id="wish_changewish">Change wish</button>
+</fieldset>
+
+<fieldset>
+<legend>Question&Answers Resource Test</legend>
+<button id="quest_add">Ask Question</button>
+<input type="text" id="quest_askerId" size="10"  placeholder="askerId" />
+<input type="text" id="quest_receiverId" size="10"  placeholder="receiverId" />
+<input type="text" id="quest_content" size="25"  placeholder="questionContent" />
+<button id="quest_answer">answer Question</button>
+<button id="quest_like">like Question</button>
+<button id="quest_dislike">dislike Question</button>
+<input type="text" id="quest_id" size="15"  placeholder="questionId/answerId" />
+<input type="text" id="quest_answererId" size="15"  placeholder="answererId(userId)" />
+<input type="text" id="quest_answercontent" size="25"  placeholder="answerContent" />
+<!-- <button id="answ_like">like Answer</button>
+<button id="answ_dislike">dislike Answer</button> -->
+<button id="qna_unansweredlist">All Unanswered Questions</button>
+<button id="qna_answeredlist">All Answered Questions</button>
+<input type="text" id="quest_ps" size="10"  placeholder="pageSize" />
+<input type="text" id="quest_page" size="10"  placeholder="currentPage" />
+<button id="qna_toMelist">All ToMe Questions</button>
+
+</fieldset>
+
+<fieldset>
+<legend>Reset password</legend>
+<input type="text" placeholder="phone" id="phone"/>
+<input type="text" placeholder="user SN" id="userSN"/>
+<input type="text" placeholder="new password" id="password"/>
+<button id="resetPwd">Reset Password</button>
+</fieldset>
+
+<fieldset>
+<legend>Schedule Resource Test</legend>
+<input type="text" id="schedule_userid" placeholder="user id"/>
+<button id="retrieve_schedule">Retrieve Schedule</button>
+<input type="text" id="schedule_id" placeholder="schedule id"/>
+<button id="get_schedule_byid">Get schedule by id</button>
+<button id="set_schedule_alarm">Set schedule alarm</buttion>
+<button id="cancel_alarm">Cancel alarm</button>
+</fieldset>
+
+<fieldset>
+<legend>Change Password</legend>
+<input type="text" id="chgpwd_userid" placeholder="user id"/>
+<input type="text" id="chgpwd_oldpwd" placeholder="old password"/>
+<input type="text" id="chgpwd_newpwd" placeholder="new password"/>
+<button id="chgpwd">Change Password</button>
+</fieldset>
+
+<fieldset>
+<legend>Introduction Games</legend>
+<input type="text" id="introGame_lan" placeholder="language"/>
+<button id="introGame_get">Get question List</button>
+<button id="score_record">record score</button>
+<input type="text" id="score_userId" placeholder="userId"/>
+<input type="text" id="score_score" placeholder="score"/>
+<input type="text" id="score_remainSec" placeholder="remain seconds"/>
+</fieldset>
+
+<fieldset>
+ <body>
+        <input id="fileToUpload1" type="file" size="20" name="fileToUpload1" class="input"></br>
+        <input id="fileToUpload2" type="file" size="20" name="fileToUpload2" class="input">
+        <button id="buttonUpload">上传</button>
+    </body>
+</fieldset>
+
+
+<script>
+
+var reqUrl = "http://localhost:8080/tour";
+
+$("#buttonUpload").click(function(){     
+    //加载图标   
+    /* $("#loading").ajaxStart(function(){
+       $(this).show();
+    }).ajaxComplete(function(){
+       $(this).hide();
+    });*/
+     //上传文件
+	//if($("#userId").val() == ""){
+	//	alert("please input user id");
+	//	return;
+	//}
+   // var userId=$("#userId").val();
+     
+   $.ajaxFileUpload({
+	   url:reqUrl+ "http://localhost:8080/tour/uploadPhoto?userID=10",//处理图片脚本
+	   contentType:"application/json",
+       secureuri :false,
+       fileElementId :['fileToUpload1'],//file控件id
+       dataType : 'json',
+       success: function(data, status){
+    	   alert(status);
+    	   
+    	  // $("#debug_info").text(JSON.stringify(data));
+       },
+   
+       error: function(data, status)
+       {
+    	   alert(status);
+    	  // $("#debug_info").text(JSON.stringify(((data.responseText).replace("<pre>","")).replace("</pre>","")));
+       }
+       /*
+       success:function(result){
+    	   alert('test'+JSON.stringify(result));
+			$("#debug_info").text(JSON.stringify(result));
+		}
+       */
+});
+ }) ;
+$("#getAllEvent").on("click",function(){
+	$.ajax(reqUrl+"rest/event/get?userId="+$("#user_id").val(),{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#vote_like").on("click",function(){
+    var eventId = ($("#event_id").val()==""?-1:$("#event_id").val());
+    var userId = ($("#user_id").val()==""?-1:$("#user_id").val());
+	$.ajax(reqUrl+"rest/event/vote/"+ eventId + "/yes?userId=" + userId,{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#vote_dislike").on("click",function(){
+    var eventId = ($("#event_id").val()==""?-1:$("#event_id").val());
+    var userId = ($("#user_id").val()==""?-1:$("#user_id").val());
+	$.ajax(reqUrl+"rest/event/vote/"+ eventId + "/no?userId=" + userId,{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#vote_results").on("click",function(){
+	$.ajax(reqUrl+"rest/program/votes?",{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#getEventById").on("click", function() {
+    var eventId = ($("#event_id").val()==""?-1:$("#event_id").val());
+    var userId = ($("#user_id").val()==""?-1:$("#user_id").val());
+    $.ajax(reqUrl+"rest/event/byid/" + eventId + "?userId=" + userId, {
+        type:"get",
+        dataType:"json",
+        success: function(result) {
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+        }
+    })
+});
+
+$("#msg_get").on("click",function(){
+	if($("#msg_get_user_id").val() == ""){
+		alert("please input user id");
+		return;
+	}
+	$.ajax(reqUrl+"rest/message?userId=" + $("#msg_get_user_id").val(),{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#msg_del").on("click",function(){
+	$.ajax(reqUrl+"rest/message/delete/"+$("#id_to_del").val() ,{
+		type:"get",
+		dataType:"json", 
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#msg_mark").on("click",function(){
+	$.ajax(reqUrl+"rest/message/read/"+$("#id_to_mark").val() ,{
+		type:"get",
+		dataType:"json", 
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+
+$("#msg_add").on("click",function(){
+	$.ajax(reqUrl+"rest/message/add",{
+		type:"post",
+		contentType:"application/json",
+		dataType:"json",
+		//data:{title:"test",content:"hello world!"},
+		data:"{\"title\":\"test\",\"content\":\"hello world\"}",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+
+});
+
+$("#build_group").on("click",function(){
+	
+	$.ajax(reqUrl+"/group",{
+		type:"post",
+		contentType:"application/json",
+		dataType:"json",
+		data:"{\"groupName\":\"bearT\",\"desc\":\"eeee\"}",
+//		data:"{\"username\":\"test1\",\"account\":\"account\",\"nickName\":\"account\",\"qq\":\"96576473\",\"user_type\":\"1\",\"disabled\":\"0\", \"email\":\"xxx@qq.com\",\"mobile\":\""+phone+"\",\"password\":\"123456\",\"signature\":\"天气不错\"}",
+		
+   
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#user_register").on("click",function(){
+	
+	if($("#email").val() == ""){
+		alert("please input mail");
+		return;
+	}
+	var phone=$("#mail").val();
+	$.ajax("http://localhost:8080/tour/register?email=x@163.com&password=123",{
+		type:"post",
+		contentType:"application/json",
+		dataType:"json",
+//		data:"{\"username\":\"test1\",\"account\":\"account\",\"nickName\":\"account\",\"qq\":\"96576473\",\"user_type\":\"1\",\"disabled\":\"0\", \"email\":\"xxx@qq.com\",\"mobile\":\""+phone+"\",\"password\":\"123456\",\"signature\":\"天气不错\"}",
+		
+   
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#user_perfect").on("click",function(){
+	
+	if($("#email").val() == ""){
+		alert("please input mail");
+		return;
+	}
+	var phone=$("#mail").val();
+	$.ajax(reqUrl+"/register/3",{
+		type:"patch",
+		contentType:"application/json",
+		dataType:"json",
+		data:"{\"username\":\"test1\",\"nickName\":\"account\",\"qq\":\"96576473\",\"userType\":\"1\",\"disabled\":\"0\", \"email\":\"xxx@qq.com\",\"mobile\":\""+phone+"\",\"password\":\"123456\",\"signature\":\"天气不错\"}",
+		
+   
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#user_makefriend").on("click",function(){
+	
+	$.ajax(reqUrl+"/account/friend/1/2",{
+		type:"post",
+		contentType:"application/json",
+		dataType:"json",
+		data:"",	
+   
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#user_agreemakefriend").on("click",function(){
+	
+	$.ajax(reqUrl+"/account/friend/1/1",{
+		type:"post",
+		contentType:"application/json",
+		dataType:"json",
+		data:"",		
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#user_login").on("click",function(){
+	if($("#phone").val() == ""){
+		alert("please input phone");
+		return;
+	}
+	var phone=$("#phone").val();
+	if($("#password").val() == ""){
+		alert("please input password");
+		return;
+	}
+	var password=$("#password").val();
+    var req = "{\"phone\":\""+phone+"\",\"password\":\""+password+"\"}";
+	$.ajax(reqUrl+"rest/user/login",{
+		type:"post",
+		dataType:"json",
+		contentType:"application/json",
+		data:req,
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+	});
+});
+
+
+
+
+
+
+
+
+$("#user_logout").on("click",function(){
+	$.ajax(reqUrl+"rest/user/logout",{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+	});
+});
+
+$("#user_getUsers").on("click",function(){
+	$.ajax(reqUrl+"rest/user",{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#user_luckyDraw").on("click",function(){
+	$.ajax(reqUrl+"rest/user/luck?userId="+$("#id_luckyDraw").val(),{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#user_luckylist").on("click",function(){
+	$.ajax(reqUrl+"rest/user/luck/print",{
+		type:"get",
+		dataType:"text",
+		success:function(result){
+			$("#debug_info").html(result);
+		}
+	});
+});
+
+$("#user_luckystatus").on("click",function(){
+	if($("#id_luckyDraw").val() == ""){
+		alert("please input userid");
+		return;
+	}
+	$.ajax(reqUrl+"rest/user/luck/"+$("#id_luckyDraw").val(),{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--user Check in-->
+$("#user_checkin").on("click",function(){
+	var userId = ($("#id_luckyDraw").val()==""?-1:$("#id_luckyDraw").val());
+    if(userId == -1){
+    	alert("please input user id");
+    	return;
+    }
+	$.ajax(reqUrl+"rest/user/checkin?userId="+userId,{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#user_getPrizeNum").on("click",function(){
+	var userId = ($("#id_luckyDraw").val()==""?-1:$("#id_luckyDraw").val());
+    if(userId == -1){
+    	alert("please input user id");
+    	return;
+    }
+	$.ajax(reqUrl+"rest/user/prizenum?userId="+userId,{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+//record score
+$("#user_feedback").on("click", function() {
+    var userId = $("#id_luckyDraw").val() == "" ? 0 : $("#id_luckyDraw").val();
+    var feedback = $("#feedback").val() == "" ? 0 : $("#feedback").val();
+  
+    if (userId == 0) {
+        alert("Please input userId");
+        return;
+    }
+    if (feedback == 0) {
+        alert("Please input feedback");
+        return;
+    }
+    
+    var req = "{\"userId\":\""+userId+"\",\"feedback\":\""+feedback+"\"}";
+    $.ajax(reqUrl + "rest/user/feedback", {
+        type:"post",
+        contentType:"application/json",
+        dataType:"json",
+        data:req,
+        success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+    });
+});
+
+<!--get managers list-->
+$("#user_manList").on("click",function(){
+	$.ajax(reqUrl+"rest/user/managers",{
+		type:"get",
+		contentType:"application/json",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#add_comment").on("click",function(){
+    var eventId = ($("#event_id_forcomment").val()==""?-1:$("#event_id_forcomment").val());
+    var userId = ($("#user_id_forcomment").val()==""?-1:$("#user_id_forcomment").val());
+    var comment = ($("#comment_forcomment").val()==""?"":$("#comment_forcomment").val());
+    if(eventId == -1){
+    	alert("please input event Id");
+    	return;
+    }
+    if(userId == -1){
+    	alert("please input user id");
+    	return;
+    }
+    var req = "{\"eventId\":\""+eventId+"\",\"comment\":\""+comment+"\"}"
+	$.ajax("rest/comment/add?userId="+userId,{
+		type:"post",
+		dataType:"json",
+		contentType:"application/json",
+		data:req,
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+	});
+});
+
+$("#get_comment").on("click",function(){
+
+    var page = ($("#page_forcomment").val()==""? 0:$("#page_forcomment").val());
+    var ps = ($("#ps_forcomment").val()==""? 0:$("#ps_forcomment").val());
+    var userId = ($("#userId_forcomment").val()==""? 0:$("#userId_forcomment").val());
+    var eventId = ($("#eventId_forcomment").val()==""? 0:$("#eventId_forcomment").val());
+    var since = ($("#since_forcomment").val()==""? 0:$("#since_forcomment").val());
+    if(page == 0){
+    	alert("please input current page");
+    	return;
+    }
+    if(ps == 0){
+    	alert("please input page size");
+    	return;
+    }
+     if(eventId == 0){
+    	alert("please input eventId");
+    	return;
+    }
+	$.ajax(reqUrl+"rest/comment/" + ps +"/" + page+ "/desc?"+"userId="+userId+"&eventId="+eventId+"&since="+since,{
+		type:"get",
+		dataType:"json",
+		contentType:"application/json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+	});
+});
+	
+	$("#get_activity").on("click",function(){
+	
+    var page = ($("#page_foractivity").val()==""? 0:$("#page_foractivity").val());
+    var ps = ($("#ps_foractivity").val()==""? 0:$("#ps_foractivity").val());
+    var userId = ($("#userId_foractivity").val()==""? 0:$("#userId_foractivity").val());
+    var year = ($("#year_foractivity").val()==""? 0:$("#year_foractivity").val());
+    if(page == 0){
+    	alert("please input current page");
+    	return;
+    }
+    if(ps == 0){
+    	alert("please input page size");
+    	return;
+    }
+ 
+	$.ajax(reqUrl+"rest/activity/" + ps +"/" + page +"?userId=" + userId + "&year=" + year,{
+		type:"get",
+		dataType:"json",
+		contentType:"application/json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+	});
+});
+
+	$("#get_activityById").on("click",function(){
+	
+    var activityId = ($("#activityId_foractivity").val()==""? 0:$("#activityId_foractivity").val());
+	var userId = ($("#userId_foractivity").val()==""? 0:$("#userId_foractivity").val());
+     if(activityId == 0){
+    	alert("please input activityId");
+    	return;
+    }
+      if(userId == 0){
+    	alert("please input userId");
+    	return;
+    }
+	$.ajax(reqUrl+"rest/activity/" + activityId+"?userId="+userId ,{
+		type:"get",
+		dataType:"json",
+		contentType:"application/json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+	});
+});
+
+$("#likeActivity").on("click",function(){
+var activityId = ($("#activityId_foractivity").val()==""? 0:$("#activityId_foractivity").val());
+	$.ajax(reqUrl+"rest/activity/like/"+ activityId+"?userId=1",{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#dislikeActivity").on("click",function(){
+var activityId = ($("#activityId_foractivity").val()==""? 0:$("#activityId_foractivity").val());
+	$.ajax(reqUrl+"rest/activity/dislike/"+ activityId+"?userId=1",{
+		type:"get",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--get configValue-->
+$("#config_get").on("click",function(){
+	var confName = ($("#configName_forconfig").val()==""? 0:$("#configName_forconfig").val());
+	if(0==confName){
+		alert("please input confName");
+		return;
+	}
+	
+	$.ajax(reqUrl+"rest/config/"+confName,{
+		type:"get",
+		contentType:"application/json",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+$("#wish_make").on("click",function(){
+	var userId = ($("#userId_forwish").val()==""? 0:$("#userId_forwish").val());
+	var content = ($("#content_forwish").val()==""? 0:$("#content_forwish").val());
+	if(""==userId){
+		alert("please input userId");
+		return;
+	}
+	if(""==content){
+		alert("please input wish content");
+		return;
+	}
+	
+	$.ajax(reqUrl+"rest/wish/add?userId="+userId,{
+		type:"post",
+		contentType:"application/json",
+		dataType:"json",
+		data:content,
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--save wish as draft-->
+$("#wish_draft").on("click",function(){
+	var userId = ($("#userId_forwish").val()==""? 0:$("#userId_forwish").val());
+	var content = ($("#content_forwish").val()==""? 0:$("#content_forwish").val());
+	if(""==userId){
+		alert("please input userId");
+		return;
+	}
+	if(""==content){
+		alert("please input wish content");
+		return;
+	}
+	
+	$.ajax(reqUrl+"rest/wish/draft?userId="+userId,{
+		type:"post",
+		contentType:"application/json",
+		dataType:"json",
+		data:content,
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--submmit a draft wish-->
+$("#wish_submmitdraft").on("click",function(){
+	var userId = ($("#userId_forwish").val()==""? 0:$("#userId_forwish").val());
+	var content = ($("#content_forwish").val()==""? 0:$("#content_forwish").val());
+	var wishId = ($("#wishId_forwish").val()==""? 0:$("#wishId_forwish").val());
+	if(""==userId){
+		alert("please input userId");
+		return;
+	}
+	if(""==content){
+		alert("please input wish content");
+		return;
+	}
+	if(""==wishId){
+		alert("please input wishId");
+		return;
+	}
+	
+	$.ajax(reqUrl+"rest/wish/confirm/"+wishId+"?userId="+userId,{
+		type:"post",
+		contentType:"application/json",
+		dataType:"json",
+		data:content,
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+
+<!--get a wish-->
+$("#wish_get").on("click",function(){
+	var userId = ($("#userId_forwish").val()==""? 0:$("#userId_forwish").val());
+	if(""==userId){
+		alert("please input userId");
+		return;
+	}
+	$.ajax(reqUrl+"rest/wish?userId="+userId,{
+		type:"get",
+		contentType:"application/json",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--change wish-->
+$("#wish_changewish").on("click",function(){
+	var userId = ($("#userId_forwish").val()==""? 0:$("#userId_forwish").val());
+	var content = ($("#content_forwish").val()==""? 0:$("#content_forwish").val());
+	var wishId = ($("#wishId_forwish").val()==""? 0:$("#wishId_forwish").val());
+	if(""==userId){
+		alert("please input userId");
+		return;
+	}
+	if(""==content){
+		alert("please input wish content");
+		return;
+	}
+	if(""==wishId){
+		alert("please input wishId");
+		return;
+	}
+	
+	$.ajax(reqUrl+"rest/wish/chg/"+wishId+"?userId="+userId,{
+		type:"post",
+		contentType:"application/json",
+		dataType:"json",
+		data:content,
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+//ask a question
+$("#quest_add").on("click",function(){
+	var askerId = ($("#quest_askerId").val()==""? 0:$("#quest_askerId").val());
+	var receiverId = ($("#quest_receiverId").val()==""? 0:$("#quest_receiverId").val());
+	var content = ($("#quest_content").val()==""? 0:$("#quest_content").val());
+	if(0==askerId){
+		alert("please input askerId");
+		return;
+	}
+	if(0==receiverId){
+		alert("please input receiverId");
+		return;
+	}
+	if(0==content){
+		alert("please input content");
+		return;
+	}
+	
+	var req = "{\"askerId\":\""+askerId+"\",\"receiverId\":\""+receiverId+"\",\"question\":\""+content+"\"}";	
+	$.ajax(reqUrl+"rest/qa/add",{
+		type:"post",
+		dataType:"json",
+		contentType:"application/json",
+		data:req,
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+	});
+});
+
+//answer a question
+$("#quest_answer").on("click",function(){
+	var questId = ($("#quest_id").val()==""? 0:$("#quest_id").val());
+	var answererId = ($("#quest_answererId").val()==""? 0:$("#quest_answererId").val());
+	var answer = ($("#quest_answercontent").val()==""? 0:$("#quest_answercontent").val());
+	if(0==questId){
+		alert("please input questId");
+		return;
+	}
+	if(0==answererId){
+		alert("please input answererId");
+		return;
+	}
+	if(0==answer){
+		alert("please input answer");
+		return;
+	}
+	
+	$.ajax(reqUrl+"rest/qa/answer/"+questId+"?userId="+answererId,{
+		type:"post",
+		dataType:"json",
+		contentType:"application/json",
+		data: answer,
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+	});
+});
+
+<!--like a question-->
+$("#quest_like").on("click",function(){
+	var userId = ($("#quest_answererId").val()==""? 0:$("#quest_answererId").val());
+	var questId = ($("#quest_id").val()==""? 0:$("#quest_id").val());
+	if(0==questId){
+		alert("please input questId");
+		return;
+	}
+	if(0==userId){
+		alert("please input userId");
+		return;
+	}
+	$.ajax(reqUrl+"rest/qa/likeq/"+questId+"?userId="+userId,{
+		type:"get",
+		contentType:"application/json",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--dislike a question-->
+$("#quest_dislike").on("click",function(){
+	var userId = ($("#quest_answererId").val()==""? 0:$("#quest_answererId").val());
+	var questId = ($("#quest_id").val()==""? 0:$("#quest_id").val());
+	if(0==questId){
+		alert("please input questId");
+		return;
+	}
+	if(0==userId){
+		alert("please input userId");
+		return;
+	}
+	$.ajax(reqUrl+"rest/qa/dislikeq/"+questId+"?userId="+userId,{
+		type:"get",
+		contentType:"application/json",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--like a answer-->
+$("#answ_like").on("click",function(){
+	var userId = ($("#quest_answererId").val()==""? 0:$("#quest_answererId").val());
+	var answId = ($("#quest_id").val()==""? 0:$("#quest_id").val());
+	if(0==answId){
+		alert("please input answId");
+		return;
+	}
+	if(0==userId){
+		alert("please input userId");
+		return;
+	}
+	$.ajax(reqUrl+"rest/qa/likea/"+answId+"?userId="+userId,{
+		type:"get",
+		contentType:"application/json",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--dislike a question-->
+$("#answ_dislike").on("click",function(){
+	var userId = ($("#quest_answererId").val()==""? 0:$("#quest_answererId").val());
+	var answId = ($("#quest_id").val()==""? 0:$("#quest_id").val());
+	if(0==answId){
+		alert("please input answId");
+		return;
+	}
+	if(0==userId){
+		alert("please input userId");
+		return;
+	}
+	$.ajax(reqUrl+"rest/qa/dislikea/"+answId+"?userId="+userId,{
+		type:"get",
+		contentType:"application/json",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--unanswered question list-->
+$("#qna_unansweredlist").on("click",function(){
+	var userId = ($("#quest_answererId").val()==""? 0:$("#quest_answererId").val());
+	var ps = ($("#quest_ps").val()==""? 0:$("#quest_ps").val());
+	var page = ($("#quest_page").val()==""? 0:$("#quest_page").val());
+	if(0==userId){
+		alert("please input userId");
+		return;
+	}
+	if(0==ps){
+		alert("please input pageSize");
+		return;
+	}
+	if(0==page){
+		alert("please input current page Num");
+		return;
+	}
+	$.ajax(reqUrl+"rest/qa/getq/"+ps+"/"+page+"?userId="+userId,{
+		type:"get",
+		contentType:"application/json",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--answered question list-->
+$("#qna_answeredlist").on("click",function(){
+	var userId = ($("#quest_answererId").val()==""? 0:$("#quest_answererId").val());
+	var ps = ($("#quest_ps").val()==""? 0:$("#quest_ps").val());
+	var page = ($("#quest_page").val()==""? 0:$("#quest_page").val());
+	if(0==userId){
+		alert("please input userId");
+		return;
+	}
+	if(0==ps){
+		alert("please input pageSize");
+		return;
+	}
+	if(0==page){
+		alert("please input current page Num");
+		return;
+	}
+	$.ajax(reqUrl+"rest/qa/getqa/"+ps+"/"+page+"?userId="+userId,{
+		type:"get",
+		contentType:"application/json",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+<!--tome question list-->
+$("#qna_toMelist").on("click",function(){
+	var userId = ($("#quest_answererId").val()==""? 0:$("#quest_answererId").val());
+	var ps = ($("#quest_ps").val()==""? 0:$("#quest_ps").val());
+	var page = ($("#quest_page").val()==""? 0:$("#quest_page").val());
+	if(0==userId){
+		alert("please input userId");
+		return;
+	}
+	if(0==ps){
+		alert("please input pageSize");
+		return;
+	}
+	if(0==page){
+		alert("please input current page Num");
+		return;
+	}
+	$.ajax(reqUrl+"rest/qa/getmeqa/"+ps+"/"+page+"?userId="+userId,{
+		type:"get",
+		contentType:"application/json",
+		dataType:"json",
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		}
+	});
+});
+
+//Reset password
+$("#resetPwd").on("click", function() {
+    var phone = ($("#phone").val()==""? 0:$("#phone").val());
+    var sn = ($("#userSN").val()==""? 0:$("#userSN").val());
+    var pwd = ($("#password").val()==""? 0:$("#password").val());
+    
+    if (0 == phone) {
+        alert("Please input phone");
+        return;
+    }
+   
+    if (0 == pwd) {
+        alert("Please input password");
+        return;
+    }
+    
+    var req = "{\"phone\":\""+phone+"\",\"userSN\":\""+sn+"\",\"password\":\""+pwd+"\"}";	
+    $.ajax(reqUrl+"rest/user/resetpwd",{
+		type:"post",
+		dataType:"json",
+		contentType:"application/json",
+		data:req,
+		success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+	});
+});
+
+//Retrieve Schedule
+$("#retrieve_schedule").on("click", function() {
+    var userid = $("#schedule_userid").val() == "" ? 0 : $("#schedule_userid").val();
+    
+    if (userid == 0) {
+        alert("Please input user id");
+        return;
+    }
+    
+    $.ajax(reqUrl + "rest/schedule/get?userId=" + userid, {
+        type:"get",
+        dataType:"json",
+        contentType:"application/json",
+        success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+    });
+});
+
+//Change Password
+$("#chgpwd").on("click", function() {
+    var userId = $("#chgpwd_userid").val() == "" ? 0 : $("#chgpwd_userid").val();
+    var oldpwd = $("#chgpwd_oldpwd").val() == "" ? 0 : $("#chgpwd_oldpwd").val();
+    var newpwd = $("#chgpwd_newpwd").val() == "" ? 0 : $("#chgpwd_newpwd").val();
+    
+    if (userId == 0) {
+        alert("Please input userid");
+        return;
+    }
+    if (oldpwd == 0) {
+        alert("Please input old password");
+        return;
+    }
+    if (newpwd == 0) {
+        alert("Please input new password");
+        return;
+    }
+    
+    var req = "{\"userId\":\""+userId+"\",\"oldpwd\":\""+oldpwd+"\",\"newpwd\":\""+newpwd+"\"}";
+    $.ajax(reqUrl + "rest/user/chgpwd", {
+        type:"post",
+        contentType:"application/json",
+        dataType:"json",
+        data:req,
+        success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+    });
+});
+
+//Get schedule by id
+$("#get_schedule_byid").on("click", function() {
+    var userid = $("#schedule_userid").val() == "" ? 0 : $("#schedule_userid").val();
+    var scheduleId = $("#schedule_id").val() == "" ? 0 : $("#schedule_id").val();
+    
+    if (userid == 0) {
+        alert("Please input user id");
+        return;
+    }
+    
+    if (scheduleId == 0) {
+        alert("Please input schedule id");
+        return;
+    }
+    
+    $.ajax(reqUrl + "rest/schedule/byid/" + scheduleId + "?userId=" + userid, {
+        type:"get",
+        dataType:"json",
+        contentType:"application/json",
+        success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+    });
+});
+
+//introduction games
+$("#introGame_get").on("click", function() {
+   var language = $("#introGame_lan").val() == "" ? 0 : $("#introGame_lan").val();
+    
+    if (language == 0) {
+        alert("Please input language");
+        return;
+    }
+    
+    $.ajax(reqUrl + "rest/introgame/get?language=" + language, {
+        type:"get",
+        dataType:"json",
+        contentType:"application/json",
+        success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+    });
+});
+
+//record score
+$("#score_record").on("click", function() {
+    var userId = $("#score_userId").val() == "" ? 0 : $("#score_userId").val();
+    var score = $("#score_score").val() == "" ? 0 : $("#score_score").val();
+    var remainSec = $("#score_remainSec").val() == "" ? 0 : $("#score_remainSec").val();
+    
+    if (userId == 0) {
+        alert("Please input userid");
+        return;
+    }
+    if (score == 0) {
+        alert("Please input old score");
+        return;
+    }
+    if (remainSec == 0) {
+        alert("Please input new remainSec");
+        return;
+    }
+    
+    var req = "{\"userId\":\""+userId+"\",\"score\":\""+score+"\",\"remainedSeconds\":\""+remainSec+"\"}";
+    $.ajax(reqUrl + "rest/introgame/score", {
+        type:"post",
+        contentType:"application/json",
+        dataType:"json",
+        data:req,
+        success:function(result){
+			$("#debug_info").text(JSON.stringify(result));
+		},
+		error:function(result){
+			console.log(result);
+		}
+    });
+});
+
+//Set schedule alarm
+$("#set_schedule_alarm").on("click", function() {
+    var userId = $("#schedule_userid").val() == "" ? 0 : $("#schedule_userid").val();
+    var scheduleId = $("#schedule_id").val() == "" ? 0 : $("#schedule_id").val();
+    
+    if (userId == 0) {
+        alert("Please input user id");
+        return;
+    }
+    
+    if (scheduleId == 0) {
+        alert("Please input schedule id");
+        return;
+    }
+    
+    var req = "1";
+    $.ajax(reqUrl + "rest/schedule/alarm/" + scheduleId + "?userId=" + userId, {
+        type: "post",
+        contentType: "application/json",
+        dataType: "json",
+        data: req,
+        success: function(result) {
+            $("#debug_info").text(JSON.stringify(result));
+        },
+        error: function(result) {
+            console.log(result);
+        }
+    })
+});
+
+//Cancel schedule alarm
+$("#cancel_alarm").on("click", function() {
+    var userId = $("#schedule_userid").val() == "" ? 0 : $("#schedule_userid").val();
+    var scheduleId = $("#schedule_id").val() == "" ? 0 : $("#schedule_id").val();
+    
+    if (userId == 0) {
+        alert("Please input user id");
+        return;
+    }
+    
+    if (scheduleId == 0) {
+        alert("Please input schedule id");
+        return;
+    }
+    
+    var req = "0";
+    $.ajax(reqUrl + "rest/schedule/alarm/" + scheduleId + "?userId=" + userId, {
+        type: "post",
+        contentType: "application/json",
+        dataType: "json",
+        data: req,
+        success: function(result) {
+            $("#debug_info").text(JSON.stringify(result));
+        },
+        error: function(result) {
+            console.log(result);
+        }
+    })
+});
+</script>
+</body>
+
+</html>

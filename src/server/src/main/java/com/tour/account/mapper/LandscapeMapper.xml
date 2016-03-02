@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.LandscapeDao">
+	<resultMap id="LandscapeMap" type="com.tour.account.entity.Landscape">
+		<id column="id" property="id" />
+		<result column="phone" property="phone" />
+		<result column="name" property="name" />
+		<result column="address" property="address" />
+		<result column="hot" property="hot" />
+		<result column="star" property="star" />
+		<result column="longitude" property="longitude" />
+		<result column="latitude" property="latitude" />
+		<result column="l_type" property="type" />
+		<result column="photo" property="photo" />
+		<result column="feature" property="feature" />
+		<result column="love_num" property="loveNum" />
+		<result column="introduction" property="introduction" />
+		<result column="business_time" property="businessTime" />
+		<result column="how_to_go" property="howToGo" />
+		<result column="tips" property="tips" />
+		<result column="description" property="description" />
+		<result column="ordered" property="ordered" />
+		<result column="recommend" property="recommend" />
+		<result column="type" property="type" />
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Landscape"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into landscape
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="phone != null">phone,</if>
+			<if test="name != null">name,</if>
+			<if test="address != null">address,</if>
+			<if test="area != null">area,</if>
+			<if test="price != null">price,</if>
+			<if test="hot != null">hot,</if>
+			<if test="star != null">star,</if>
+			<if test="longitude != null">longitude,</if>
+			<if test="latitude != null">latitude,</if>
+			<if test="businessTime != null">business_time,</if>
+			<if test="tips != null">tips,</if>
+			<if test="howToGo != null">how_to_go,</if>
+			<if test="introduction != null">introduction,</if>
+			<if test="photo != null">photo,</if>
+			<if test="type != null">l_type,</if>
+			<if test="feature != null">feature,</if>
+			<if test="cBy != null">c_by,</if>			
+			<if test="loveNum != null">love_num,</if>			
+			<if test="description != null">description,</if>
+			c_time
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="phone != null">#{phone},</if>
+			<if test="name != null">#{name},</if>
+			<if test="address != null">#{address},</if>
+			<if test="area != null">#{area},</if>
+			<if test="price != null">#{price},</if>
+			<if test="hot != null">#{hot},</if>
+			<if test="star != null">#{star},</if>
+			<if test="longitude != null">#{longitude},</if>
+			<if test="latitude != null">#{latitude},</if>
+			<if test="businessTime != null">#{businessTime},</if>
+			<if test="tips != null">#{tips},</if>
+			<if test="howToGo != null">#{howToGo},</if>
+			<if test="introduction != null">#{introduction},</if>
+			<if test="photo != null">#{photo},</if>			
+			<if test="type != null">#{type},</if>		
+			<if test="loveNum != null">#{loveNum},</if>	
+			<if test="feature != null">#{feature},</if>
+			<if test="cBy != null">#{cBy},</if>
+			<if test="description != null">#{description},</if>
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.account.entity.Landscape">
+		update landscape
+		<set>
+			<if test="phone != null">phone=#{ phone },
+			</if>
+			<if test="name != null">name=#{ name },
+			</if>
+			<if test="area != null">area=#{ area },
+			</if>
+			<if test="price != null">price=#{ price },
+			</if>
+			<if test="address != null">address=#{ address },
+			</if>
+			<if test="hot != null">hot=#{ hot },
+			</if>
+			<if test="star != null">star=#{ star },
+			</if>
+			<if test="photo != null">photo=#{ photo },
+			</if>
+			<if test="longitude != null">longitude=#{ longitude },
+			</if>
+			<if test="latitude != null">latitude=#{ latitude },
+			</if>
+			<if test="type != null">l_type=#{ type },
+			</if>
+			<if test="feature != null">feature=#{ feature },
+			</if>
+			<if test="businessTime != null">business_time=#{ businessTime },
+			</if>
+			<if test="tips != null">tips=#{ tips },
+			</if>
+			<if test="howToGo != null">how_to_go=#{ howToGo },
+			</if>			
+			<if test="introduction != null">introduction=#{ introduction },
+			</if>
+			<if test="cBy != null">c_by=#{ cBy },
+			</if>
+			<if test="loveNum != null">love_num=#{ loveNum },
+			</if>
+			<if test="description != null">description=#{ description },
+			</if>
+			<if test="recommend != null">recommend=#{ recommend },
+			</if>
+			u_time=now()
+		</set>
+		where
+		id=#{ id }
+	</update>
+	<!--修改love_num -->
+	<update id="loveNumAdd" parameterType="com.tour.account.entity.Landscape">
+		update landscape
+		<set>
+				love_num= love_num + 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	<!--修改love_num -->
+	<update id="loveNumSubtract" parameterType="com.tour.account.entity.Landscape">
+		update landscape
+		<set>
+				love_num= love_num - 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	<!--修改ordered -->
+	<update id="orderAdd" parameterType="com.tour.account.entity.Landscape">
+		update landscape
+		<set>
+				ordered= ordered + 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	<!--修改ordered -->
+	<update id="orderSubtract" parameterType="com.tour.account.entity.Landscape">
+		update landscape
+		<set>
+				ordered= ordered - 1
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	<!--修改Hot-->
+	<update id="updateHot" parameterType="com.tour.account.entity.Landscape">
+		update landscape
+		set hot=#{hot}
+		where
+		id=#{ id }
+	</update>
+	<!--修改Recommend-->
+	<update id="updateRecommend" parameterType="com.tour.account.entity.Landscape">
+		update landscape
+		set recommend=#{recommend}
+		where
+		id=#{ id }
+	</update>
+	
+	<!--修改Banner-->
+	<update id="updateBanner" parameterType="com.tour.account.entity.Landscape">
+		update landscape
+		set banner=#{banner}
+		where
+		id=#{ id }
+	</update>
+	
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.account.entity.Landscape">
+		delete
+		from landscape
+		where
+		id=#{ id }
+	</delete>
+	
+
+	<!--查询 -->
+	<select id="findById" resultMap="LandscapeMap" parameterType="java.lang.Long">
+		select *
+		from landscape
+		where
+		id=#{ id }
+	</select>
+	<!--查询 -->
+	<select id="findByName" resultMap="LandscapeMap" parameterType="java.lang.String">
+		select *
+		from landscape
+		where
+		name=#{ name }
+	</select>
+	<!--查询 -->
+	<select id="findBy" resultMap="LandscapeMap" parameterType="java.lang.Long">
+		select *
+		from landscape
+		where
+		id=#{ id }
+	</select>
+	<!--recommends查询 -->
+	<select id="findByRecommends" resultMap="LandscapeMap" parameterType="java.lang.Long">
+		select *
+		from landscape
+		where
+		recommend=1
+	</select>
+	
+	<!--Hot查询 -->
+	<select id="findByHot" resultMap="LandscapeMap" parameterType="java.lang.Long">
+		select *
+		from landscape
+		where
+		hot=1 order by id asc
+	</select>
+	<!--banner查询 -->
+	<select id="findByBanner" resultMap="LandscapeMap" parameterType="java.lang.Long">
+		select *
+		from landscape
+		where
+		banner > 0 order by banner desc
+	</select>
+	<!--recommend查询 -->
+	<select id="findByRecommend" resultMap="LandscapeMap" parameterType="java.lang.Long">
+		select *
+		from landscape
+		where
+		banner=1
+	</select>
+	
+	<select id="listPage" resultMap="LandscapeMap"
+		parameterType="com.tour.account.entity.Landscape">
+		select * from landscape where 1=1
+		<if test="landscape.name != null and landscape.name !='' ">
+			and name=#{ landscape.name }
+		</if>
+		<if test="landscape.area != null and landscape.area !=''">
+			and area=#{ landscape.area }
+		</if>
+		<if test="landscape.hot == 1">
+			and hot=1
+		</if>
+		<if test="landscape.recommend == 1">
+			and recommend=1
+		</if>
+			order by numbers asc
+	</select>
+	
+	<select id="findListByVo" resultMap="LandscapeMap"
+		parameterType="com.tour.account.entity.Landscape">
+		select * from landscape where 1=1
+		<if test="landscape.banner != null and landscape.banner !='' ">
+			and banner=#{ landscape.banner }
+		</if>
+		order by banner desc, hot desc, id asc
+	</select>
+</mapper> 

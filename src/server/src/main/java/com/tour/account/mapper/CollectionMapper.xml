@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.CollectionDao">
+	<resultMap id="CollectionMap" type="com.tour.account.entity.Collection">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="typeid" property="typeid" />
+		<result column="type" property="type" />
+		<result column="userid" property="userid" />
+		<result column="photo" property="photo" />	
+		<result column="price" property="price" />
+		<result column="validDate" property="validDate" />
+		<result column="star" property="star" />
+		<result column="c_time" property="cTime" />	
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Collection"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into collection
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="userid != null">userid,</if>
+			<if test="typeid != null">typeid,</if>
+			<if test="type != null">type,</if>
+			<if test="photo != null">photo,</if>
+			<if test="price != null">price,</if>
+			<if test="validDate != null">validDate,</if>
+			<if test="star != null">star,</if>
+			c_time
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="userid != null">#{userid},</if>
+			<if test="typeid != null">#{typeid},</if>
+			<if test="type != null">#{type},</if>
+			<if test="photo != null">#{photo},</if>
+			<if test="price != null">#{price},</if>
+			<if test="validDate != null">#{validDate},</if>
+			<if test="star != null">#{star},</if>
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.account.entity.Collection">
+		update collection
+		<set>
+			<if test="name != null">name=#{ name },
+			</if>
+			<if test="photo != null">photo=#{ photo },
+			</if>
+			<if test="price != null">price=#{ price },
+			</if>
+			<if test="validDate != null">validDate=#{ validDate },
+			</if>
+			<if test="star != null">star=#{ star },
+			</if>
+		</set>
+		where 1=1
+		<if test="typeid != null ">
+			and typeid=#{typeid }
+		</if>
+		<if test="type != null ">
+			and type=#{ type }
+		</if>
+		<if test="id != null ">
+			and id=#{ id }
+		</if>
+	</update>
+
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.account.entity.Collection">
+		delete
+		from collection
+		where
+		id=#{ id }
+	</delete>
+	
+	<!--通过typeid删除 -->
+	<delete id="deleteByTypeid" parameterType="com.tour.account.entity.Collection">
+		delete
+		from collection
+		where
+		typeid=#{ typeid } and type=#{ type }
+	</delete>
+	
+	<!--查询 -->
+	<select id="findById" resultMap="CollectionMap" parameterType="java.lang.Long">
+		select *
+		from collection
+		where
+		id=#{ id }
+	</select>
+	<!--查询 -->
+	<select id="findBy" resultMap="CollectionMap" parameterType="java.lang.Long">
+		select *
+		from collection
+		where
+		userid=#{ id }
+	</select>
+	
+	<!--查询 -->
+	<select id="findByC" resultMap="CollectionMap" parameterType="java.lang.Long">
+		select *
+		from collection
+		where
+		userid=#{ userid } and type=#{ type } and typeid=#{ typeid }
+	</select>
+	
+	<select id="listPage" resultMap="CollectionMap"
+		parameterType="com.tour.account.entity.Collection">
+		select * from collection where 1=1
+		<if test="collection.name != null and collection.name !='' ">
+			and name=#{ collection.name }
+		</if>
+		<if test="collection.userid != null and collection.userid !='' ">
+			and userid=#{ collection.userid }
+		</if>
+	</select>
+</mapper> 

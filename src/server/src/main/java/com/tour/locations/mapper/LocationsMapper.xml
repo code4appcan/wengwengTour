@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.locations.dao.LocationsDao">
+	<resultMap id="LocationsMap" type="com.tour.locations.entity.Locations">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="location" property="location" />
+		<result column="typeid" property="typeid" />
+		<result column="type" property="type" />
+		<result column="description" property="description" />
+		<result column="c_time" property="cTime" />
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.locations.entity.Locations"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into location 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="type != null">type,</if>
+			<if test="description != null">description,</if>
+			<if test="typeid != null">typeid,</if>
+			location,
+			c_time
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="type != null">#{type},</if>
+			<if test="description != null">#{description},</if>
+			<if test="typeid != null">#{typeid},</if>
+			GeomFromText('POINT(122.2 122.2)'),
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.locations.entity.Locations">
+		update location
+		<set>
+			<if test="name != null">name=#{ name },
+			</if>
+			<if test="typeid != null">typeid=#{ typeid },
+			</if>
+			<if test="type != null">type=#{ type },
+			</if>
+			<if test="location != null">location=GeomFromText('POINT(21.321 11.234)'),
+			</if>
+			<if test="description != null">description=#{ description },
+			</if>
+		</set>
+		where
+		typeid=#{ typeid } and type=#{ type }
+	</update>
+	
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.locations.entity.Locations">
+		delete
+		from location
+		where
+		id=#{ id }
+	</delete>
+	
+	<!--通过typeid删除 -->
+	<delete id="deleteByTypeid" parameterType="com.tour.locations.entity.Locations">
+		delete
+		from location
+		where
+		typeid=#{ typeid } and type=#{ type }
+	</delete>
+	
+<select id="searchNearBy" statementType="CALLABLE">
+<![CDATA[
+    {call nearby (#{longitude,mode=IN,jdbcType=float},#{latitude,mode=IN,jdbcType=float},#{distance,mode=IN,jdbcType=INTEGER},#{status,mode=OUT,jdbcType=INTEGER})}
+]]>
+</select>
+</mapper> 

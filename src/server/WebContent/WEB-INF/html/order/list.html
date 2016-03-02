@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title> <@h.head />
+
+
+<style type="text/css">
+body {
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+</head>
+<body>
+	<form class="form-inline definewidth m20" action="${path}/order/list" method="get" id="listForm">
+		搜索： <input type="text" name="keyWords" id="name"
+			class="abc input-default" placeholder="用户名/订单对象名" value="${(RequestParameters['keyWords'])!''}">&nbsp;&nbsp;
+		<button type="submit" class="btn btn-primary">查询</button>
+		&nbsp;&nbsp; 
+	</form>
+	<table class="table table-bordered table-hover definewidth m10">
+		<thead>
+			<tr>
+				<th onclick="checkAll();"><input type="checkbox" id="checkAll">全选</th>
+				<th>ID</th>
+				<th>用户名</th>
+				<th>订单对象</th>
+				<th>单价</th>
+				<th>数量</th>
+				<th>提交时间</th>
+				<th>修改操作</th>
+				<th>删除操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<#list list as u>
+			<tr class="">
+				<td><input type="checkbox" name="checkbox" value="id=${(u.id)!''}&typeid=${(u.typeid)!''}&type=${(u.type)!''}"></td>
+				<td>${(u.id)!""}</td>
+				<td>${(u.userName)!""}</td>
+				<td>${(u.name)!""}</td>
+				<td>${(u.price)!""}</td>
+				<td>${(u.number)!""}</td>
+				<td>${(u.cTime?string("yyyy-MM-dd HH:MM:ss"))!""}</td>
+				<td><a href="${path}/order/update?id=${(u.id)!''}">修改</a></td>
+				<td><a href="${path}/order/delete?id=${(u.id)!''}&typeid=${(u.typeid)!''}&type=${(u.type)!''}">删除</a></td>
+				
+			</tr>
+			</#list>
+		</tbody>
+	</table>
+	<button type="button" class="btn btn-danger  m10" style="margin-left:20px;" onclick="deleteChecked();">删除</button>
+	<@h.page /> <@h.foot />
+	<script type="text/javascript">
+		function checkAll(){
+			//alert($("#checkAll").attr("checked"))
+			if($("#checkAll").attr("checked")=="checked"){
+				$("[name='checkbox']").attr("checked",'true');//全选
+			}
+			else $("[name='checkbox']").removeAttr("checked");//取消全选
+		}
+		function deleteChecked(){
+			var r=confirm("确认删除？");
+			if (r==true)
+			  {
+			 	var checkboxes = document.getElementsByName("checkbox");
+				for (var i = 0; i < checkboxes.length; i++)  {
+				  var checkbox = checkboxes[i];
+				  if(checkbox.checked){
+				   	$.get("${path}/delete_order?"+checkboxes[i].value, function(data) {
+						
+					})
+				  }
+				}
+				alert("删除成功！");
+				setTimeout(window.location.href = "${path}/order/list",1000);
+			  }
+			else
+			  {
+				return ;
+			  }
+		}
+	</script>
+</body>
+</html>

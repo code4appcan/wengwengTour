@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.RecommendDao">
+	<resultMap id="RecommendMap" type="com.tour.account.entity.Recommend">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="typeid" property="typeid" />
+		<result column="type" property="type" />
+		<result column="photo" property="photo" />
+		<result column="level" property="level" />
+		<result column="status" property="status" />
+		<result column="star" property="star" />
+		<result column="sort" property="sort" />
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Recommend"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into recommend
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="typeid != null">typeid,</if>
+			<if test="type != null">type,</if>
+			<if test="photo != null">photo,</if>
+			<if test="level != null">level,</if>
+			<if test="status != null">status,</if>
+			<if test="star != null">star,</if>
+			<if test="sort != null">sort,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="typeid != null">#{typeid},</if>
+			<if test="type != null">#{type},</if>
+			<if test="photo != null">#{photo},</if>
+			<if test="level != null">#{level},</if>
+			<if test="status != null">#{status},</if>
+			<if test="star != null">#{star},</if>
+			<if test="sort != null">#{sort},</if>
+		</trim>
+	</insert>
+	
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.account.entity.Recommend">
+		delete
+		from recommend
+		where
+		id=#{ id }
+	</delete>
+	
+	<!--查询 -->
+	<select id="findById" resultMap="RecommendMap" parameterType="java.lang.Long">
+		select *
+		from recommend
+		where
+		id=#{ id }
+	</select>
+	
+
+	<select id="findListByVo" resultMap="RecommendMap"
+		parameterType="com.tour.account.entity.Recommend">
+		select * from recommend where 1=1
+		<if test="recommend.type != null and recommend.type !='' ">
+			and type=#{ recommend.type }
+		</if>
+		order by level, type, sort asc
+	</select>
+	
+	<select id="listPage" resultMap="RecommendMap"
+		parameterType="com.tour.account.entity.Recommend">
+		select * from recommend where 1=1
+		<if test="recommend.level != null and recommend.level !='' ">
+			and level=#{ recommend.level }
+		</if>
+		<if test="recommend.type != null and recommend.type !='' ">
+			and type=#{ recommend.type }
+		</if>
+		<if test="recommend.status != null and recommend.status !='' ">
+			and status=#{ recommend.status }
+		</if>
+		order by sort asc
+	</select>
+</mapper> 

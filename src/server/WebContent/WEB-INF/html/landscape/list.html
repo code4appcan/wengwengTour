@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title> <@h.head />
+
+
+<style type="text/css">
+body {
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+</head>
+<body>
+	<form class="form-inline definewidth m20" action="${path}/search_landscape" method="get" id="listForm">
+		景点名称： <input type="text" name="keyWords" id="id"
+			class="abc input-default" placeholder="景点名" value="${(RequestParameters['keyWords'])!''}">&nbsp;&nbsp;
+		<button type="submit" class="btn btn-primary">查询</button>
+		&nbsp;&nbsp; 
+		<a class="btn btn-success" href="${path}/landscape/add">新增景点</a>
+		<a class="btn btn-success" href="${path}/update_landscape_hot">必玩景点</a>
+	</form>
+	<table class="table table-bordered table-hover definewidth m10">
+		<thead>
+			<tr>
+				<th onclick="checkAll();"><input type="checkbox" id="checkAll">全选</th>
+				<th>景点ID</th>
+				<th>景点</th>
+				<th>地址</th>
+				<th>区域</th>
+				<th>门票</th>
+				<th>等级</th>
+				<th>图片</th>
+				<th>联系方式</th>
+				<th>修改操作</th>
+				<th>删除操作</th>
+				<th>推荐</th>
+				<th>必玩</th>
+			</tr>
+		</thead>
+		<tbody>
+			<#list list as u>
+			<tr class="">
+				<td><input type="checkbox" name="checkbox" value="id=${(u.id)!''}&is_collection=${(u.loveNum)!''}&is_order=${(u.ordered)!''}&hot=1&recommend=1&type=3"></td>
+				<td>${(u.id)!""}</td>
+				<td>${(u.name)!""}</td>
+				<td>${(u.address)!""}</td>
+				<td>${(u.area)!""}</td>
+				<td>${(u.price)!""}</td>
+				<td>${(u.star)!""}</td>
+				<td><img name="myimg" src="${(u.photo)!''}" style="height:50px;"></td>
+				<td>${(u.phone)!""}</td>
+				<td><a href="${path}/landscape/update?id=${(u.id)!''}">修改</a></td>
+				<td><a href="${path}/delete_landscape?id=${(u.id)!''}&is_collection=${(u.loveNum)!''}&is_order=${(u.ordered)!''}">删除</a></td>
+				<td id='tab${(u.id)!""}'><a href="javascript: addRecommend(${(u.id)!''});">添加</a></td>
+				<script>
+					if(${(u.hot)!''}==1){
+						$('#tab${(u.id)!""}').after('<td id="hot${(u.id)!""}">已推荐</td>');
+					}
+					else {
+						$('#tab${(u.id)!""}').after('<td id="hot${(u.id)!""}"><a href="${path}/update_landscape_hot?id=${(u.id)!''}&hot=1">推荐</a></td>');
+					}
+					/* if(${(u.recommend)!''}==1){
+						$('#hot${(u.id)!""}').after('<td>已添加</td>');
+					}
+					else{
+						$('#hot${(u.id)!""}').after('<td><a href="javascript: addRecommend(${(u.id)!''});">添加</a></td>');
+					} */
+				</script>
+			</tr>
+			</#list>
+		</tbody>
+	</table>
+	<button type="button" class="btn btn-danger  m10" style="margin-left:20px;" onclick="deleteChecked();">删除</button>
+	<button type="button" class="btn btn-success  m10" style="margin-left:20px;" onclick="updateHot();">推荐为必玩</button>
+	<button type="button" class="btn btn-info  m10"  onclick="updateRecommend();">添加到推荐</button>
+	<@h.page /> <@h.foot />
+	<script type="text/javascript">
+	$(function() {
+		$("img[name='myimg']").each(function(i){
+			var url_img = this.src.split("WEB-INF/");
+			this.src = "${path}/"+url_img[1];
+		 });
+		bindImg();
+		
+		// 查询已推荐，置灰链接
+		$.ajax({
+			type : 'get',
+			url : "${path}/recommend/json?type=3&pageSize=100",
+			success : function(data) {
+				var result = eval('(' + data + ')');
+				if(result.status == 200){
+					var recommends = result.body.recommends;
+					for (var i = 0; i < recommends.length; i++) {
+						var typeid = recommends[i].typeid;
+						$("#tab" + typeid).html('已添加');
+					}
+				}
+			}
+		});
+	});
+		function checkAll(){
+			if($("#checkAll").attr("checked")=="checked"){
+				$("[name='checkbox']").attr("checked",'true');//全选
+			}
+			else $("[name='checkbox']").removeAttr("checked");//取消全选
+		}
+		function deleteChecked(){
+			var r=confirm("确认删除？");
+			if (r==true)
+			  {
+			 	var checkboxes = document.getElementsByName("checkbox");
+				for (var i = 0; i < checkboxes.length; i++)  {
+				  var checkbox = checkboxes[i];
+				  if(checkbox.checked){
+					  alert(checkboxes[i].value);
+				   	$.get("${path}/delete_landscapes?"+checkboxes[i].value, function(data) {
+						
+					})
+				  }
+				}
+				alert("删除成功！");
+				setTimeout(window.location.href = "${path}/landscape/list",1000);
+			  }
+			else
+			  {
+				return ;
+			  }
+		}
+		function updateHot(){
+		 	var checkboxes = document.getElementsByName("checkbox");
+			for (var i = 0; i < checkboxes.length; i++)  {
+			  var checkbox = checkboxes[i];
+			  if(checkbox.checked){
+			   	$.get("${path}/update_landscape_hot?"+checkboxes[i].value, function(data) {
+					
+				})
+			  }
+			}
+			alert("推荐成功！");
+			window.location.href = "${path}/landscape/list";
+		}
+		function updateRecommend(){
+		 	var checkboxes = document.getElementsByName("checkbox");
+			for (var i = 0; i < checkboxes.length; i++)  {
+			  var checkbox = checkboxes[i];
+			  if(checkbox.checked){
+			   	$.get("${path}/update_recommend?"+checkboxes[i].value, function(data) {
+					
+				})
+			  }
+			}
+			alert("推荐成功！");
+			window.location.href = "${path}/landscape/list";
+		}
+		
+
+		//图片绑定鼠标移上去事件及移出事件
+		function bindImg(){
+		    var xOffset = 100;
+		    var yOffset = 40;  
+		    $("img[name='myimg']").hover(function(e){     //鼠标要移动的图片        
+		             this.t = this.src;          
+		             $("body").append("<img id='tooltip' src='"+this.t+"'  width='250px' height='250px' />");
+		             $("#tooltip")
+		              .css("top",(e.pageY - xOffset) + "px")
+		              .css("left",(e.pageX + yOffset) + "px")
+		              .css("position","absolute")
+		              .fadeIn("fast");  
+		        },
+		        function(){
+		            this.title = this.t;  
+		            $("#tooltip").remove();
+		        }
+		    );
+		    $("img[name='myimg']").mousemove(function(e){
+		        $("#tooltip")
+		            .css("top",(e.pageY - xOffset) + "px")
+		            .css("left",(e.pageX + yOffset) + "px")
+		            .fadeIn("slow");
+		    });   
+		}
+		
+		function addRecommend(id){
+			var url = "${path}/recommend/save?recommend=2&type=3&id=" + id; 
+			$.get(url, function(data) {
+				document.location.reload();
+			});
+		}
+	</script>
+</body>
+</html>

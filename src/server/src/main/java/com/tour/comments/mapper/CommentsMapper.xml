@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.comments.dao.CommentsDao">
+	<resultMap id="CommentsMap" type="com.tour.comments.entity.Comments">
+		<id column="id" property="id" />
+		<result column="userName" property="userName" />
+		<result column="userid" property="userid" />
+		<result column="typeid" property="typeid" />
+		<result column="type" property="type" />
+		<result column="comment" property="comment" />
+		<result column="cTime" property="cTime" />
+		<result column="typeName" property="typeName" />
+		<result column="score" property="score" />
+	</resultMap>
+
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.comments.entity.Comments"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into comments
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userName != null">userName,</if>
+			<if test="userid != null">userid,</if>
+			<if test="comment != null">comment,</if>
+			<if test="type != null">type,</if>
+			<if test="typeid != null">typeid,</if>
+			<if test="typeName != null">typeName,</if>
+			<if test="score != null">score,</if>
+			cTime
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userName != null">#{userName},</if>
+			<if test="userid != null">#{userid},</if>
+			<if test="comment != null">#{comment},</if>
+			<if test="type != null">#{type},</if>
+			<if test="typeid != null">#{typeid},</if>
+			<if test="typeName != null">#{typeName},</if>
+			<if test="score != null">#{score},</if>
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.comments.entity.Comments">
+		update comments
+		<set>
+			<if test="userName != null">userName=#{userName},</if>
+			<if test="userid != null">userid=#{userid},</if>
+			<if test="comment != null">comment=#{comment},</if>
+			<if test="type != null">type=#{type},</if>
+			<if test="typeid != null">typeid=#{typeid},</if>	
+			<if test="typeName != null">typeName=#{typeName},</if>	
+			<if test="score != null">score=#{score},</if>	
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.comments.entity.Comments">
+		delete
+		from comments
+		where
+		id=#{ id }
+	</delete>
+	
+	<!--查询 -->
+	<select id="findById" resultMap="CommentsMap" parameterType="com.tour.comments.entity.Comments">
+		select *
+		from comments
+		where
+		id=#{id }
+	</select>
+	
+	<!--查询 -->
+	<select id="findBy" resultMap="CommentsMap" parameterType="com.tour.comments.entity.Comments">
+		select *
+		from comments
+		where
+		typeid=#{typeid } and type=#{ type }
+	</select>
+	
+	
+	<select id="listPage" resultMap="CommentsMap"
+		parameterType="com.tour.comments.entity.Comments">
+		select * from comments where 1=1
+		<if test="comments.id != null and comments.id !='' ">
+			and id=#{ comments.id }
+		</if>
+		<if test="comments.userName != null and comments.userName !='' ">
+			and userName=#{ comments.userName }
+		</if>
+		<if test="comments.type != null and comments.type !='' ">
+			and type=#{ comments.type }
+			<if test="comments.typeid != null and comments.typeid !='' ">
+				and typeid=#{ comments.typeid }
+			</if>
+		</if>
+		<if test="comments.typeName != null and comments.typeName !='' ">
+			and typeName=#{ comments.typeName }
+		</if>
+		<if test="comments.userid != null and comments.userid !='' ">
+			and userid=#{ comments.userid }
+		</if>
+	</select>
+	
+	
+</mapper> 

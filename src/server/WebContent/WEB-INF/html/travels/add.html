@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title> <@h.head />
+<style type="text/css">
+body {
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+</head>
+<body>
+	<form action="${path}/travels/save" id="fm" method="post" class="definewidth m20">
+		<input type="hidden" id="photoid" value="" name="photo">
+		<div style="text-align: center;" id="errorMsg"></div>
+		<table class="table table-bordered table-hover definewidth m10">
+			<tr>
+				<td class="tableleft">景点 <span class="required">*</span></td>
+				<td>
+					<input type="hidden" id="landscapeName" value="" name="landscapeName">
+					<select class="span3 m-wrap" name="landscapeId" id="landscapeId" datatype="*" nullmsg="请选择！"
+						onchange="document.getElementById('landscapeName').value=options[selectedIndex].text">
+						<option value=''>请选择</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="tableleft">标题 <span class="required">*</span></td>
+				<td><input type="text" name="title" datatype="*" nullmsg="请输入标题！"/></td>
+			</tr>
+			<tr>
+				<td class="tableleft">内容<span class="required">*</span></td>
+				<td><textarea cols="50" name="content" datatype="*" nullmsg="请输入内容！"/></textarea></td>
+			</tr>
+			<tr>
+				<td class="tableleft"></td>
+				<td>
+					<button type="submit" class="btn btn-primary" type="button">保存</button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-success" name="backid"
+						id="backid">返回列表</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	图片
+	<span class="required">*</span>
+	<input id="fileToUploadTravels" type="file" size="20"
+		name="fileToUploadTravels" class="input">
+	<button id="buttonUpload">upload</button>
+	<@h.foot />
+	<script type="text/javascript">
+		$(function() {
+			$('#backid').click(function() {
+				window.location.href = "${path}/travels/list";
+			});
+			
+			initLandscape();
+		});
+		var callback = function(data) {
+			if (data.status == "200") {
+				window.location.href = "${path}/travels/list";
+			} else {
+				$("#errorMsg").html(data.msg).show();
+			}
+		}
+		$("#fm").validFrom(callback);
+		$("#buttonUpload").click(function() {
+			$.ajaxFileUpload({
+				url : "${path}/uploadPhotoTravels",//处理图片脚本
+				contentType : "application/json",
+				secureuri : false,
+				fileElementId : [ 'fileToUploadTravels' ],//file控件id
+				dataType : 'json',
+				success : function(data, status) {
+					$("#img").attr("src", data);
+					$("#photoid").val(data);
+					alert(data);
+				},
+				error : function(data, status) {
+					alert('上传失败');
+				}
+			});
+		});
+		
+		function initLandscape(){
+			
+			var url = "${path}/get_landscape_list?pageSize=1000";
+			$.ajax({
+				type : "post",
+				url : url,
+				async : false,
+				success : function(data){
+					data = eval("(" + data + ")");
+					if(data.status == 200){
+						// 插入景点信息
+						$.each(data.body.landscaps,function(i,n){
+					          $("#landscapeId").append("<option value='"+n.id+"'>"+n.name+"</option>")
+					    });
+					}else{
+						alert(data.error);
+					}
+				}
+			});
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+http://www.springframework.org/schema/mvc 
+http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+
+	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
+
+	<context:component-scan base-package="com.tour.*.controller"
+		use-default-filters="false"><!-- base-package 如果多个，用“,”分隔 -->
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<context:annotation-config />  
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+		<!--	默认情况下MappingJacksonHttpMessageConverter会设置content为application/json，在IE9下返回会出现提示下载的现象 -->
+			<bean
+				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"
+				p:supportedMediaTypes="text/html;charset=UTF-8">
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+	<mvc:annotation-driven />
+
+
+	<!-- 静态资源映射 -->
+	<mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
+
+	
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="requestContextAttribute" value="ctp" />
+		<property name="cache" value="true" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".html" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="order" value="1" />
+	</bean>
+	 
+	  <!-- ContentNegotiatingViewResolver视图解析器,利用他就可以配置多种返回值 -->
+	 <bean  class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">   
+	   <property name="order" value="0" />   
+	   <!-- 这里是否忽略掉accept header，默认就是false -->
+	   <property name="ignoreAcceptHeader" value="true" />   
+	    
+	   <!-- 如果所有的mediaType都没匹配上，就会使用defaultContentType -->
+	   <property name="defaultContentType" value="text/html" />   
+	    
+	   <property name="mediaTypes">    
+	    <map>     
+	     <entry key="json" value="application/json" />      
+	     <entry key="jsonp" value="application/javascript"/>  
+	     <entry key="xml" value="application/xml" />      
+	    </map>    
+	    </property>   
+	    <!-- 默认使用MappingJacksonJsonView生成jsonview-->
+	    <property name="defaultViews">    
+	     <list>     
+	      <bean  class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">        
+	         <property  name="extractValueFromSingleKeyModel" value="true" />     
+	      </bean>        
+	      <bean  class="org.springframework.web.servlet.view.xml.MarshallingView">      
+	       <property name="marshaller">        
+	        <bean  class="org.springframework.oxm.xstream.XStreamMarshaller" />        
+	      </property>      
+	      </bean>      
+	     </list>     
+	    </property>  
+	  </bean>
+
+	<!-- <bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+		<property name="maxUploadSize">
+			<value>10000000</value>
+		</property>
+	</bean>
+	 -->
+	<import resource="classpath:shiro/spring-shiro.xml" />
+	<import resource="classpath:freemarker/spring-freemarker.xml" />
+</beans>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.OrderDao">
+	<resultMap id="OrderMap" type="com.tour.account.entity.Order">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="typeid" property="typeid" />
+		<result column="type" property="type" />
+		<result column="photo" property="photo" />	
+		<result column="price" property="price" />
+		<result column="userid" property="userid" />
+		<result column="cTime" property="cTime" />	
+		<result column="number" property="number" />
+		<result column="userName" property="userName" />	
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Order"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into orders
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="typeid != null">typeid,</if>
+			<if test="type != null">type,</if>
+			<if test="photo != null">photo,</if>
+			<if test="price != null">price,</if>
+			<if test="userid != null">userid,</if>
+			<if test="number != null">number,</if>
+			<if test="userName != null">userName,</if>
+			cTime
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="typeid != null">#{typeid},</if>
+			<if test="type != null">#{type},</if>
+			<if test="photo != null">#{photo},</if>
+			<if test="price != null">#{price},</if>
+			<if test="userid != null">#{userid},</if>
+			<if test="number != null">#{number},</if>
+			<if test="userName != null">#{userName},</if>
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.account.entity.Order">
+		update orders
+		<set>
+			<if test="name != null">name=#{ name },
+			</if>
+			<if test="photo != null">photo=#{ photo },
+			</if>
+			<if test="price != null">price=#{ price },
+			</if>
+			<if test="userid != null">userid=#{ userid },
+			</if>
+			<if test="number != null">number=#{ number },
+			</if>
+			<if test="userName != null">userName=#{ userName },
+			</if>
+		</set>
+		where 1=1
+		<if test="id != null ">
+			and id=#{ id }
+		</if>
+		<if test="typeid != null">
+			and typeid=#{ typeid }
+		</if>
+		<if test="type != null">
+			and type=#{ type }
+		</if>
+	</update>
+
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.account.entity.Order">
+		delete
+		from orders
+		where
+		id=#{ id }
+	</delete>
+	
+	<!--通过typeid删除 -->
+	<delete id="deleteByTypeid" parameterType="com.tour.account.entity.Order">
+		delete
+		from orders
+		where
+		typeid=#{ typeid } and type=#{ type }
+	</delete>
+	
+	<!--查询 -->
+	<select id="findById" resultMap="OrderMap" parameterType="java.lang.Long">
+		select *
+		from orders
+		where
+		id=#{ id }
+	</select>
+	<!--查询 -->
+	<select id="findBy" resultMap="OrderMap" parameterType="java.lang.Long">
+		select *
+		from orders
+		where
+		userid=#{ id }
+	</select>
+	
+	<select id="listPage" resultMap="OrderMap"
+		parameterType="com.tour.account.entity.Order">
+		select * from orders where 1=1
+		<if test="order.id != null and order.id !='' ">
+			and id=#{ order.id }
+		</if>
+		<if test="order.name != null and order.name !='' ">
+			and name=#{ order.name }
+		</if>
+		<if test="order.userName != null and order.userName !='' ">
+			or userName=#{ order.userName }
+		</if>
+	</select>
+</mapper> 

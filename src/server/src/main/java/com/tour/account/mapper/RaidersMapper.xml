@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.RaidersDao">
+	<resultMap id="RaidersMap" type="com.tour.account.entity.Raiders">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="cover" property="cover" />
+		<result column="content" property="content" />
+		<result column="cdate" property="cdate" />
+		<result column="tag" property="tag" />
+		<result column="pl_total" property="plTotal" />
+		<result column="sc_total" property="scTotal" />
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Raiders"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into raiders
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null">title,</if>
+			<if test="cover != null">cover,</if>
+			<if test="content != null">content,</if>
+			<if test="tag != null">tag,</if>
+			cdate
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title != null">#{title},</if>
+			<if test="cover != null">#{cover},</if>
+			<if test="content != null">#{content},</if>
+			<if test="tag != null">#{tag},</if>
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.account.entity.Raiders">
+		update raiders
+		<set>
+			<if test="title != null">
+				title=#{ title },
+			</if>
+			<if test="cover != null">
+				cover=#{ cover },
+			</if>
+			<if test="content != null">
+				content=#{ content },
+			</if>
+			<if test="tag != null">
+				tag=#{ tag },
+			</if>
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.account.entity.Raiders">
+		delete
+		from raiders
+		where
+		id=#{ id }
+	</delete>
+	
+
+	<!--查询 -->
+	<select id="findById" resultMap="RaidersMap" parameterType="java.lang.Long">
+		select *
+		from raiders
+		where
+		id=#{ id }
+	</select>
+	
+	<select id="listPage" resultMap="RaidersMap"
+		parameterType="com.tour.account.entity.Raiders">
+		select t.id, t.title, t.cover, t.tag, t.cdate,
+		(select count(1) from comments c where c.type=6 and c.typeid=t.id) pl_total ,
+		(select count(1) from collection s where s.type=6 and s.typeid=t.id) sc_total 
+		from raiders t where 1=1
+		<if test="raiders.tag != null and raiders.tag !='' ">
+			and tag =#{ raiders.tag }
+		</if>
+	</select>
+</mapper> 

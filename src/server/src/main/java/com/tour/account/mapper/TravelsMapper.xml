@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.TravelsDao">
+	<resultMap id="TravelsMap" type="com.tour.account.entity.Travels">
+		<id column="id" property="id" />
+		<result column="userid" property="userid" />
+		<result column="landscape_name" property="landscapeName" />
+		<result column="landscape_id" property="landscapeId" />
+		<result column="content" property="content" />
+		<result column="title" property="title" />
+		<result column="love_num" property="loveNum" />
+		<result column="share_num" property="shareNum" />
+		<result column="longitude" property="longitude" />
+		<result column="latitude" property="latitude" />
+		<result column="c_time" property="cTime" />
+		<result column="u_time" property="uTime" />
+		<result column="photo" property="photo" />
+		<result column="photo1" property="photo1" />
+		<result column="userName" property="userName" />
+		<result column="commentNum" property="commentNum" />
+		<result column="userHeadImg" property="userHeadImg" />
+		<result column="feature" property="feature" />
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Travels"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into travels
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userid != null">userid,</if>
+			<if test="landscapeName != null">landscape_name,</if>
+			<if test="landscapeId != null">landscape_id,</if>
+			<if test="content != null">content,</if>
+			<if test="title != null">title,</if>
+			<if test="loveNum != null">love_num,</if>
+			<if test="shareNum != null">share_num,</if>
+			<if test="longitude != null">longitude,</if>
+			<if test="latitude != null">latitude,</if>
+			<if test="photo != null">photo,</if>
+			<if test="photo1 != null">photo1,</if>
+			<if test="userName != null">userName,</if>
+			<if test="commentNum != null">commentNum,</if>
+			<if test="userHeadImg != null">userHeadImg,</if>
+			<if test="feature != null">feature,</if>
+			c_time
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userid != null">#{userid},</if>
+			<if test="landscapeName != null">#{landscapeName},</if>
+			<if test="landscapeId != null">#{landscapeId},</if>
+			<if test="content != null">#{content},</if>
+			<if test="title != null">#{title},</if>
+			<if test="loveNum != null">#{loveNum},</if>
+			<if test="shareNum != null">#{shareNum},</if>
+			<if test="longitude != null">#{longitude},</if>
+			<if test="latitude != null">#{latitude},</if>
+			<if test="photo != null">#{photo},</if>
+			<if test="photo1 != null">#{photo1},</if>
+			<if test="userName != null">#{userName},</if>
+			<if test="commentNum != null">#{commentNum},</if>
+			<if test="userHeadImg != null">#{userHeadImg},</if>
+			<if test="feature != null">#{feature},</if>
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.account.entity.Travels">
+		update travels
+		<set>
+			<if test="userid != null">userid=#{userid},</if>
+			<if test="landscapeName != null">landscape_name=#{landscapeName},</if>
+			<if test="landscapeId != null">landscape_id=#{landscapeId},</if>
+			<if test="content != null">content=#{content},</if>
+			<if test="title != null">title=#{title},</if>
+			<if test="loveNum != null">love_num=#{loveNum},</if>
+			<if test="shareNum != null">share_num=#{shareNum},</if>
+			<if test="longitude != null">longitude=#{longitude},</if>
+			<if test="latitude != null">latitude=#{latitude},</if>
+			<if test="cTime != null">c_time=#{cTime},</if>
+			<if test="photo != null">photo=#{photo},</if>
+			<if test="photo1 != null">photo1=#{photo1},</if>
+			<if test="userName != null">userName=#{userName},</if>
+			<if test="commentNum != null">commentNum=#{commentNum},</if>
+			<if test="userHeadImg != null">userHeadImg=#{userHeadImg},</if>
+			<if test="feature != null">feature=#{feature},</if>
+			u_time=now()
+		</set>
+		where
+		id=#{ id }
+	</update>
+	
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.account.entity.Travels">
+		delete
+		from travels
+		where
+		id=#{ id }
+	</delete>
+
+	<!--查询 -->
+	<select id="findById" resultMap="TravelsMap" parameterType="java.lang.Long">
+		select *
+		from travels
+		where
+		id=#{ id }
+	</select>
+	<!--查询 -->
+	<select id="findBy" resultMap="TravelsMap" parameterType="java.lang.Long">
+		select *
+		from travels
+		where
+		id=#{ id }
+	</select>
+	<!--查询 -->
+	<select id="findByUser" resultMap="TravelsMap" parameterType="java.lang.Long">
+		select *
+		from travels
+		where
+		userid=#{ userid }
+	</select>
+	
+	<select id="listPage" resultMap="TravelsMap"
+		parameterType="com.tour.account.entity.Travels">
+		select * from travels where 1=1
+		<if test="travels.title != null and travels.title !='' ">
+			and title=#{ travels.title }
+		</if>
+		<if test="travels.landscapeId != null and travels.landscapeId !='' ">
+			and landscape_id=#{ travels.landscapeId }
+		</if>
+	</select>
+</mapper> 

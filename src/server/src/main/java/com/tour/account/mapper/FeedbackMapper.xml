@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.FeedbackDao">
+	<resultMap id="FeedbackMap" type="com.tour.account.entity.Feedback">
+		<id column="id" property="id" />
+		<result column="flag" property="flag" />
+		<result column="contents" property="contents" />
+		<result column="userid" property="userid" />
+		<result column="cdate" property="cdate" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Feedback"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into feedback
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="flag != null">flag,</if>
+			<if test="contents != null">contents,</if>
+			<if test="userid != null">userid,</if>
+			<if test="status != null">status,</if>
+			cdate
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="flag != null">#{flag},</if>
+			<if test="contents != null">#{contents},</if>
+			<if test="userid != null">#{userid},</if>
+			<if test="status != null">#{status},</if>
+			now()
+		</trim>
+	</insert>
+	
+	
+	<select id="listPage" resultMap="FeedbackMap"
+		parameterType="com.tour.account.entity.Feedback">
+		select * from feedback where 1=1
+		<if test="status != null and status !='' ">
+			and id=#{ comments.id }
+		</if>
+	</select>
+	
+	
+</mapper> 

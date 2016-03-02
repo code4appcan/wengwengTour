@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title> <@h.head />
+<style type="text/css">
+body {
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+</head>
+<body>
+	<form action="${path}/update_wineshop" id="fm" method="post"
+		class="definewidth m20">
+		<div style="text-align: center;" id="errorMsg"></div>
+		<table class="table table-bordered table-hover definewidth m10">
+			<#list wineshop as u>
+			<input type="hidden" name="id" value="${(u.id)!''}"  />
+			<input type="hidden" id="photoid" value="${(u.photo)!''}" name="photo">
+			<tr>
+				<td width="10%" class="tableleft">酒店名称 <span class="required">*</span></td>
+				<td><input type="text" name="name" value="${(u.name)!''}"  /></td>
+			</tr>
+			<tr id="password">
+				<td class="tableleft">区域 <span class="required">*</span></td>
+				<td><input type="text" name="area" value="${(u.area)!''}"  /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">具体地址<span class="required">*</span></td>
+				<td><input type="text" name="address" value="${(u.address)!''}"  /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">星级<span class="required">*</span></td>
+				<td><input type="text" name="star" value="${(u.star)!''}" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">经度<span class="required">*</span></td>
+				<td><input type="text" name="longitude" value="${(u.longitude)!''}" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">纬度<span class="required">*</span></td>
+				<td><input type="text" name="latitude" value="${(u.latitude)!''}" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">房型描述<span class="required">*</span></td>
+				<td><textarea  name="comments" style="width:300px;height:50px;">${(u.comments)!''}</textarea></td>
+			</tr>
+			<tr>
+				<td class="tableleft">联系电话<span class="required">*</span></td>
+				<td><input type="text" name="phone" value="${(u.phone)!''}" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">如何到达<span class="required">*</span></td>
+				<td><textarea  name="howToGo" style="width:300px;height:50px;"/>${(u.howToGo)!''}</textarea></td>
+			</tr>
+			<tr>
+				<td class="tableleft">停车位（个数）<span class="required">*</span></td>
+				<td><input type="text" name="park" value="${(u.park)!''}" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">入住时间<span class="required">*</span></td>
+				<td><input type="text" name="timeInOut" value="${(u.timeInOut)!''}"/></td>
+			</tr>
+			<tr>
+				<td class="tableleft">房间配置<span class="required">*</span></td>
+				<td><textarea  name="roomEquipment" style="width:300px;height:50px;"/>${(u.roomEquipment)!''}</textarea></td>
+			</tr>
+			<tr>
+				<td class="tableleft">配套设施<span class="required">*</span></td>
+				<td><textarea  name="roomFacilities" style="width:300px;height:50px;"/>${(u.roomFacilities)!''}</textarea></td>
+			</tr>
+			<tr>
+				<td class="tableleft">餐饮服务<span class="required">*</span></td>
+				<td><textarea  name="foodBeverages" style="width:300px;height:50px;"/>${(u.foodBeverages)!''}</textarea></td>
+			</tr>
+			<tr>
+				<td class="tableleft">行车保障<span class="required">*</span></td>
+				<td><textarea  name="drivingSupport" style="width:300px;height:50px;"/>${(u.drivingSupport)!''}</textarea></td>
+			</tr>
+			<tr>
+				<td class="tableleft">支付服务<span class="required">*</span></td>
+				<td><input type="text" name="payByCard" value="${(u.payByCard)!''}" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft">酒店简介<span class="required">*</span></td>
+				<td><textarea  name="introduction" style="width:300px;height:50px;"/>${(u.introduction)!''}</textarea></td>
+			</tr>
+			<tr>
+				<td class="tableleft">旅店概述<span class="required">*</span></td>
+				<td><input type="text" name="feature" value="${(u.feature)!''}" /></td>
+			</tr>
+			<tr>
+				<td class="tableleft"></td>
+				<td>
+					<button type="submit" class="btn btn-primary" type="button">保存</button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-success" name="backid"
+						id="backid">返回列表</button>
+				</td>
+			</tr>
+			</#list>	
+		</table>
+	</form>
+	图片<span class="required">*</span>
+	<img src="" id="img" style=" width:150px; height:100px;">
+	<input id="fileToUploadWineshop" type="file" size="20" name="fileToUploadWineshop" class="input">
+	<button id="buttonUpload">upload</button>
+	<@h.foot />
+<script type="text/javascript">
+	$(function() {
+		$('#backid').click(function() {
+			window.location.href = "${path}/wineshop/list";
+		});
+		var photourl = $("#photoid").val();
+		$("#img").attr("src", "${path}" + photourl.substring(7));
+	});
+	
+	var callback = function(data) {
+		if (data.status == "200") {
+			window.location.href = "${path}/wineshop/list";
+		} else {
+			$("#errorMsg").html(data.msg).show();
+		}
+	}
+	$("#fm").validFrom(callback);
+	$("#buttonUpload").click(function(){     
+		   $.ajaxFileUpload({
+			   url:"${path}/uploadPhotoWineshop",//处理图片脚本
+			   contentType:"application/json",
+		       secureuri :false,
+		       fileElementId :['fileToUploadWineshop'],//file控件id
+		       dataType : 'json',
+		       success: function(data, status){
+		    	   url_img = data.split("WEB-INF/");
+		    	   $("#img").attr("src", "${path}/"+url_img[1]);
+		    	   $("#photoid").val(data);
+		       },
+		       error: function(data, status)
+		       {
+		    	  // alert(status);
+		       }
+			});
+		 }) ;
+</script>
+</body>
+</html>

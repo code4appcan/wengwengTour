@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tour.account.dao.AdvertisementDao">
+	<resultMap id="AdvertisementMap" type="com.tour.account.entity.Advertisement">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="typeid" property="typeid" />
+		<result column="type" property="type" />
+		<result column="photo" property="photo" />	
+		<result column="price" property="price" />
+		<result column="userid" property="userid" />
+		<result column="c_time" property="cTime" />	
+		<result column="number" property="number" />
+		<result column="description" property="description" />	
+	</resultMap>
+	
+	<!--保存 -->
+	<insert id="save" parameterType="com.tour.account.entity.Advertisement"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into advertisement
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="typeid != null">typeid,</if>
+			<if test="type != null">type,</if>
+			<if test="photo != null">photo,</if>
+			<if test="description != null">description,</if>
+			c_time
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="typeid != null">#{typeid},</if>
+			<if test="type != null">#{type},</if>
+			<if test="photo != null">#{photo},</if>
+			<if test="description != null">#{description},</if>
+			now()
+		</trim>
+	</insert>
+	
+	<!--修改 -->
+	<update id="update" parameterType="com.tour.account.entity.Advertisement">
+		update advertisement
+		<set>
+			<if test="name != null">name=#{ name },
+			</if>
+			<if test="typeid != null">typeid=#{ typeid },
+			</if>
+			<if test="type != null">type=#{ type },
+			</if>
+			<if test="photo != null">photo=#{ photo },
+			</if>
+			<if test="description != null">description=#{ description },
+			</if>
+		</set>
+		where
+		typeid=#{ typeid } and type=#{ type }
+	</update>
+
+	<!--删除 -->
+	<delete id="deleteById" parameterType="com.tour.account.entity.Advertisement">
+		delete
+		from advertisement
+		where
+		id=#{ id }
+	</delete>
+	
+	<!--通过typeid删除 -->
+	<delete id="deleteByTypeid" parameterType="com.tour.account.entity.Advertisement">
+		delete
+		from advertisement
+		where
+		typeid=#{ typeid } and type=#{ type }
+	</delete>
+	
+	<!--查询 -->
+	<select id="findById" resultMap="AdvertisementMap" parameterType="java.lang.Long">
+		select *
+		from advertisement
+		where
+		id=#{ id }
+	</select>
+	
+	<select id="listPage" resultMap="AdvertisementMap"
+		parameterType="com.tour.account.entity.Advertisement">
+		select * from advertisement where 1=1
+		<if test="advertisement.name != null and advertisement.name !='' ">
+			and id=#{ advertisement.id }
+		</if>
+	</select>
+</mapper> 
